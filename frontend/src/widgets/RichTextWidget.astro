@@ -1,0 +1,5 @@
+---
+const { widget } = Astro.props;
+const { content } = widget;
+---
+<div class="rich-text-widget" set:html={ content }></div>

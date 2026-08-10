@@ -1,0 +1,64 @@
+{
+  "name": "spatial-verse-cms",
+  "version": "1.0.0",
+  "description": "Apostrophe starter kit project for Astro integration",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "start": "node app",
+    "dev": "cross-env APOS_EXTERNAL_FRONT_KEY=dev nodemon",
+    "build": "cross-env NODE_ENV=production node app @apostrophecms/asset:build",
+    "serve": "cross-env NODE_ENV=production node app",
+    "release": "npm install && npm run build && npm run migrate",
+    "migrate": "cross-env NODE_ENV=production node app @apostrophecms/migration:migrate"
+  },
+  "nodemonConfig": {
+    "delay": 1000,
+    "verbose": true,
+    "watch": [
+      "./app.js",
+      "./modules/**/*",
+      "./lib/**/*.js",
+      "./views/**/*.html"
+    ],
+    "ignoreRoot": [
+      ".git"
+    ],
+    "ignore": [
+      "**/ui/apos/",
+      "**/ui/src/",
+      "**ui/public/",
+      "locales/*.json",
+      "public/uploads/",
+      "public/apos-frontend/*.js",
+      "data/"
+    ],
+    "ext": "json, js, html, scss, vue"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/apostrophecms/combined-astro-starter-kit"
+  },
+  "author": "Apostrophe Technologies, Inc.",
+  "license": "MIT",
+  "dependencies": {
+    "@apostrophecms/blog": "^1.0.4",
+    "@apostrophecms/vite": "^1.1.0",
+    "apostrophe": "^4.23.0",
+    "cross-env": "^10.1.0",
+    "dotenv": "^17.4.2"
+  },
+  "devDependencies": {
+    "eslint-config-apostrophe": "^6.0.1",
+    "nodemon": "^3.0.1"
+  },
+  "allowScripts": {
+    "@parcel/watcher": true,
+    "better-sqlite3": true,
+    "esbuild": true,
+    "fsevents": true,
+    "sharp": true,
+    "unrs-resolver": true,
+    "vue-demi": true
+  }
+}
