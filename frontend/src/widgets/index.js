@@ -10,6 +10,12 @@ import LayoutColumnWidget from '@apostrophecms/apostrophe-astro/widgets/LayoutCo
 import NestedLayoutWidget from '@apostrophecms/apostrophe-astro/widgets/LayoutWidget.astro';
 import NestedLayoutColumnWidget from '@apostrophecms/apostrophe-astro/widgets/LayoutColumnWidget.astro';
 import FileWidget from './FileWidget.astro';
+import HeroWidget from './HeroWidget.astro';
+import WhyWidget from './WhyWidget.astro';
+import SolutionsWidget from './SolutionsWidget.astro';
+import CapabilitiesWidget from './CapabilitiesWidget.astro';
+import SupportModesWidget from './SupportModesWidget.astro';
+import ContactWidget from './ContactWidget.astro';
 
 const widgetComponents = {
   '@apostrophecms/rich-text': RichTextWidget,
@@ -20,6 +26,12 @@ const widgetComponents = {
   'nested-layout-widget': NestedLayoutWidget,
   'nested-column-widget': NestedLayoutColumnWidget,
   '@apostrophecms/file': FileWidget,
+  'hero': HeroWidget,
+  'why': WhyWidget,
+  'solutions': SolutionsWidget,
+  'capabilities': CapabilitiesWidget,
+  'support-modes': SupportModesWidget,
+  'contact': ContactWidget,
 };
 
 export default widgetComponents;

@@ -1,0 +1,50 @@
+---
+import {
+  getAttachmentUrl,
+  getAttachmentSrcset,
+  getFocalPoint,
+  getWidth,
+  getHeight
+} from '@apostrophecms/apostrophe-astro/lib/attachment.js';
+import HeroHud from '../components/home/HeroHud.astro';
+import { relationshipUrl } from '../utils/homeContent';
+
+const { widget = {} } = Astro.props;
+const secondaryButtonUrl = relationshipUrl(widget._secondaryButtonPage);
+const desktopImage = widget._desktopImage?.[0];
+const mobileImage = widget._mobileImage?.[0];
+const displayImage = desktopImage || mobileImage;
+const desktopSrc = displayImage ? getAttachmentUrl(displayImage) : undefined;
+const desktopSrcset = displayImage ? getAttachmentSrcset(displayImage) : undefined;
+const mobileSrc = mobileImage ? getAttachmentUrl(mobileImage) : undefined;
+const mobileSrcset = mobileImage ? getAttachmentSrcset(mobileImage) : undefined;
+const objectPosition = displayImage ? getFocalPoint(displayImage) : undefined;
+const width = displayImage ? getWidth(displayImage) : undefined;
+const height = displayImage ? getHeight(displayImage) : undefined;
+---
+
+<section class="hero">
+  <div class="shell hero-grid">
+    <div class="hero-copy reveal">
+      <p class="eyebrow mono">{widget.eyebrow}</p>
+      <h1 data-i18n-html="hero.title">{widget.titleLeadZh}<span>{widget.titleAccentZh}</span></h1>
+      <p class="hero-lead" data-i18n-html="hero.lead"><strong>{widget.descriptionLeadZh}</strong><br />{widget.descriptionZh}</p>
+      <div class="hero-actions">
+        <a class="button primary" href={widget.primaryButtonUrl || undefined} data-i18n="hero.solutions">{widget.primaryButtonLabelZh}</a>
+        <a class="button" href={secondaryButtonUrl} data-i18n="hero.download">{widget.secondaryButtonLabelZh}</a>
+      </div>
+      <div class="hero-meta mono"><span>2D / 3D DATA</span><span>ROBOTICS SIMULATION</span><span>AIGC / XR</span></div>
+    </div>
+    <div class="hero-visual" aria-label="室内空间合成数据动态演示">
+      <div class="visual-frame">
+        {widget.videoUrl
+          ? <video autoplay muted loop playsinline preload="metadata" src={widget.videoUrl} poster={desktopSrc}></video>
+          : desktopSrc && <picture>
+              {mobileSrc && <source media="(max-width: 700px)" srcset={mobileSrcset || mobileSrc} />}
+              <img src={desktopSrc} srcset={desktopSrcset || undefined} alt="" style={objectPosition ? `object-position:${objectPosition}` : undefined} {width} {height} />
+            </picture>}
+      </div>
+      <HeroHud />
+    </div>
+  </div>
+</section>

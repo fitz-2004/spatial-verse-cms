@@ -1,0 +1,19 @@
+---
+import SolutionCard from '../components/home/SolutionCard.astro';
+
+const { widget = {} } = Astro.props;
+const products = Array.isArray(widget._products) ? widget._products : [];
+---
+
+<section class="section solutions" id="solutions">
+  <div class="shell">
+    <div class="section-head reveal">
+      <div><p class="eyebrow mono">{widget.eyebrow}</p><h2 data-i18n-html="solutions.title">{widget.titleLine1Zh}<br />{widget.titleLine2Zh}</h2></div>
+      <p data-i18n="solutions.intro">{widget.descriptionZh}</p>
+    </div>
+    {widget.previewVideoUrl && <div class="solutions-preview reveal"><video autoplay muted loop playsinline preload="metadata" src={widget.previewVideoUrl}></video><span class="solutions-preview-label mono">MULTIMODAL SOLUTION STREAM / ACTIVE</span></div>}
+    <div class="solution-grid reveal">
+      {products.map((product: any, index: number) => <SolutionCard {product} {index} buttonLabel={widget.cardButtonLabelZh} />)}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,46 @@
+---
+import { relationshipUrl, type SpatialVerseCopy } from '../../utils/homeContent';
+
+interface Props {
+  global?: Record<string, any>;
+  copy: SpatialVerseCopy;
+}
+
+const { global = {}, copy } = Astro.props;
+const homeUrl = relationshipUrl(global._homePage);
+const solutionsUrl = homeUrl ? `${homeUrl.replace(/\/$/, '')}/#solutions` : undefined;
+const contactUrl = homeUrl ? `${homeUrl.replace(/\/$/, '')}/#contact` : undefined;
+const capabilitiesUrl = relationshipUrl(global._capabilitiesPage);
+const researchUrl = relationshipUrl(global._researchPage);
+const datasetsUrl = relationshipUrl(global._datasetsPage);
+const aboutUrl = relationshipUrl(global._aboutPage);
+const serializedCopy = JSON.stringify(copy).replaceAll('<', '\\u003c');
+---
+
+<script id="spatial-verse-copy" type="application/json" set:html={serializedCopy}></script>
+<header class="site-header">
+  <div class="shell nav">
+    <a class="brand" href={homeUrl} aria-label={global.brandAriaLabelZh}><span class="brand-mark" aria-hidden="true"></span><span>{global.brandLabel}</span></a>
+    <nav class="nav-links" id="site-nav" aria-label="主导航">
+      <a href={homeUrl} data-i18n="nav.home">{global.homeLabelZh}</a>
+      <a href={solutionsUrl} data-i18n="nav.solutions">{global.solutionsLabelZh}</a>
+      <div class="nav-dropdown">
+        <button class="nav-dropdown-trigger" type="button" aria-expanded="false" aria-controls="capabilities-menu" data-i18n="nav.capabilities">{global.capabilitiesLabelZh}</button>
+        <div class="nav-dropdown-menu" id="capabilities-menu">
+          <a href={capabilitiesUrl} data-i18n="nav.capabilities">{global.capabilitiesLabelZh}</a>
+          <a href={researchUrl} data-i18n="nav.research">{global.researchLabelZh}</a>
+          <a href={datasetsUrl} data-i18n="nav.datasets">{global.datasetsLabelZh}</a>
+        </div>
+      </div>
+      <a href={aboutUrl} data-i18n="nav.about">{global.aboutLabelZh}</a>
+    </nav>
+    <div class="nav-actions">
+      <div class="language-switch" role="group" aria-label="Language">
+        <button type="button" data-language="zh" class="active" aria-pressed="true">中文</button>
+        <button type="button" data-language="en" aria-pressed="false">EN</button>
+      </div>
+      <a class="nav-cta" href={contactUrl} data-i18n="nav.contact">{global.contactLabelZh}</a>
+    </div>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="打开导航">MENU</button>
+  </div>
+</header>

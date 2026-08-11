@@ -1,0 +1,18 @@
+---
+import CapabilityPanel from '../components/home/CapabilityPanel.astro';
+import { relationshipUrl } from '../utils/homeContent';
+
+const { widget = {} } = Astro.props;
+const capabilities = Array.isArray(widget._capabilities) ? widget._capabilities : [];
+const buttonUrl = relationshipUrl(widget._buttonPage);
+---
+
+<section class="section" id="capabilities">
+  <div class="shell capability-shell">
+    <div class="section-head reveal">
+      <div><p class="eyebrow mono">{widget.eyebrow}</p><h2 data-i18n="capabilities.title">{widget.titleZh}</h2></div>
+      <p data-i18n="capabilities.intro">{widget.descriptionZh}</p>
+    </div>
+    <CapabilityPanel items={capabilities} url={buttonUrl} buttonLabel={widget.buttonLabelZh} />
+  </div>
+</section>

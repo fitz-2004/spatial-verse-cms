@@ -1,0 +1,31 @@
+---
+import {
+  getAttachmentUrl,
+  getAttachmentSrcset,
+  getFocalPoint,
+  getWidth,
+  getHeight
+} from '@apostrophecms/apostrophe-astro/lib/attachment.js';
+
+interface Props {
+  item: {
+    key: string;
+    buttonKey?: string;
+    title?: string;
+    buttonLabel?: string;
+    image?: Record<string, any>;
+    alt?: string;
+    altKey?: string;
+    url?: string;
+  };
+}
+
+const { item } = Astro.props;
+const src = item.image ? getAttachmentUrl(item.image) : undefined;
+const srcset = item.image ? getAttachmentSrcset(item.image) : undefined;
+const objectPosition = item.image ? getFocalPoint(item.image) : undefined;
+const width = item.image ? getWidth(item.image) : undefined;
+const height = item.image ? getHeight(item.image) : undefined;
+---
+
+<article class="mode"><div class="mode-media">{src && <img src={src} srcset={srcset || undefined} alt={item.alt || ''} data-i18n-alt={item.altKey} loading="lazy" decoding="async" style={objectPosition ? `object-position:${objectPosition}` : undefined} {width} {height} />}</div><div class="mode-content"><h3 data-i18n={item.key}>{item.title}</h3>{item.buttonLabel && <a class="button" href={item.url} data-i18n={item.buttonKey}>{item.buttonLabel}</a>}</div></article>

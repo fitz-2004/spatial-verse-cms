@@ -1,0 +1,18 @@
+---
+interface Metric {
+  value?: string;
+  suffix?: string;
+  labelZh?: string;
+}
+
+const metrics = Array.isArray(Astro.props.metrics) ? Astro.props.metrics as Metric[] : [];
+---
+
+<div class="metrics reveal" aria-label="平台数据">
+  {metrics.map((metric, index) => (
+    <div class="metric" data-index={`DATA_${String(index + 1).padStart(2, '0')}`}>
+      <strong>{metric.value}<em>{metric.suffix}</em></strong>
+      <span data-i18n={`metric.${index}`}>{metric.labelZh}</span>
+    </div>
+  ))}
+</div>

@@ -2,15 +2,27 @@
 import aposPageFetch from "@apostrophecms/apostrophe-astro/lib/aposPageFetch.js";
 import AposLayout from "@apostrophecms/apostrophe-astro/components/layouts/AposLayout.astro";
 import AposTemplate from "@apostrophecms/apostrophe-astro/components/AposTemplate.astro";
+import SiteHeader from "../components/global/SiteHeader.astro";
+import SiteFooter from "../components/global/SiteFooter.astro";
+import { createSpatialVerseCopy } from "../utils/homeContent";
 import "../styles/app.css";
 import "../styles/styles.css";
+import "../styles/spatial-verse-home.css";
 
 // aposPageFetch fetches the full page payload from the ApostropheCMS backend for the
 // current URL. It returns an object with: `page` (the page document), `piece` (set on
 // piece-show routes), `global` (global config), and flags like `redirect` and `notFound`.
 // Downstream templates receive this object as `Astro.props.aposData`.
-const aposData = await aposPageFetch(Astro.request);
-const bodyClass = `myclass`;
+const requestUrl = new URL(Astro.request.url);
+const normalizedPath = requestUrl.pathname.replace(/\/+$/, '') || '/';
+const isHomeAlias = normalizedPath === '/coohomcloud';
+const aposRequest = isHomeAlias
+  ? new Request(new URL(`/${requestUrl.search}`, requestUrl), Astro.request)
+  : Astro.request;
+const aposData = await aposPageFetch(aposRequest);
+const isHomePage = aposData.page?.type === '@apostrophecms/home-page';
+const bodyClass = isHomePage ? 'spatial-verse-page' : 'myclass';
+const copy = createSpatialVerseCopy(aposData.page, aposData.global);
 
 if (aposData.redirect) {
   return Astro.redirect(aposData.url, aposData.status);
@@ -20,13 +32,20 @@ if (aposData.notFound) {
 }
 ---
 
-<AposLayout title={aposData.page?.title} {aposData} {bodyClass}>
+<AposLayout title={aposData.page?.seoTitle || aposData.page?.title} {aposData} {bodyClass}>
   <Fragment slot="standardHead">
+    {isHomePage && <link rel="canonical" href={new URL('/', Astro.url.origin).href} />}
     <meta name="description" content={aposData.page?.seoDescription} />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta charset="UTF-8" />
   </Fragment>
+  <SiteHeader slot="beforeMain" global={aposData.global} {copy} />
   <main slot="beforeMain" class="main">
-  <AposTemplate {aposData} slot="main" />
-  </main slot="afterMain" >
+    <AposTemplate {aposData} slot="main" />
+  </main>
+  <SiteFooter slot="afterMain" global={aposData.global} />
 </AposLayout>
+
+<script>
+  import '../scripts/site';
+</script>

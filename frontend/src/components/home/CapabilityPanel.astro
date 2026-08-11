@@ -1,0 +1,26 @@
+---
+interface Capability {
+  displayTitleZh?: string;
+  descriptionZh?: string;
+  videoUrl?: string;
+}
+
+const { items = [], url, buttonLabel } = Astro.props as { items: Capability[]; url?: string; buttonLabel?: string };
+const first = items[0];
+const codes = [ '01 / PHYSICS', '02 / ANNOTATION', '03 / AUGMENTATION', '04 / MULTICHANNEL' ];
+---
+
+{first && <div class="capability-layout reveal">
+  <div class="capability-media" id="capability-media">
+    {first.videoUrl && <video id="capability-video" autoplay muted loop playsinline controls preload="metadata" controlslist="nodownload" data-active-video={first.videoUrl} src={first.videoUrl}></video>}
+    <div class="capability-media-label mono"><span id="capability-status" aria-live="polite">{first.displayTitleZh} / LIVE</span><span>04 CAPABILITIES</span></div>
+  </div>
+  <div class="capability-controls">
+    <div class="capability-list">
+      {items.map((item, index) => (
+        <button type="button" class="capability-item" data-video={item.videoUrl} aria-pressed={index === 0 ? 'true' : 'false'}><span class="mono">{codes[index] || `0${index + 1}`}</span><h3 data-i18n={`capability.${index}.title`}>{item.displayTitleZh}</h3><p data-i18n={`capability.${index}.body`}>{item.descriptionZh}</p></button>
+      ))}
+    </div>
+    <a class="button capability-action" href={url} data-i18n="capabilities.more">{buttonLabel}</a>
+  </div>
+</div>}

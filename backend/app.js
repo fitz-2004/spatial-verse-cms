@@ -19,6 +19,18 @@ apostrophe({
     '@apostrophecms/rich-text-widget': {},
     '@apostrophecms/image-widget': {},
     '@apostrophecms/video-widget': {},
+    // Homepage content shared with future detail pages.
+    product: {},
+    capability: {},
+    // Fixed homepage section widgets. Each is restricted to its matching area
+    // in @apostrophecms/home-page.
+    'hero-widget': {},
+    'why-widget': {},
+    'solutions-widget': {},
+    'capabilities-widget': {},
+    'support-modes-widget': {},
+    'contact-widget': {},
+    'home-content-import': {},
     // The project's first custom page type.
     'default-page': {},
     '@apostrophecms/blog': {},

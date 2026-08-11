@@ -1,0 +1,14 @@
+---
+import { relationshipUrl } from '../../utils/homeContent';
+
+interface Props {
+  product: Record<string, any>;
+  index: number;
+  buttonLabel?: string;
+}
+
+const { product, index, buttonLabel } = Astro.props;
+const url = relationshipUrl(product?._detailPage);
+---
+
+<article class="solution-card"><span class="card-index mono">{`SOLUTION_${String(index + 1).padStart(2, '0')}`}</span><h3 data-i18n={`solution.${index}.title`}>{product?.displayTitleZh}</h3><p data-i18n={`solution.${index}.body`}>{product?.descriptionZh}</p><a class="card-link" href={url} data-i18n="solutions.more">{buttonLabel}</a></article>

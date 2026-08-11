@@ -1,0 +1,20 @@
+---
+import MetricGrid from '../components/home/MetricGrid.astro';
+import { relationshipUrl } from '../utils/homeContent';
+
+const { widget = {} } = Astro.props;
+const buttonUrl = relationshipUrl(widget._buttonPage);
+const metrics = Array.isArray(widget.metrics) ? widget.metrics : [];
+---
+
+<section class="section" id="why">
+  <div class="shell why-grid">
+    <div class="why-copy reveal">
+      <p class="eyebrow mono">{widget.eyebrow}</p>
+      <h2 data-i18n-html="why.title">{widget.titleLine1Zh}<br />{widget.titleLine2Zh}</h2>
+      <p data-i18n="why.body">{widget.descriptionZh}</p>
+      <a class="button" href={buttonUrl} data-i18n="why.research">{widget.buttonLabelZh}</a>
+    </div>
+    <MetricGrid {metrics} />
+  </div>
+</section>

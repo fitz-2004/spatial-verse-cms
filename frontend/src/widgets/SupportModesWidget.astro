@@ -1,0 +1,44 @@
+---
+import SupportModeCard from '../components/home/SupportModeCard.astro';
+import { relationshipUrl } from '../utils/homeContent';
+
+const { widget = {} } = Astro.props;
+const items = [
+  {
+    key: 'modes.solutions',
+    buttonKey: 'modes.solutionsMore',
+    title: widget.dataSolutionsTitleZh,
+    buttonLabel: widget.dataSolutionsButtonLabelZh,
+    image: widget._dataSolutionsImage?.[0],
+    alt: widget.dataSolutionsImageAltZh,
+    altKey: 'modes.solutionsAlt',
+    url: '#contact'
+  },
+  {
+    key: 'modes.custom',
+    title: widget.customProcessingTitleZh,
+    image: widget._customProcessingImage?.[0],
+    alt: widget.customProcessingImageAltZh,
+    altKey: 'modes.customAlt'
+  },
+  {
+    key: 'modes.research',
+    buttonKey: 'modes.researchMore',
+    title: widget.researchTitleZh,
+    buttonLabel: widget.researchButtonLabelZh,
+    image: widget._researchImage?.[0],
+    alt: widget.researchImageAltZh,
+    altKey: 'modes.researchAlt',
+    url: relationshipUrl(widget._researchPage)
+  }
+];
+---
+
+<section class="section" id="modes">
+  <div class="shell">
+    <div class="section-head reveal"><div><p class="eyebrow mono">{widget.eyebrow}</p><h2 data-i18n="modes.title">{widget.titleZh}</h2></div><p data-i18n="modes.intro">{widget.descriptionZh}</p></div>
+    <div class="modes-grid reveal">
+      {items.map((item) => <SupportModeCard {item} />)}
+    </div>
+  </div>
+</section>

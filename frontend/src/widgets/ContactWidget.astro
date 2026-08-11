@@ -1,0 +1,16 @@
+---
+const { widget = {} } = Astro.props;
+---
+
+<section class="section contact" id="contact">
+  <div class="shell contact-grid">
+    <div class="reveal"><p class="eyebrow mono">{widget.eyebrow}</p><h2 data-i18n-html="contact.title">{widget.titleLine1Zh}<br />{widget.titleLine2Zh}</h2><p class="contact-copy" data-i18n="contact.body">{widget.descriptionZh}</p></div>
+    <form class="contact-panel reveal" id="contact-form" data-success-key="contact.success">
+      <label for="email" data-i18n="contact.email">{widget.emailLabelZh}</label>
+      <input id="email" name="email" type="email" autocomplete="email" placeholder={widget.emailLabelZh} data-i18n-placeholder="contact.email" required />
+      <button class="button primary" type="submit" data-i18n="contact.submit">{widget.submitLabelZh}</button>
+      <p class="consent" data-i18n="contact.consent">{widget.consentZh}</p>
+      <div class="form-note" role="status" aria-live="polite"></div>
+    </form>
+  </div>
+</section>

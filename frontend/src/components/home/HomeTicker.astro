@@ -1,0 +1,11 @@
+---
+const items = [
+  [ '01', 'SYNTHETIC IMAGES' ],
+  [ '02', '3D MODELS' ],
+  [ '03', '3D SCENES' ],
+  [ '04', 'ROBOT SIMULATION' ],
+  [ '05', 'SEMANTIC LABELS' ]
+];
+---
+
+<div class="ticker" aria-hidden="true"><div class="ticker-track mono">{[ ...items, ...items ].map(([ number, label ]) => <span><b>{number}</b> {label}</span>)}</div></div>

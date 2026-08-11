@@ -1,0 +1,26 @@
+---
+import { relationshipUrl } from '../../utils/homeContent';
+
+const { global = {} } = Astro.props;
+const homeUrl = relationshipUrl(global._homePage);
+const capabilitiesUrl = relationshipUrl(global._capabilitiesPage);
+const researchUrl = relationshipUrl(global._researchPage);
+const datasetsUrl = relationshipUrl(global._datasetsPage);
+const aboutUrl = relationshipUrl(global._aboutPage);
+const emailHref = global.email ? `mailto:${global.email}` : undefined;
+const phoneHref = global.phoneNumber ? `tel:${String(global.phoneNumber).replace(/[^+\d]/g, '')}` : undefined;
+const socialLinks = Array.isArray(global.socialLinks)
+  ? global.socialLinks.filter((link: any) => link?.label && link?.url)
+  : [];
+---
+
+<footer class="site-footer">
+  <div class="shell">
+    <div class="footer-grid">
+      <div class="footer-brand"><a class="brand" href={homeUrl}><span class="brand-mark" aria-hidden="true"></span><span>{global.brandLabel}</span></a><p data-i18n="footer.body">{global.footerDescriptionZh}</p>{global.email && <a class="footer-email" href={emailHref}>{global.email}</a>}{global.phoneLabel && <a class="footer-email" href={phoneHref}>{global.phoneLabel}</a>}</div>
+      <div class="footer-col"><h3>Our Dataset Products</h3>{global.datasetProductLabel1 && <a href={datasetsUrl}>{global.datasetProductLabel1}</a>}{global.datasetProductLabel2 && <a href={datasetsUrl}>{global.datasetProductLabel2}</a>}{global.datasetProductLabel3 && <a href={datasetsUrl}>{global.datasetProductLabel3}</a>}</div>
+      <div class="footer-col"><h3>Navigate</h3><a href={capabilitiesUrl} data-i18n="nav.capabilities">{global.capabilitiesLabelZh}</a><a href={researchUrl} data-i18n="nav.research">{global.researchLabelZh}</a><a href={datasetsUrl} data-i18n="nav.datasets">{global.datasetsLabelZh}</a><a href={aboutUrl} data-i18n="nav.about">{global.aboutLabelZh}</a></div>
+    </div>
+    <div class="footer-bottom"><div class="socials">{socialLinks.map((link: any) => <a href={link.url} target="_blank" rel="noopener noreferrer">{link.label}</a>)}</div><div><span data-i18n="footer.registration">{global.registrationLabelZh}</span> {global.registrationNumber && <a href={global.registrationUrl || undefined} target="_blank" rel="noopener noreferrer">{global.registrationNumber}</a>} {global.registrationNumber && <span aria-hidden="true">|</span>} <span data-i18n="footer.license">{global.businessLicenseLabelZh}</span></div></div>
+  </div>
+</footer>
