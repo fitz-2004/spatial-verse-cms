@@ -1,8 +1,15 @@
+import importTask from './lib/tasks/import.js';
+
 export default {
   extend: '@apostrophecms/page-type',
   options: {
     label: '学术研究列表页',
     pluralLabel: '学术研究列表页'
+  },
+  tasks(self) {
+    return {
+      import: importTask(self)
+    };
   },
   fields: {
     add: {

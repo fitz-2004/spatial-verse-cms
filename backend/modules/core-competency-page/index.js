@@ -1,8 +1,15 @@
+import importTask from './lib/tasks/import.js';
+
 export default {
   extend: '@apostrophecms/page-type',
   options: {
     label: '核心能力页',
     pluralLabel: '核心能力页'
+  },
+  tasks(self) {
+    return {
+      import: importTask(self)
+    };
   },
   fields: {
     add: {

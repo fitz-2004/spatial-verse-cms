@@ -1,3 +1,5 @@
+import importTask from './lib/tasks/import.js';
+
 export default {
   extend: '@apostrophecms/piece-type',
   options: {
@@ -6,6 +8,11 @@ export default {
     // 稳定标识：使用 slug 确保重复导入可以更新而不是重复创建
     sort: { year: -1 },
     searchable: true
+  },
+  tasks(self) {
+    return {
+      import: importTask(self)
+    };
   },
   fields: {
     add: {
