@@ -1,0 +1,127 @@
+/* ============================================================
+ * Research Archive Page — 学术研究列表页样式
+ * 域前缀：research-*
+ * ============================================================ */
+
+.archive-hero {
+  min-height: 75svh;
+}
+
+.research-archive-section,
+.dataset-archive-section {
+  padding: 165px 0;
+  background: #050711;
+}
+
+.archive-section-head {
+  display: grid;
+  grid-template-columns: minmax(170px, 0.38fr) minmax(0, 1fr);
+  gap: 9vw;
+  align-items: start;
+  margin-bottom: 76px;
+}
+
+.archive-section-head h2 {
+  max-width: 700px;
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--display);
+  font-size: clamp(48px, 6vw, 86px);
+  font-weight: 300;
+  letter-spacing: -0.08em;
+  line-height: 0.94;
+}
+
+.research-archive-list {
+  border-top: 1px solid rgba(203, 226, 255, 0.15);
+}
+
+.research-archive-item {
+  display: grid;
+  grid-template-columns: 92px minmax(0, 1fr) 40px;
+  gap: 24px;
+  align-items: start;
+  padding: 28px 0 31px;
+  border-bottom: 1px solid rgba(203, 226, 255, 0.15);
+}
+
+.research-archive-year {
+  color: var(--cyan);
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+}
+
+.research-archive-venue {
+  margin: 0 0 12px;
+  color: var(--acid);
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+}
+
+.research-archive-item h3 {
+  max-width: 820px;
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--display);
+  font-size: clamp(22px, 2.4vw, 34px);
+  font-weight: 300;
+  letter-spacing: -0.045em;
+  line-height: 1.05;
+}
+
+.research-archive-item div > p:last-child {
+  max-width: 670px;
+  margin: 15px 0 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.75;
+}
+
+.research-archive-item > a {
+  color: var(--cyan);
+  font-family: var(--mono);
+  font-size: 20px;
+  text-align: right;
+}
+
+.research-archive-item > a:hover {
+  color: var(--acid);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+  .archive-section-head {
+    grid-template-columns: 1fr;
+    gap: 26px;
+  }
+
+  .archive-section-head h2 {
+    font-size: 48px;
+  }
+}
+
+@media (max-width: 560px) {
+  .research-archive-section,
+  .dataset-archive-section {
+    padding: 90px 0 80px;
+  }
+
+  .archive-section-head {
+    margin-bottom: 45px;
+  }
+
+  .research-archive-item {
+    grid-template-columns: 50px minmax(0, 1fr) 24px;
+    gap: 12px;
+  }
+
+  .research-archive-item h3 {
+    font-size: 22px;
+  }
+
+  .research-archive-item div > p:last-child {
+    font-size: 13px;
+  }
+}

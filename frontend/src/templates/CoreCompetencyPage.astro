@@ -1,5 +1,101 @@
 ---
-const { page } = Astro.props.aposData;
----
+import CoreCapabilityNavigation from '../components/core/CoreCapabilityNavigation.tsx';
+import { paths } from '../lib/siteChrome.js';
+import '../styles/core.css';
 
-<h1>{page?.title}</h1>
+const { page } = Astro.props.aposData;
+const intro = page?.intro || {};
+const capabilities = Array.isArray(page?.capabilities) ? page.capabilities : [];
+const signals = Array.isArray(intro?.signals) ? intro.signals : [];
+const coreLinks = [
+  { number: '02', label: '学术研究', href: paths.core[1] },
+  { number: '03', label: '样例数据集', href: paths.core[2] }
+];
+const capabilityAccents = ['cyan', 'purple', 'acid', 'pink'];
+const nextHeading = '继续探索群核的数据基础设施';
+---
+<section class="section-capabilities-intro core-page-intro" aria-labelledby="core-capability-title">
+  <div class="content-width">
+    <div class="section-intro">
+      <p class="section-index">{intro?.eyebrow || '02 / CORE COMPETENCY'}</p>
+      <div>
+        <h1 id="core-capability-title">{intro?.title || '核心能力'}</h1>
+        <p>{intro?.lead || ''}</p>
+        {intro?.subcopy && <p class="core-page-intro-subcopy">{intro.subcopy}</p>}
+        <div class="core-page-signal-row" aria-label="核心能力数据类型">
+          {signals.map((signal) => <span key={signal.label}>{signal.label}</span>)}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="core-page-intro-grid" aria-hidden="true" />
+  <div class="core-page-intro-orbit" aria-hidden="true" />
+</section>
+
+<section class="core-capability-stack" aria-label="四项核心能力">
+  <div class="core-capability-index" aria-hidden="true">
+    {capabilities.map((capability, index) => (
+      <a href={`#core-capability-${index + 1}`} key={capability.number}>
+        <span>{capability.number}</span><b>{capability.title}</b>
+      </a>
+    ))}
+  </div>
+
+  {capabilities.map((capability, index) => {
+    const accent = capabilityAccents[index] || 'cyan';
+    return (
+      <article className={`core-capability-panel core-capability-panel-${index + 1} accent-${accent}`} id={`core-capability-${index + 1}`} key={capability.number}>
+        <div class="content-width core-capability-panel-inner">
+          <header class="core-capability-panel-header"><span>CORE CAPABILITY / {capability.number}</span></header>
+          <div class="core-capability-panel-layout">
+            <div class="core-capability-panel-copy">
+              <p class="core-capability-panel-label">{capability.number} / {capability.label}</p>
+              <h2>{capability.title}</h2>
+              <p class="core-capability-panel-description">{capability.text}</p>
+              <div class="core-capability-panel-meta"><span>SPATIALVERSE ENGINE</span><span>CAPABILITY {capability.number}</span></div>
+            </div>
+            <div class="core-capability-panel-visual" aria-label={`${capability.title}媒体插槽`}>
+              <div class="core-capability-panel-video-frame">
+                <div class="core-capability-media-slot" aria-label={`${capability.title} CMS 媒体插槽`}>
+                  <span>MEDIA SLOT / CMS</span>
+                  <strong>{capability.number}</strong>
+                  <small>预留视频 / 图片接口</small>
+                </div>
+                <span class="core-video-corner core-video-corner-one" aria-hidden="true" />
+                <span class="core-video-corner core-video-corner-two" aria-hidden="true" />
+                <span class="core-capability-panel-source">CMS / MEDIA FIELD</span>
+              </div>
+              <div class="core-capability-orbit-scene" aria-hidden="true">
+                <div class="core-capability-orbit core-capability-orbit-one" />
+                <div class="core-capability-orbit core-capability-orbit-two" />
+                <div class="core-capability-orbit core-capability-orbit-three" />
+                <div class="core-capability-gear"><i /><i /><i /><i /><i /><i /><i /><i /></div>
+                <div class="core-capability-core"><span>CORE</span><strong>{capability.number}</strong></div>
+              </div>
+            </div>
+          </div>
+          <footer class="core-capability-panel-footer"><span>{index === capabilities.length - 1 ? 'CORE SYSTEM / COMPLETE' : 'SCROLL TO NEXT CAPABILITY'}</span><span>{String(index + 1).padStart(2, '0')} / 04</span></footer>
+        </div>
+      </article>
+    );
+  })}
+</section>
+
+<CoreCapabilityNavigation
+  client:visible
+  capabilities={capabilities.map((c) => ({
+    number: c.number,
+    label: c.label,
+    title: c.title,
+    text: c.text
+  }))}
+/>
+
+<section class="core-page-next content-width" aria-label="核心能力下一层级">
+  <div><span>CORE COMPETENCY / COMPLETE</span><strong>{nextHeading}</strong></div>
+  <div class="core-page-next-links">
+    {coreLinks.map((item) => (
+      <a href={item.href} key={item.href}><span>{item.number}</span>{item.label}<b>↗</b></a>
+    ))}
+  </div>
+</section>
