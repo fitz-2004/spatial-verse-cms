@@ -35,7 +35,6 @@ export default (self) => {
       const req = apos.task.getReq();
       const data = buildData();
 
-      // 关联论文 Pieces（使用稳定 slug 匹配）
       const paperSlugs = [
         'learning-based-inverse-rendering-of-complex-indoor-scenes',
         'minervas-massive-interior-environments-virtual-synthesis',
@@ -48,10 +47,14 @@ export default (self) => {
 
       const existing = await pages.find(req, { slug: data.slug }).toArray();
       if (existing.length > 0) {
-        await pages.update(req, { ...data, _id: existing[0]._id });
+        await pages.update(req, { ...data, _id: existing[0]._id, aposLocale: 'zh:draft' });
         console.log(`✅ 学术研究页草稿已更新: ${data.slug}（关联 ${found.length} 篇论文）`);
       } else {
-        await pages.insert(req, { ...data, aposMode: 'draft' });
+        const home = await pages.find(req, { level: 0 }).toObject();
+        if (!home) {
+          throw new Error('Home 页面不存在，无法插入子页面');
+        }
+        await pages.insert(req, home._id, 'lastChild', { ...data, aposLocale: 'zh:draft', aposMode: 'draft' });
         console.log(`✅ 学术研究页草稿已创建: ${data.slug}（关联 ${found.length} 篇论文）`);
       }
     }

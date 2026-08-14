@@ -63,11 +63,15 @@ export default (self) => {
 
       const existing = await pages.find(req, { slug: data.slug }).toArray();
       if (existing.length > 0) {
-        await pages.update(req, { ...data, _id: existing[0]._id });
+        await pages.update(req, { ...data, _id: existing[0]._id, aposLocale: 'zh:draft' });
         console.log(`✅ 核心能力页草稿已更新: ${data.slug}`);
       } else {
-        await pages.insert(req, { ...data, aposMode: 'draft' });
-        console.log(`✅ 核心能力页草稿已创建: ${data.slug}`);
+        const home = await pages.find(req, { level: 0 }).toObject();
+        if (!home) {
+          throw new Error('Home 页面不存在，无法插入子页面');
+        }
+        await pages.insert(req, home._id, 'lastChild', { ...data, aposLocale: 'zh:draft', aposMode: 'draft' });
+        console.log(`✅ 核心能力页草稿已创建: ${data.slug}（父页面: ${home.slug}）`);
       }
     }
   };
