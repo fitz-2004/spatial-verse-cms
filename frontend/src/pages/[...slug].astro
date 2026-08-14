@@ -2,15 +2,19 @@
 import aposPageFetch from "@apostrophecms/apostrophe-astro/lib/aposPageFetch.js";
 import AposLayout from "@apostrophecms/apostrophe-astro/components/layouts/AposLayout.astro";
 import AposTemplate from "@apostrophecms/apostrophe-astro/components/AposTemplate.astro";
+import ContactDrawer from "../components/ContactDrawer.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import SiteHeader from "../components/SiteHeader.astro";
 import "../styles/app.css";
 import "../styles/styles.css";
+import "../styles/site-chrome.css";
 
 // aposPageFetch fetches the full page payload from the ApostropheCMS backend for the
 // current URL. It returns an object with: `page` (the page document), `piece` (set on
 // piece-show routes), `global` (global config), and flags like `redirect` and `notFound`.
 // Downstream templates receive this object as `Astro.props.aposData`.
 const aposData = await aposPageFetch(Astro.request);
-const bodyClass = `myclass`;
+const bodyClass = `spatialverse-body page-type-${aposData.page?.type || 'unknown'}`;
 
 if (aposData.redirect) {
   return Astro.redirect(aposData.url, aposData.status);
@@ -26,7 +30,10 @@ if (aposData.notFound) {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta charset="UTF-8" />
   </Fragment>
-  <main slot="beforeMain" class="main">
-  <AposTemplate {aposData} slot="main" />
-  </main slot="afterMain" >
+  <SiteHeader {aposData} pathname={Astro.url.pathname} slot="beforeMain" />
+  <main slot="main" class="main site-main" id="top">
+    <AposTemplate {aposData} />
+  </main>
+  <SiteFooter {aposData} slot="afterMain" />
+  <ContactDrawer {aposData} slot="afterMain" />
 </AposLayout>

@@ -21,6 +21,11 @@ apostrophe({
     '@apostrophecms/video-widget': {},
     // The project's first custom page type.
     'default-page': {},
+    'solution-page': {},
+    'core-competency-page': {},
+    'research-archive-page': {},
+    'dataset-library-page': {},
+    'about-page': {},
     '@apostrophecms/blog': {},
     '@apostrophecms/blog-page': {},
     'nested-layout-widget': {},

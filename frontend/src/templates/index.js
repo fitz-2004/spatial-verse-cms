@@ -8,10 +8,20 @@ import DefaultPage from './DefaultPage.astro';
 import BlogIndexPage from './BlogIndexPage.astro';
 import BlogShowPage from './BlogShowPage.astro';
 import NotFoundPage from './NotFoundPage.astro';
+import SolutionPage from './SolutionPage.astro';
+import CoreCompetencyPage from './CoreCompetencyPage.astro';
+import ResearchArchivePage from './ResearchArchivePage.astro';
+import DatasetLibraryPage from './DatasetLibraryPage.astro';
+import AboutPage from './AboutPage.astro';
 
 const templateComponents = {
   '@apostrophecms/home-page': HomePage,
   'default-page': DefaultPage,
+  'solution-page': SolutionPage,
+  'core-competency-page': CoreCompetencyPage,
+  'research-archive-page': ResearchArchivePage,
+  'dataset-library-page': DatasetLibraryPage,
+  'about-page': AboutPage,
   '@apostrophecms/blog-page:index': BlogIndexPage,
   '@apostrophecms/blog-page:show': BlogShowPage,
   '@apostrophecms/page:notFound': NotFoundPage

@@ -1,0 +1,63 @@
+---
+import {
+  getSiteChrome,
+  localeName
+} from '../lib/siteChrome.js';
+
+const { aposData } = Astro.props;
+const locale = localeName(aposData.locale);
+const content = getSiteChrome(aposData.global, locale);
+---
+
+<aside id="contact-drawer" class="contact-drawer" aria-labelledby="contact-drawer-title">
+  <div class="contact-drawer-grid" aria-hidden="true"></div>
+  <div class="contact-drawer-scan" aria-hidden="true"></div>
+  <div class="contact-drawer-orbit contact-drawer-orbit-one" aria-hidden="true"></div>
+  <div class="contact-drawer-orbit contact-drawer-orbit-two" aria-hidden="true"></div>
+  <header class="contact-drawer-header">
+    <span class="contact-drawer-kicker">CONTACT / SPATIALVERSE</span>
+    <a class="contact-drawer-close" href="#" aria-label={locale === 'zh' ? '关闭联系面板' : 'Close contact panel'}>×</a>
+  </header>
+  <div class="contact-drawer-content">
+    <div class="contact-drawer-intro">
+      <p class="section-index">05 / CONTACT SYSTEM</p>
+      <h2 id="contact-drawer-title">{content.contactTitle}</h2>
+      <p>{content.contactDescription}</p>
+    </div>
+    <form class="contact-drawer-form" data-display-only-form>
+      <label class="contact-drawer-field">
+        <span>{content.emailPlaceholder}</span>
+        <input name="email" type="email" placeholder={content.emailPlaceholder} required />
+      </label>
+      <label class="contact-drawer-field">
+        <span>{content.messagePlaceholder}</span>
+        <textarea name="message" placeholder={content.messagePlaceholder} rows="5" required></textarea>
+      </label>
+      <label class="contact-drawer-consent">
+        <input type="checkbox" name="consent" required />
+        <span>{content.contactPrivacy} {content.contactEmail}</span>
+      </label>
+      <button class="contact-drawer-submit" type="submit">{content.submitLabel}<span aria-hidden="true">↗</span></button>
+      <p class="contact-drawer-status" role="status" hidden data-form-status>{content.submittedMessage}</p>
+    </form>
+  </div>
+  <footer class="contact-drawer-footer">
+    <span>{content.contactEmail}</span>
+    <span>{content.contactPhone}</span>
+  </footer>
+</aside>
+<a class="contact-drawer-backdrop" href="#" aria-label={locale === 'zh' ? '关闭联系面板' : 'Close contact panel'}></a>
+
+<script is:inline>
+  (() => {
+    document.querySelectorAll('.contact-drawer-form[data-display-only-form]').forEach((form) => {
+      if (form.dataset.formReady === 'true') return;
+      form.dataset.formReady = 'true';
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const status = form.querySelector('[data-form-status]');
+        if (status) status.hidden = false;
+      });
+    });
+  })();
+</script>

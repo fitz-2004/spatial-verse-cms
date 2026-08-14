@@ -15,6 +15,26 @@ export default {
       {
         name: '@apostrophecms/home-page',
         label: 'Home'
+      },
+      {
+        name: 'solution-page',
+        label: 'Solution Page'
+      },
+      {
+        name: 'core-competency-page',
+        label: 'Core Competency Page'
+      },
+      {
+        name: 'research-archive-page',
+        label: 'Research Archive Page'
+      },
+      {
+        name: 'dataset-library-page',
+        label: 'Dataset Library Page'
+      },
+      {
+        name: 'about-page',
+        label: 'About Page'
       }
     ]
   }

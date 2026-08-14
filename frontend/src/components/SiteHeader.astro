@@ -1,0 +1,123 @@
+---
+import {
+  getSiteChrome,
+  localeName,
+  localeSwitchHref,
+  localizeHref,
+  paths,
+  resolveHref
+} from '../lib/siteChrome.js';
+
+const {
+  aposData,
+  pathname = '/'
+} = Astro.props;
+const locale = localeName(aposData.locale);
+const content = getSiteChrome(aposData.global, locale);
+const pageType = aposData.page?.type;
+const isHome = pageType === '@apostrophecms/home-page';
+const isSolution = pageType === 'solution-page';
+const isCore = [
+  'core-competency-page',
+  'research-archive-page',
+  'dataset-library-page'
+].includes(pageType);
+const isAbout = pageType === 'about-page';
+const languageHref = localeSwitchHref(pathname, locale);
+---
+
+<header class="site-header spatial-site-header" data-site-header>
+  <a
+    class="brand-lockup original-brand-lockup"
+    href={localizeHref('/#top', locale)}
+    aria-label={`${content.brandName}${locale === 'zh' ? '首页' : ' home'}`}
+  >
+    <span class="spatialverse-mark header-logo" aria-hidden="true"></span>
+    <span>
+      <strong>{content.brandName}</strong>
+      <small>{content.brandEnglish} / {content.brandDescriptor}</small>
+    </span>
+  </a>
+
+  <button
+    class="menu-toggle"
+    type="button"
+    aria-expanded="false"
+    aria-controls="site-primary-navigation"
+    aria-label={locale === 'zh' ? '打开导航菜单' : 'Open navigation menu'}
+    data-menu-toggle
+  >
+    <span></span><span></span><span></span><b>MENU</b>
+  </button>
+
+  <nav id="site-primary-navigation" class="primary-nav" aria-label={locale === 'zh' ? '主导航' : 'Primary navigation'}>
+    <a class:list={{ 'is-current': isHome }} href={localizeHref(paths.home, locale)} aria-current={isHome ? 'page' : undefined}>
+      {content.homeLabel}
+    </a>
+
+    <div class="nav-dropdown">
+      <button class:list={['nav-dropdown-trigger', { 'is-current': isSolution }]} type="button" aria-haspopup="true">
+        {content.solutionsLabel}
+      </button>
+      <div class="nav-dropdown-menu">
+        {content.solutionLinks.map((link) => (
+          <a href={resolveHref(link, locale)} target={link.newTab ? '_blank' : undefined} rel={link.newTab ? 'noreferrer' : undefined}>
+            {link.label}
+          </a>
+        ))}
+      </div>
+    </div>
+
+    <div class="nav-dropdown">
+      <button class:list={['nav-dropdown-trigger', { 'is-current': isCore }]} type="button" aria-haspopup="true">
+        {content.coreLabel}
+      </button>
+      <div class="nav-dropdown-menu nav-dropdown-menu-core">
+        {content.coreLinks.map((link) => (
+          <a href={resolveHref(link, locale)} target={link.newTab ? '_blank' : undefined} rel={link.newTab ? 'noreferrer' : undefined}>
+            {link.label}
+          </a>
+        ))}
+      </div>
+    </div>
+
+    <a class:list={{ 'is-current': isAbout }} href={localizeHref(paths.about, locale)} aria-current={isAbout ? 'page' : undefined}>
+      {content.aboutLabel}
+    </a>
+    <a class="nav-language" href={languageHref} hreflang={locale === 'zh' ? 'en' : 'zh-CN'}>
+      {locale === 'zh' ? '中文 / EN' : 'EN / 中文'}
+    </a>
+    <a class="nav-contact" href="#contact-drawer">{content.contactLabel} <span aria-hidden="true">↗</span></a>
+  </nav>
+</header>
+
+<script is:inline>
+  (() => {
+    document.querySelectorAll('[data-site-header]').forEach((header) => {
+      if (header.dataset.menuReady === 'true') return;
+      header.dataset.menuReady = 'true';
+      const toggle = header.querySelector('[data-menu-toggle]');
+      const navigation = header.querySelector('.primary-nav');
+      if (!toggle || !navigation) return;
+
+      const setOpen = (open) => {
+        header.classList.toggle('menu-open', open);
+        toggle.setAttribute('aria-expanded', String(open));
+        toggle.setAttribute('aria-label', open ? '关闭导航菜单' : '打开导航菜单');
+        const label = toggle.querySelector('b');
+        if (label) label.textContent = open ? 'CLOSE' : 'MENU';
+      };
+
+      toggle.addEventListener('click', () => setOpen(!header.classList.contains('menu-open')));
+      navigation.addEventListener('click', (event) => {
+        if (event.target.closest('a')) setOpen(false);
+      });
+      window.addEventListener('resize', () => {
+        if (window.innerWidth > 960) setOpen(false);
+      });
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') setOpen(false);
+      });
+    });
+  })();
+</script>

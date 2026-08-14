@@ -1,0 +1,157 @@
+---
+import {
+  getSiteChrome,
+  localeName,
+  localizeHref,
+  paths,
+  resolveHref
+} from '../lib/siteChrome.js';
+
+const { aposData } = Astro.props;
+const locale = localeName(aposData.locale);
+const content = getSiteChrome(aposData.global, locale);
+const pageType = aposData.page?.type;
+const isHome = pageType === '@apostrophecms/home-page';
+const phoneHref = content.contactPhone.replace(/[^+\d]/g, '');
+const compactLinks = [
+  { label: content.solutionsLabel, href: paths.solutions[0] },
+  { label: content.coreLabel, href: paths.core[0] },
+  { label: content.datasetHeading, href: paths.core[2] },
+  { label: content.aboutLabel, href: paths.about },
+  { label: content.contactLabel, href: '#contact-drawer' }
+];
+---
+
+<footer id="footer" class="site-footer content-width spatial-site-footer">
+  <section id="footer-contact" class="footer-contact-form-section" aria-labelledby="footer-contact-title">
+    <h2 id="footer-contact-title">{content.contactTitle}</h2>
+    <p class="contact-lead">{content.contactDescription}</p>
+    <div class="contact-layout-single">
+      <form class="contact-form" data-display-only-form>
+        <label class="contact-field-email">
+          <span>{content.emailPlaceholder}</span>
+          <input name="email" type="email" placeholder={content.emailPlaceholder} required />
+        </label>
+        <label class="contact-field-message">
+          <span>{content.messagePlaceholder}</span>
+          <textarea name="message" placeholder={content.messagePlaceholder} maxlength="300" rows="5"></textarea>
+        </label>
+        <label class="contact-consent">
+          <input type="checkbox" name="consent" required />
+          <span>{content.contactPrivacy} {content.contactEmail}</span>
+        </label>
+        <button class="button button-primary" type="submit">{content.submitLabel} <span aria-hidden="true">↗</span></button>
+        <p class="form-status" role="status" hidden data-form-status>{content.submittedMessage}</p>
+      </form>
+    </div>
+    <aside class="footer-contact-side" aria-labelledby="footer-datasets-title">
+      <a class="footer-wordmark original-brand-lockup" href={localizeHref('/#top', locale)} aria-label={content.brandName}></a>
+      <h3 id="footer-datasets-title">{content.datasetHeading}</h3>
+      <div class="footer-side-datasets">
+        {content.datasetLinks.map((dataset, index) => (
+          <a class="footer-side-dataset" href={resolveHref(dataset, locale)} target={dataset.newTab ? '_blank' : undefined} rel={dataset.newTab ? 'noreferrer' : undefined}>
+            <span>{String(index + 1).padStart(2, '0')}</span><b>{dataset.title}</b><span aria-hidden="true">↗</span>
+          </a>
+        ))}
+      </div>
+    </aside>
+  </section>
+
+  <div class="footer-directory">
+    <div class="footer-directory-brand">
+      <a class="footer-wordmark original-brand-lockup" href={localizeHref('/#top', locale)} aria-label={content.brandName}></a>
+      <p>{content.brandDescriptor}</p>
+    </div>
+    {content.footerGroups.map((group) => (
+      <nav class="footer-column" aria-label={group.title}>
+        <h3>{group.title}</h3>
+        {(group.links || []).map((link) => (
+          <a href={resolveHref(link, locale)} target={link.newTab ? '_blank' : undefined} rel={link.newTab ? 'noreferrer' : undefined}>{link.label}</a>
+        ))}
+      </nav>
+    ))}
+    <div class="footer-column footer-contact-column">
+      <h3>{content.contactLabel}</h3>
+      <div class="footer-socials">
+        {content.socialLinks.map((social) => (
+          <a class="footer-social" href={social.href} target="_blank" rel="noreferrer" aria-label={social.name}>{social.label}</a>
+        ))}
+      </div>
+      <a class="footer-contact-link" href={`mailto:${content.contactEmail}`}>{content.contactEmail}</a>
+      <a class="footer-contact-link" href={`tel:${phoneHref}`}>{content.contactPhone}</a>
+      <p class="footer-contact-note">{content.contactPrivacy}</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-meta">
+      <span>{content.contactEmail} · {content.contactPhone}</span>
+      <a href="#top">{content.backToTopLabel}</a>
+    </div>
+  </div>
+  <div class="footer-legal"><span>{content.registrationText}</span><span>{content.businessLicenseText}</span></div>
+</footer>
+
+{isHome ? (
+  <footer id="legacy-footer" class="site-footer content-width spatial-site-footer spatial-secondary-footer" aria-hidden="true">
+    <div class="footer-directory">
+      <div class="footer-directory-brand">
+        <a class="footer-wordmark original-brand-lockup" href="#top" aria-label={content.brandName}></a>
+        <p>{content.brandDescriptor}</p>
+      </div>
+      {content.footerGroups.map((group) => (
+        <nav class="footer-column" aria-label={group.title}>
+          <h3>{group.title}</h3>
+          {(group.links || []).map((link) => <a href={resolveHref(link, locale)}>{link.label}</a>)}
+        </nav>
+      ))}
+      <div class="footer-column footer-contact-column">
+        <h3>{content.contactLabel}</h3>
+        <div class="footer-socials">
+          {content.socialLinks.map((social) => <a class="footer-social" href={social.href} tabindex="-1">{social.label}</a>)}
+        </div>
+        <a class="footer-contact-link" href={`mailto:${content.contactEmail}`} tabindex="-1">{content.contactEmail}</a>
+        <a class="footer-contact-link" href={`tel:${phoneHref}`} tabindex="-1">{content.contactPhone}</a>
+        <p class="footer-contact-note">{content.contactPrivacy}</p>
+        <div class="contact-datasets footer-datasets">
+          <p class="contact-datasets-index">DATASET PRODUCTS</p>
+          <h3>{content.datasetHeading}</h3>
+          <div class="contact-dataset-list">
+            {content.datasetLinks.map((dataset, index) => (
+              <a class={`contact-dataset-link dataset-${index + 1}`} href="#contact-drawer" tabindex="-1">
+                <span>{String(index + 1).padStart(2, '0')}</span>
+                <span><b>{dataset.title}</b><small>{dataset.code} / {dataset.description}</small></span>
+                <span aria-hidden="true">↗</span>
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom"><div class="footer-meta"><span>{content.contactEmail} · {content.contactPhone}</span><a href="#top" tabindex="-1">{content.backToTopLabel}</a></div></div>
+    <div class="footer-legal"><span>{content.registrationText}</span><span>{content.businessLicenseText}</span></div>
+  </footer>
+) : (
+  <footer class:list={['secondary-route-footer', `secondary-route-footer--${pageType}`]} aria-hidden="true">
+    <a class="footer-wordmark original-brand-lockup" href={localizeHref('/#top', locale)} aria-label={content.brandName} tabindex="-1"></a>
+    <div class="secondary-route-footer-links">
+      {compactLinks.map((link) => <a href={localizeHref(link.href, locale)} tabindex="-1">{link.label}</a>)}
+    </div>
+    <div class="secondary-route-footer-meta">
+      <span>{content.contactEmail}</span><span>{content.contactPhone}</span><a href="#top" tabindex="-1">{content.backToTopLabel}</a>
+    </div>
+  </footer>
+)}
+
+<script is:inline>
+  (() => {
+    document.querySelectorAll('[data-display-only-form]').forEach((form) => {
+      if (form.dataset.formReady === 'true') return;
+      form.dataset.formReady = 'true';
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const status = form.querySelector('[data-form-status]');
+        if (status) status.hidden = false;
+      });
+    });
+  })();
+</script>
