@@ -28,22 +28,22 @@ Page Type 已在后端、页面选择器和 Astro Template 映射中建立。负
 
 | 页面 | 中文 URL | Page Type / 映射键 | Astro Template | 负责人 |
 |---|---|---|---|---|
-| 首页 | `/` | `@apostrophecms/home-page` | `HomePage.astro` | A |
-| 智能体感知 | `/coohomcloud/solutions/aiagent` | `solution-page` | `SolutionPage.astro` | B |
-| AIGC | `/coohomcloud/solutions/aigc` | `solution-page` | `SolutionPage.astro` | B |
-| 机器人仿真 | `/coohomcloud/solutions/roboticsimulation` | `solution-page` | `SolutionPage.astro` | B |
-| 产品可视化推广 | `/coohomcloud/solutions/visualizedproductpromotion` | `solution-page` | `SolutionPage.astro` | B |
-| XR | `/coohomcloud/solutions/xr` | `solution-page` | `SolutionPage.astro` | B |
-| 核心能力 | `/coohomcloud/corecompetency` | `core-competency-page` | `CoreCompetencyPage.astro` | C |
-| 学术研究 | `/coohomcloud/corecompetency/paper` | `research-archive-page` | `ResearchArchivePage.astro` | C |
-| 样例数据集 | `/coohomcloud/corecompetency/data` | `dataset-library-page` | `DatasetLibraryPage.astro` | D |
-| 关于我们 | `/coohomcloud/about` | `about-page` | `AboutPage.astro` | D |
+| 首页 | `/` | `@apostrophecms/home-page` | `HomePage.astro` | 沈远卓 |
+| 智能体感知 | `/coohomcloud/solutions/aiagent` | `solution-page` | `SolutionPage.astro` | 楼博涵 |
+| AIGC | `/coohomcloud/solutions/aigc` | `solution-page` | `SolutionPage.astro` | 楼博涵 |
+| 机器人仿真 | `/coohomcloud/solutions/roboticsimulation` | `solution-page` | `SolutionPage.astro` | 楼博涵 |
+| 产品可视化推广 | `/coohomcloud/solutions/visualizedproductpromotion` | `solution-page` | `SolutionPage.astro` | 楼博涵 |
+| XR | `/coohomcloud/solutions/xr` | `solution-page` | `SolutionPage.astro` | 楼博涵 |
+| 核心能力 | `/coohomcloud/corecompetency` | `core-competency-page` | `CoreCompetencyPage.astro` | 池一锴 |
+| 学术研究 | `/coohomcloud/corecompetency/paper` | `research-archive-page` | `ResearchArchivePage.astro` | 池一锴 |
+| 样例数据集 | `/coohomcloud/corecompetency/data` | `dataset-library-page` | `DatasetLibraryPage.astro` | 陈俊烨 |
+| 关于我们 | `/coohomcloud/about` | `about-page` | `AboutPage.astro` | 陈俊烨 |
 
 判断依据：五个 Solution 页面结构相同、只有内容不同，因此共用 `solution-page`。首页、核心能力、学术研究、数据集和关于我们具有明显不同的整体结构，分别保留独立 Page Type。局部差异通过字段、数组、Widget 或普通组件表达，不再增加 Page Type。
 
 ## 3. 四人任务分配
 
-### A：首页
+### 沈远卓：首页，并担任集成负责人
 
 负责范围：
 
@@ -57,10 +57,19 @@ Page Type 已在后端、页面选择器和 Astro Template 映射中建立。负
 
 - 完整迁移首页各区块顺序、滚动效果、动画和响应式视觉。
 - 迁移最新 `deepseek-harness-bg.tsx`。该效果属于普通前端交互组件/客户端岛，不属于 CMS Widget；CMS 只管理需要编辑的标题、文案、媒体及必要参数。
-- 首页的区块内容模型由 A 根据编辑需求决定。只在本页使用的数据优先放在 Home Page 字段或 `home-*` Widget 中，不建立全站 Piece。
+- 首页的区块内容模型由沈远卓根据编辑需求决定。只在本页使用的数据优先放在 Home Page 字段或 `home-*` Widget 中，不建立全站 Piece。
 - 不复制 Header、Footer、语言切换和联系抽屉。
 
-### B：五个 Solution 页面，并担任集成负责人
+### 沈远卓 同时负责最终集成时的共享注册文件冲突，只合并注册和依赖，不替其他负责人决定内容模型：
+
+- `backend/app.js`
+- `backend/modules/@apostrophecms/page/index.js`
+- `frontend/src/templates/index.js`
+- `frontend/src/widgets/index.js`
+- `frontend/package.json`、`frontend/package-lock.json`
+- `frontend/astro.config.mjs`
+
+### 楼博涵：五个 Solution 页面
 
 负责范围：
 
@@ -77,16 +86,9 @@ Page Type 已在后端、页面选择器和 Astro Template 映射中建立。负
 - 重复卡片通常使用 `array` 或页面专属 Widget。当前内容没有跨页面独立管理需求，不建议建立 Solution Piece。
 - 验证每个小写 URL 和五份不同内容都能正确渲染。
 
-B 同时负责最终集成时的共享注册文件冲突，只合并注册和依赖，不替其他负责人决定内容模型：
 
-- `backend/app.js`
-- `backend/modules/@apostrophecms/page/index.js`
-- `frontend/src/templates/index.js`
-- `frontend/src/widgets/index.js`
-- `frontend/package.json`、`frontend/package-lock.json`
-- `frontend/astro.config.mjs`
 
-### C：核心能力与学术研究
+### 池一锴：核心能力与学术研究
 
 负责范围：
 
@@ -101,11 +103,11 @@ B 同时负责最终集成时的共享注册文件冲突，只合并注册和依
 必须完成：
 
 - 核心能力页完整视觉、能力切换/滚动交互和响应式实现。
-- `research-paper` 使用 Piece，这是已确认的模型决定。论文标题、摘要、作者、年份、外链/文件、封面等具体字段由 C 根据原站数据与编辑场景确定。
+- `research-paper` 使用 Piece，这是已确认的模型决定。论文标题、摘要、作者、年份、外链/文件、封面等具体字段由池一锴根据原站数据与编辑场景确定。
 - `research-archive-page` 负责列表页自身标题、简介、筛选/排序配置，并查询/关联 `research-paper`；不要把每篇论文硬编码成页面字段。
 - 核心能力页和学术研究页可以共享 `core/` 下的普通组件，但不把这种局部共享提升为 Global。
 
-### D：样例数据集与关于我们
+### 陈俊烨：样例数据集与关于我们
 
 负责范围：
 
@@ -169,7 +171,7 @@ Global 只存真正的全站内容。页面 Hero、页面章节、论文、数�
 - 首页首屏背景使用 `client:load`。
 - 首屏以下且不影响初始布局的重交互组件优先使用 `client:visible`。
 - CMS 数据必须由 Astro Template 作为 props 传入 island，客户端不能自行请求或保存 CMS 内容。
-- 第一个需要 React 的分支提交一笔独立基础设施提交，添加 `@astrojs/react`、`react`、`react-dom` 及 Astro integration；B 在集成时只保留一次依赖和配置变更。
+- 第一个需要 React 的分支提交一笔独立基础设施提交，添加 `@astrojs/react`、`react`、`react-dom` 及 Astro integration；沈远卓在集成时只保留一次依赖和配置变更。
 - 如果负责人选择改写为无框架 TypeScript，也必须证明视觉、交互和清理逻辑等价，不能为了“纯 Astro”牺牲还原度。
 
 ## 7. Git 与文件冲突规则
@@ -185,7 +187,7 @@ Global 只存真正的全站内容。页面 Hero、页面章节、论文、数�
 
 1. 每个分支只修改自己负责的 Page Type、Template、域组件、域样式、域 Widget/Piece 和数据交付文件。
 2. 不从原站复制 `layout.tsx`、Header、Footer 或整份 `globals.css`。只迁移本域实际使用的规则，并放进本域样式文件。
-3. 必须修改共享注册文件时，把注册修改做成独立 commit，方便 B 在集成时选择或手工合并。
+3. 必须修改共享注册文件时，把注册修改做成独立 commit，方便沈远卓在集成时选择或手工合并。
 4. 不修改正式路由 `frontend/src/pages/[...slug].astro`。
 5. 不提交 `node_modules`、构建目录或本地 SQLite 数据库。
 6. 每个分支至少每日 rebase/merge 最新公共基线；不要通过复制其他分支文件解决冲突。
@@ -229,7 +231,7 @@ Global 只存真正的全站内容。页面 Hero、页面章节、论文、数�
 
 ## 10. 集成顺序
 
-B 按以下顺序合并，降低共享依赖和注册冲突：
+沈远卓按以下顺序合并，降低共享依赖和注册冲突：
 
 1. 公共 React integration 提交（如果使用）。
 2. Solution。
