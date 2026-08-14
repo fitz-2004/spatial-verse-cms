@@ -1,6 +1,7 @@
 import { defineConfig } from 'astro/config';
 import { loadEnv } from 'vite';
 import node from '@astrojs/node';
+import react from '@astrojs/react';
 import apostrophe from '@apostrophecms/apostrophe-astro';
 
 // Load .env variables into the config file context.
@@ -18,6 +19,7 @@ export default defineConfig({
     mode: 'standalone'
   }),
   integrations: [
+    react(),
     apostrophe({
       aposHost: 'http://localhost:3000',
       widgetsMapping: './src/widgets',
