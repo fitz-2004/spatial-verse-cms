@@ -19,17 +19,21 @@ apostrophe({
     '@apostrophecms/rich-text-widget': {},
     '@apostrophecms/image-widget': {},
     '@apostrophecms/video-widget': {},
-    // Allow video uploads for solution page hero media (shared infra change)
-    '@apostrophecms/file': {
+    // Allow video uploads for solution page hero media (shared infra change).
+    // NOTE: `accepts` on @apostrophecms/file is NOT honored by this Apostrophe
+    // version; the supported mechanism is `addFileGroups` on the attachment
+    // module (see apostrophe/test/attachments.js).
+    '@apostrophecms/attachment': {
       options: {
-        accepts: [
-          // Apostrophe default list
-          'jpg', 'jpeg', 'png', 'gif', 'svg', 'webp',
-          'txt', 'rtf', 'pdf', 'xls', 'ppt', 'doc',
-          'pptx', 'sldx', 'ppsx', 'potx', 'xlsx', 'xltx',
-          'csv', 'docx', 'dotx',
-          // Video extensions required by solution pages
-          'mp4', 'mov', 'webm', 'm4v', 'avi', 'mkv'
+        addFileGroups: [
+          {
+            name: 'video',
+            label: 'Video',
+            extensions: [ 'mp4', 'mov', 'webm', 'm4v', 'avi', 'mkv' ],
+            extensionMaps: {},
+            // uploadfs should just accept this file as-is
+            image: false
+          }
         ]
       }
     },
