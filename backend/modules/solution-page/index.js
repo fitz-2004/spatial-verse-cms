@@ -129,6 +129,25 @@ export default {
         label: 'CTA Title',
         help: 'Large heading above the contact button',
         def: '让下一组数据进入真实应用。'
+      },
+      seoTitle: {
+        type: 'string',
+        label: 'SEO Title',
+        help: 'Browser tab title and search engine title tag',
+        def: 'SpatialVerse'
+      },
+      seoDescription: {
+        type: 'string',
+        label: 'SEO Description',
+        textarea: true,
+        help: 'Page meta description for search engines',
+        def: '空间智能解决方案'
+      },
+      ogImage: {
+        type: 'attachment',
+        label: 'Social Share Image',
+        help: 'Image shown when sharing on social media (1200x630 recommended)',
+        group: 'images'
       }
     },
     group: {
@@ -155,6 +174,10 @@ export default {
       cta: {
         label: 'CTA',
         fields: [ 'ctaTitle' ]
+      },
+      seo: {
+        label: 'SEO',
+        fields: [ 'seoTitle', 'seoDescription', 'ogImage' ]
       }
     }
   }

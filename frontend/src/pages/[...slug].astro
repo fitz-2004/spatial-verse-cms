@@ -8,18 +8,10 @@ import SiteHeader from "../components/SiteHeader.astro";
 import "../styles/app.css";
 import "../styles/styles.css";
 import "../styles/site-chrome.css";
-// TEMPORARY (visual verification only): mock solution pages until CMS pages exist
 import { solutionMockBySlug } from "../lib/solution-mock-data.js";
 
-// aposPageFetch fetches the full page payload from the ApostropheCMS backend for the
-// current URL. It returns an object with: `page` (the page document), `piece` (set on
-// piece-show routes), `global` (global config), and flags like `redirect` and `notFound`.
-// Downstream templates receive this object as `Astro.props.aposData`.
 const aposData = await aposPageFetch(Astro.request);
 
-// TEMPORARY (visual verification only): if the CMS has no page for a known solution
-// slug, render it from mock data so the frontend visuals can be reviewed before the
-// CMS draft pages are imported. Remove once real CMS pages exist.
 if (aposData.notFound) {
   const mockKey = Astro.url.pathname.replace(/^\/+|\/+$/g, "");
   const mockPage = solutionMockBySlug.get(mockKey);
@@ -38,13 +30,36 @@ if (aposData.redirect) {
 if (aposData.notFound) {
   Astro.response.status = 404;
 }
+
+const page = aposData.page || {};
+const seoTitle = page.seoTitle || page.title || 'SpatialVerse';
+const seoDescription = page.seoDescription || '空间智能解决方案';
+const ogImage = page.ogImage?._url || '';
+const canonicalUrl = Astro.url.origin + Astro.url.pathname;
 ---
 
-<AposLayout title={aposData.page?.title} {aposData} {bodyClass}>
+<AposLayout title={seoTitle} {aposData} {bodyClass}>
   <Fragment slot="standardHead">
-    <meta name="description" content={aposData.page?.seoDescription} />
+    <meta name="description" content={seoDescription} />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta charset="UTF-8" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:title" content={seoTitle} />
+    <meta property="og:description" content={seoDescription} />
+    {ogImage && <meta property="og:image" content={ogImage} />}
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={canonicalUrl} />
+    <meta property="twitter:title" content={seoTitle} />
+    <meta property="twitter:description" content={seoDescription} />
+    {ogImage && <meta property="twitter:image" content={ogImage} />}
+    
+    <!-- Canonical -->
+    <link rel="canonical" href={canonicalUrl} />
   </Fragment>
   <SiteHeader {aposData} pathname={Astro.url.pathname} slot="beforeMain" />
   <main slot="main" class="main site-main" id="top">
