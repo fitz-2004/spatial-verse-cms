@@ -17,8 +17,8 @@ const widgetComponents = {
   '@apostrophecms/video': VideoWidget,
   '@apostrophecms/layout': LayoutWidget,
   '@apostrophecms/layout-column': LayoutColumnWidget,
-  'nested-layout-widget': NestedLayoutWidget,
-  'nested-column-widget': NestedLayoutColumnWidget,
+  'nested-layout': NestedLayoutWidget,
+  'nested-column': NestedLayoutColumnWidget,
   '@apostrophecms/file': FileWidget,
 };
 

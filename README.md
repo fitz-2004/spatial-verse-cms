@@ -1,460 +1,435 @@
-# ApostropheCMS + Astro Essentials Starter Kit:
+# SpatialVerse CMS — 群核空间智能平台
 
-**Build lightning-fast websites with the editing experience your content team actually wants to use.**
+基于 **ApostropheCMS + Astro** 的空间智能数据平台官网管理系统。
 
-This powerful combination gives you Astro's incredible performance and developer experience, plus ApostropheCMS's intuitive in-context editing and content management capabilities. No more choosing between speed and usability—get both.
-
-## ApostropheCMS + Astro Starter Kits
-
-**Choose the right foundation for your project:**
-
-## 🎯 Astro Essentials Starter Kit (This Repository)
-**Perfect if you want:** A clean, minimal foundation to build your own design system
-
-- **Minimal & Non-opinionated**: Essential building blocks without imposed design decisions
-- **Core Components**: Basic page types, essential widgets, and clean architecture  
-- **Maximum Flexibility**: Build your own styling approach and component library
-- **Learning Focus**: Understand the ApostropheCMS + Astro integration from the ground up
-- **Best for**: Developers who want full creative control and custom design systems
-
-## 🌟 [Apollo Starter Kit](https://github.com/apostrophecms/apollo)
-**Perfect if you want:** A production-ready foundation with beautiful design included
-
-- **Production-Ready Design**: Complete Bulma-based design system with modern styling
-- **Rich Feature Set**: Advanced widgets, layouts, and pre-styled components
-- **Faster Time-to-Market**: Launch professional sites with minimal additional styling
-- **Content-Rich Sites**: Built-in blog, author relationships, and content management features
-- **Best for**: Teams who want to focus on content and functionality over design from scratch
+本仓库是 **SpatialVerse**（群核空间智能平台）官网的前后端一体化项目：ApostropheCMS 作为后端内容管理平台，Astro 作为前端渲染框架。两者通过 `@apostrophecms/apostrophe-astro` 桥接包连接，兼顾 Astro 的高性能与现代开发体验，以及 ApostropheCMS 的可视化、原地编辑能力。
 
 ---
 
-**Still deciding?** Both use the same powerful ApostropheCMS + Astro architecture. You can always start with the Essentials Starter Kit and add features, or begin with [Apollo](https://github.com/apostrophecms/apollo) and customize the design to match your brand.
+## ✨ 功能特性
 
-**Ready for enterprise features?** [Contact us about Apollo Pro](https://apostrophecms.com/contact-us) for advanced permissions, automated translations, SEO optimization, and more professional capabilities.
-
-- [ApostropheCMS + Astro Essentials Starter Kit:](#apostrophecms--astro-essentials-starter-kit)
-  - [ApostropheCMS + Astro Starter Kits](#apostrophecms--astro-starter-kits)
-  - [🎯 Astro Essentials Starter Kit (This Repository)](#-astro-essentials-starter-kit-this-repository)
-  - [🌟 Apollo Starter Kit](#-apollo-starter-kit)
-  - [🎯 What This Starter Provides](#-what-this-starter-provides)
-  - [✨ Why Use This Combination](#-why-use-this-combination)
-  - [🎯 What Makes This Special](#-what-makes-this-special)
-  - [🚀 Quick Start](#-quick-start)
-    - [Prerequisites](#prerequisites)
-    - [Get Running in Minutes](#get-running-in-minutes)
-  - [🏗️ Architecture Overview](#️-architecture-overview)
-    - [How It Works](#how-it-works)
-    - [Project Structure](#project-structure)
-    - [For ApostropheCMS Developers](#for-apostrophecms-developers)
-    - [For Astro Developers](#for-astro-developers)
-  - [🖼️ Image Helper Functions](#️-image-helper-functions)
-    - [Overview](#overview)
-    - [Working with Image Relationships](#working-with-image-relationships)
-    - [Working with Direct Attachments](#working-with-direct-attachments)
-    - [Image Cropping and Sizes](#image-cropping-and-sizes)
-    - [Working with Focal Points](#working-with-focal-points)
-    - [Core Functions Reference](#core-functions-reference)
-  - [🚀 Deployment Options](#-deployment-options)
-    - [**ApostropheCMS Hosting** (Recommended)](#apostrophecms-hosting-recommended)
-    - [**DIY Deployment**](#diy-deployment)
-      - [Backend (ApostropheCMS) Deployment](#backend-apostrophecms-deployment)
-      - [Frontend (Astro) Deployment](#frontend-astro-deployment)
-      - [Netlify Deployment Example](#netlify-deployment-example)
-  - [🚑 Need Help?](#-need-help)
-  - [📚 Learn More](#-learn-more)
-  - [🎯 Ready to Build Something Amazing?](#-ready-to-build-something-amazing)
-
-
-## 🎯 What This Starter Provides
-
-This is a **minimal, non-opinionated foundation** that demonstrates the ApostropheCMS + Astro integration without imposing design decisions on your project. You get the essential building blocks:
-
-- **Basic Page Types**: Home page, default content page, and simple blog structure
-- **Core Widgets**: Rich text, images, video, and a layout widget
-- **Clean Architecture**: Well-organized but unopinionated code structure
-- **Integration Examples**: Working demonstrations of content fetching and rendering
-
-**Perfect for:** Developers who want to understand the integration and build their own design system on top, rather than those looking for a ready-to-launch theme.
-
-## ✨ Why Use This Combination
-
-**For Developers:**
-- 🏎️ **Blazing Fast**: Astro's server-side rendering + smart hydration = incredible Core Web Vitals scores
-- 🛠️ **Modern DX**: Write components in React, Vue, Svelte, or vanilla JS—your choice
-- 🔧 **Zero API Boilerplate**: The `apostrophe-astro` package handles all the backend communication automatically
-- 🚀 **Seamless Hosting**: Deploy your ApostropheCMS + Astro Essentials project with [ApostropheCMS hosting](https://apostrophecms.com/hosting) for zero-config deployment, or choose from flexible alternatives like Netlify, Vercel, and Cloudflare
-
-**For Content Teams:**
-- ✏️ **True WYSIWYG**: Edit content directly on the live site with ApostropheCMS's in-context editing
-- 🎯 **No Learning Curve**: Familiar, intuitive admin interface that non-technical users love
-- 🔄 **Instant Previews**: See changes immediately without switching between admin panels and preview modes
-- 👥 **Powerful Workflows**: Built-in user roles, content approval, and publishing controls
-
-**For Everyone:**
-- 🏗️ **Solid Foundation**: Essential building blocks with core widgets and basic page types
-- 📚 **Non-Opinionated**: Clean starter that doesn't impose design decisions on your project
-- 📈 **Room to Grow**: Architecture that scales from simple sites to complex applications
-- 💰 **Open Source**: Free to use with optional Pro features available
+- **可视化内容管理**：在网站前台直接点击内容进行原地编辑（In-Context Editing），无需跳转管理后台
+- **高性能前端**：Astro 服务端渲染（SSR）+ 按需 Hydration，提供优异的 Web Vitals 表现
+- **多语言支持**：中文 `zh` 为默认语言（URL 无前缀），英文 `en` 使用 `/en` 前缀
+- **内容模型完善**：Page Type + Piece + Widget 三层内容架构，覆盖页面、论文、数据集等实体
+- **数据导入任务**：内置可重复执行的中文草稿数据导入脚本，稳定 slug 支持重复更新
+- **React 客户端岛**：核心能力交互、数据集筛选等复杂交互保留为 React Island（`client:visible`）
 
 ---
 
-## 🎯 What Makes This Special
+## 📋 环境要求
 
-Unlike typical headless setups where content editors work in separate admin panels, this combination delivers **in-context editing**. Content teams can click directly on the live site to edit—while you keep the modern development experience of Astro.
+| 依赖 | 版本 |
+|---|---|
+| Node.js | `>= 22` |
+| MongoDB | `>= 6.0`（本地开发也可使用 SQLite） |
 
-**The key:** The [`apostrophe-astro` package](https://github.com/apostrophecms/apostrophe-astro) creates a seamless bridge between your Astro frontend and ApostropheCMS backend, handling authentication, content fetching, and real-time updates automatically.
-
-## 🚀 Quick Start
-
-### Prerequisites
-- Node.js v22 or later
-- MongoDB v6.0 or later ([setup guide](https://docs.apostrophecms.org/guide/development-setup.html))
-- Windows users: [WSL2 required](https://docs.apostrophecms.org/cookbook/windows-development.html)
-
-### Get Running in Minutes
-
-The codebases located in the `backend` and `frontend` folders should be treated as interlinked but separate projects.
-
-To simplify dependency management, this repository includes several root-level scripts for convenience. The `postinstall` script automatically installs dependencies for both the `frontend` and `backend` folders when you run `npm install` at the root.
-
-1. **Clone the repo and install dependencies**
-   ```bash
-   git clone https://github.com/apostrophecms/starter-kit-astro-essentials.git
-   cd starter-kit-astro-essentials
-   npm install
-   ```
-2. **Set up environment variables**
-Both projects need an `APOS_EXTERNAL_FRONT_KEY` environment variable set to the same value for authentication. Open two terminals:
-   - **Mac/Linux users**: One terminal in `frontend` folder, one in `backend` folder
-   - **Windows users**: WSL terminal for `backend` folder, WSL or Windows terminal for `frontend` folder
-
-   ```bash
-   # In both terminal windows
-   export APOS_EXTERNAL_FRONT_KEY=my-secret-key
-   ```
-
-   The `astro.config.mjs` file uses default values, but if running the backend on a different port and/or a different server, also set:
-   ```bash
-   export APOS_HOST=your-backend-url
-   ```
-
-3. **Start development servers**
-
-   ```bash
-   # Terminal 1 - Backend (use WSL on Windows)
-   cd backend && npm run dev
-
-   # Terminal 2 - Frontend
-   cd frontend && npm run dev
-   ```
-
-> **Note:** Astro is less stringent about project setup in development mode. Before deployment, run `npm run build` followed by `npm run preview` in the `frontend` folder to test production behavior. We don't recommend using the root `npm run serve-frontend` script during development - it's used for Apostrophe hosting.
-
-Visit `http://localhost:4321` and start building! 🎉
+> **Windows 用户**：建议为后端启用 [WSL2](https://docs.apostrophecms.org/cookbook/windows-development.html)。
 
 ---
 
-## 🏗️ Architecture Overview
+## 🚀 快速开始
 
+### 1. 安装依赖
 
-### How It Works
-This project utilizes ApostropheCMS as a headless backend with Astro as a frontend. What sets this apart from typical headless setups is the [apostrophe-astro](https://github.com/apostrophecms/apostrophe-astro) package in the Astro frontend project. This enables full use of the ApostropheCMS Admin UI, including in-context editing, while largely automating content fetching from the backend without writing REST API calls.
+在仓库根目录执行，`postinstall` 脚本会自动安装 `frontend` 和 `backend` 两个子项目的依赖：
 
-### Project Structure
-```
-├── backend/               # ApostropheCMS application
-│   ├── modules/           # Custom modules (pages, pieces, widgets)
-│   ├── app.js             # Main configuration
-│   └── ...
-├── frontend/              # Astro application
-│   ├── src/
-│   │   ├── pages/         # Single [...slug].astro route
-│   │   ├── templates/     # Page templates
-│   │   ├── widgets/       # Widget templates
-│   │   └── components/    # Astro components
-│   ├── astro.config.mjs   # Astro configuration
-│   └── ...
-└── README.md              # This file
-└── package.json.          # Whole project scripts
+```bash
+npm install
 ```
 
-### For ApostropheCMS Developers
+### 2. 配置环境变量（推荐）
 
-If you've worked with ApostropheCMS previously, the backend should look familiar. Custom modules for pages, pieces, and widgets are in the `modules` folder, with core module configuration in `modules/@apostrophecms`.
+项目支持 `.env` 文件配置环境变量（后端已内置 `dotenv`），配置一次即可在 Windows / macOS / Linux 任意平台使用，无需在每条命令前添加环境变量前缀。
 
-**What stays the same:**
-- Module registration in `app.js`
-- Page types added to `modules/@apostrophecms/page/index.js`
-- Most [module configuration settings](https://docs.apostrophecms.org/reference/module-api/module-overview.html#module-configuration) for Admin UI, request routing, and MongoDB interaction
+**后端**：复制 `backend/.env.example` 为 `backend/.env`，添加数据库连接：
 
-**Key differences:**
-- **No frontend code in modules** - Stylesheets, templates (implemented as Astro components), and client-side JavaScript go in the Astro project instead
-- **No template helpers** - Skip `helper()`, `extendHelpers()`, `components()`, and `renderRoutes()` functions
+```bash
+# backend/.env
+APOS_EXTERNAL_FRONT_KEY=dev
+APOS_DB_URI=sqlite://data/spatial-verse-cms.sqlite
+```
 
-The `modules/@apostrophecms/home-page` module loads the core `views/layout.html` file, which has been modified to indicate that editing should take place in the Astro frontend.
+**前端**：复制 `frontend/.env.example` 为 `frontend/.env`：
 
-### For Astro Developers
+```bash
+# frontend/.env
+APOS_EXTERNAL_FRONT_KEY=dev
+```
 
-The Astro portion follows standard conventions with components in `src` and assets in `public`. Configuration is managed through `astro.config.mjs` following standard practices.
+> 两个项目的 `APOS_EXTERNAL_FRONT_KEY` 必须一致。开发脚本已内置 `dev`，如使用 `.env` 请保持相同值。
 
-**What stays the same:**
-- Standard Astro project organization
-- Normal component and template patterns
-- Client-side asset management
+### 3. 启动后端（ApostropheCMS）
 
-**Key differences:**
-- **Single route system** - Instead of multiple routes in `pages`, there's one `[...slug].astro` file that handles all routing
-- **Template mapping** - Pages map to templates in the `templates` folder, mapped by the `index.js` file in that folder. Each template corresponds to an ApostropheCMS page type, including `index.html` and `show.html` piece-page types
-- **Widget system** - The `widgets` folder contains templates for ApostropheCMS widgets, mapped through an `index.js` file in that folder.
-- **Required configuration** - The `apostrophe` integration and `output: 'server'` settings must remain for backend integration
+打开第一个终端：
 
-Content is populated by data from the CMS backend and inserted into slots in the main `[...slug].astro` file. Widget data is handled through the mapped templates and added to page templates using the `AposArea` helper component.
+```bash
+cd backend
+npm run dev
+```
 
-Read more in the [`apostrophe-astro` documentation](https://github.com/apostrophecms/apostrophe-astro)  or in the [Apollo tutorial series](https://docs.apostrophecms.org/tutorials/astro/apostrophecms-and-astro.html).
+后端默认地址：**http://localhost:3000**
+
+> **说明**：`backend/data/` 中的 SQLite 数据库已被 Git 忽略。首次启动会自动创建空数据库，正常现象，不必担心「代码缺失」。
+
+### 4. 启动前端（Astro）
+
+打开第二个终端：
+
+```bash
+cd frontend
+npm run dev
+```
+
+前端默认地址：**http://localhost:4321**
+
+### 5. 创建管理员账号
+
+在 `backend` 目录执行（配置 `.env` 后无需添加环境变量前缀）：
+
+```bash
+node app @apostrophecms/user:add admin admin
+```
+
+> `admin` 为用户名，`admin` 为密码，可自定义（命令格式：`用户名 角色`，角色通常为 `admin`）。
+
+### 6. 导入中文草稿数据
+
+在 `backend` 目录依次执行以下命令，导入初始页面与内容草稿：
+
+```bash
+# 导入 5 篇论文草稿
+node app research-paper:import
+
+# 导入「核心能力」页面草稿
+node app core-competency-page:import
+
+# 导入「学术研究」页面草稿（自动关联论文）
+node app research-archive-page:import
+```
+
+> 所有导入任务使用稳定 slug，重复执行只会更新、不会重复创建。
+
+### 7. 登录管理后台
+
+浏览器访问 **http://localhost:4321/login**，使用刚才创建的管理员账号登录。登录后即可在网站前台享受原地编辑体验。
 
 ---
 
-## 🖼️ Image Helper Functions
+## 📐 架构概览
 
-### Overview
-These helper functions are designed to work with images in your Astro frontend that come from ApostropheCMS through relationships or attachment fields. If you're using the image widget within an area, you should use the `AposArea` helper instead - these utilities are specifically for handling images that are part of your content model.
+```
+┌─────────────────────┐          REST / 认证          ┌─────────────────────┐
+│   ApostropheCMS     │  ◄─────────────────────────►  │       Astro         │
+│   （后端 · 端口 3000）│                              │ （前端 · 端口 4321）  │
+│                     │                              │                     │
+│  · 内容模型 / Schema │                              │  · 页面渲染          │
+│  · Page Type / Piece│                              │  · 模板映射          │
+│  · Widget           │                              │  · Widget 渲染       │
+│  · 管理后台 / 原地编辑│                              │  · 客户端交互（React）│
+└─────────────────────┘                              └─────────────────────┘
+```
 
-**Important:** These helpers expect a single attachment object, not an array. When working with relationships or array fields, make sure to pass a single image object (e.g., `page.relationship._image[0]`) rather than the full array.
+**职责分工：**
 
-### Working with Image Relationships
-When you have a relationship field to `@apostrophecms/image` in your content type, you'll typically need to:
-1. Get the image URL (potentially at different sizes for responsive images)
-2. Handle focal points if configured
-3. Get the image dimensions including any cropping that should be applied
-4. Set up proper alt text
+- **后端（ApostropheCMS）** 拥有所有内容模型：页面类型（Page Type）、内容片段（Piece）、组件（Widget）以及管理编辑界面。前端不定义数据结构。
+- **前端（Astro）** 负责所有渲染：从后端通过 REST 获取内容对象，并映射到 Astro 组件。前端不存储、不校验内容。
+- **桥接包 `@apostrophecms/apostrophe-astro`** 连接两者，提供 `aposPageFetch`、`AposArea` 以及原地编辑覆盖层。
 
-Here's a typical example:
+---
+
+## 🗂️ 项目结构
+
+```
+├── backend/                    # ApostropheCMS 后端
+│   ├── app.js                  # 后端入口与模块注册
+│   ├── modules/
+│   │   ├── @apostrophecms/     # 核心系统模块配置
+│   │   │   ├── home-page/      # 首页 Page Type
+│   │   │   ├── page/           # 页面类型注册表
+│   │   │   ├── global/         # 全站内容（品牌/导航/联系方式/Footer）
+│   │   │   └── i18n/           # 多语言配置（zh 默认 / en 使用 /en）
+│   │   ├── default-page/       # 通用内容页
+│   │   ├── solution-page/      # 解决方案页（5 个页面共用）
+│   │   ├── core-competency-page/  # 核心能力页
+│   │   ├── research-archive-page/ # 学术研究列表页
+│   │   ├── research-paper/     # 论文 Piece
+│   │   ├── dataset-library-page/  # 样例数据集页
+│   │   └── about-page/         # 关于我们页
+│   └── data/                   # 本地数据库（SQLite，Git 忽略）
+│
+├── frontend/                   # Astro 前端
+│   ├── astro.config.mjs        # Astro 配置（含 Apostrophe 集成）
+│   ├── public/                 # 静态资源
+│   └── src/
+│       ├── pages/              # 唯一路由 [...slug].astro
+│       ├── templates/          # 页面模板（Page Type → Astro 组件映射）
+│       ├── widgets/            # 组件模板（Widget → Astro 组件映射）
+│       ├── components/         # Astro / React 组件
+│       │   ├── core/           # 核心能力域组件
+│       │   └── ...             # 公共组件（Header/Footer/ContactDrawer）
+│       ├── styles/             # 全局与页面样式
+│       └── lib/                # 前端工具
+│
+├── docs/                       # 文档
+│   └── migration/              # 各页面域迁移记录
+├── README.md                   # 本文件
+├── AGENTS.md                   # Agent/开发者执行规则
+├── ARCHITECTURE.md             # 架构快速参考
+└── MIGRATION_WORK_SPLIT.md     # 并行迁移分工基线
+```
+
+---
+
+## 📄 页面与内容模型
+
+### 页面类型（Page Type）
+
+| 页面 | URL | Page Type | Astro 模板 |
+|---|---|---|---|
+| 首页 | `/` | `@apostrophecms/home-page` | `HomePage.astro` |
+| 智能体感知 | `/coohomcloud/solutions/aiagent` | `solution-page` | `SolutionPage.astro` |
+| AIGC | `/coohomcloud/solutions/aigc` | `solution-page` | `SolutionPage.astro` |
+| 机器人仿真 | `/coohomcloud/solutions/roboticsimulation` | `solution-page` | `SolutionPage.astro` |
+| 产品可视化推广 | `/coohomcloud/solutions/visualizedproductpromotion` | `solution-page` | `SolutionPage.astro` |
+| 拓展现实 | `/coohomcloud/solutions/xr` | `solution-page` | `SolutionPage.astro` |
+| 核心能力 | `/coohomcloud/corecompetency` | `core-competency-page` | `CoreCompetencyPage.astro` |
+| 学术研究 | `/coohomcloud/corecompetency/paper` | `research-archive-page` | `ResearchArchivePage.astro` |
+| 样例数据集 | `/coohomcloud/corecompetency/data` | `dataset-library-page` | `DatasetLibraryPage.astro` |
+| 关于我们 | `/coohomcloud/about` | `about-page` | `AboutPage.astro` |
+
+### 内容片段（Piece）
+
+| Piece | 说明 | 关键字段 |
+|---|---|---|
+| `research-paper` | 学术论文 | `title`、`year`、`venue`、`abstract`、`externalUrl`、`cover` |
+| `dataset-item`（规划中） | 数据集条目 | 分类、标题、摘要、详情、格式/标签、下载链接等 |
+
+### 组件（Widget）
+
+标准 ApostropheCMS 组件：富文本（`rich-text`）、图片（`image`）、视频（`video`）、文件（`file`）、布局（`layout` / `layout-column` / `nested-layout-widget` / `nested-column-widget`）。
+
+---
+
+## 🔗 关键配置
+
+### 环境变量
+
+| 变量 | 说明 | 默认值 |
+|---|---|---|
+| `APOS_EXTERNAL_FRONT_KEY` | 前后端认证密钥，两个项目必须一致 | `dev`（开发脚本中内置） |
+| `APOS_DB_URI` | 数据库连接串（本地开发使用 SQLite） | `sqlite://data/spatial-verse-cms.sqlite` |
+| `APOS_HOST` | 后端地址（供前端连接） | `http://localhost:3000`（见 `astro.config.mjs`） |
+| `PORT` | Astro 前端端口 | `4321` |
+| `APOS_MONGODB_URI` | MongoDB 连接串（生产环境） | — |
+
+> **Windows 用户提示**：环境变量推荐写入 `backend/.env` 与 `frontend/.env` 文件（项目已内置 `dotenv` 支持）。请勿在 PowerShell 中使用 `KEY=value npm run ...` 这类 Unix 风格的前缀语法，会导致命令错误。
+
+### 多语言
+
+- 中文 `zh`：默认语言，URL 无前缀（如 `/coohomcloud/corecompetency`）
+- 英文 `en`：URL 使用 `/en` 前缀（如 `/en/coohomcloud/corecompetency`）
+- 语言配置位于 `backend/modules/@apostrophecms/i18n/index.js`
+
+---
+
+## 👨‍💻 开发指南
+
+### 新增页面类型（Page Type）
+
+1. 在 `backend/modules/` 创建模块目录（如 `my-page/`），在 `index.js` 中设置 `extend: '@apostrophecms/page-type'` 并定义字段
+2. 在 `backend/app.js` 的 `modules` 中注册：`'my-page': {}`
+3. 在 `backend/modules/@apostrophecms/page/index.js` 的 `types` 数组中添加，供编辑人员选择
+4. 在 `frontend/src/templates/` 创建 `MyPage.astro`，页面数据通过 `Astro.props.aposData.page` 获取
+5. 在 `frontend/src/templates/index.js` 中添加映射：`'my-page': MyPage`
+
+> **注意**：模板映射键必须与后端模块名完全一致，否则会静默回退到默认渲染器（页面显示空白但无报错）。
+
+### 新增组件（Widget）
+
+1. 在 `backend/modules/` 创建模块目录（如 `my-widget/`），在 `index.js` 中设置 `extend: '@apostrophecms/widget-type'`
+2. 在 `backend/app.js` 中注册
+3. 在 `frontend/src/widgets/` 创建 `MyWidget.astro`，组件数据通过 `Astro.props.widget` 获取
+4. 在 `frontend/src/widgets/index.js` 中添加映射
+5. 在相关后端 Schema 的 area `widgets` 配置中加入该组件
+
+### 新增内容片段（Piece）
+
+1. 在 `backend/modules/` 创建模块目录（如 `my-piece/`），在 `index.js` 中设置 `extend: '@apostrophecms/piece-type'` 并定义字段
+2. 在 `backend/app.js` 中注册
+3. 在页面的 Schema 中使用 `relationship` 字段关联该 Piece
+
+### 图片处理
+
+推荐使用 `@apostrophecms/apostrophe-astro/lib/attachment.js` 提供的工具函数：
+
 ```js
----
 import {
   getAttachmentUrl,
   getAttachmentSrcset,
   getFocalPoint,
   getWidth,
   getHeight
-} from '../lib/attachments.js';
+} from '@apostrophecms/apostrophe-astro/lib/attachment.js';
 
-// Get first image from relationship
-const image = relationshipField._image[0];
----
-
-<img
-  src={getAttachmentUrl(image, { size: 'full' })}
-  srcset={getAttachmentSrcset(image)}
-  sizes="(max-width: 800px) 100vw, 800px"
-  alt={image.alt || image.title || 'Image description'}
-  width={getWidth(image)}
-  height={getHeight(image)}
-  style={`object-position: ${getFocalPoint(image)};`}
-/>
+// 关系字段以数组形式返回，即使 max: 1 也要用 [0]
+const image = widget._image?.[0];
 ```
 
-### Working with Direct Attachments
-For attachment fields (like logo fields), the pattern is similar:
+主要函数：
+
+| 函数 | 说明 |
+|---|---|
+| `getAttachmentUrl(attachment)` | 获取图片 URL（可指定尺寸） |
+| `getAttachmentSrcset(attachment)` | 生成响应式 srcset |
+| `getFocalPoint(attachment)` | 获取焦点坐标（`object-position` 值） |
+| `getWidth(attachment)` / `getHeight(attachment)` | 获取图片宽高（自动适配裁剪） |
+
+### `_` 前缀约定
+
+以 `_` 开头的字段是关系字段（relationship）。Apostrophe 在请求时解析它们，并**始终以数组形式返回**，即使 `max: 1`：
 
 ```js
-<img 
-  src={getAttachmentUrl(attachmentField)}
-  width={getWidth(attachmentField)}
-  height={getHeight(attachmentField)}
-  alt="Logo"
-/>
+const image = widget._image?.[0];
+const author = article._author?.[0]?.title;
 ```
 
-### Image Cropping and Sizes
+### 组件注册表
 
-**Automatic Crop Handling**
-
-If you set a crop region for an image in the ApostropheCMS Admin UI, all the helper methods will automatically respect that crop. You don't need to do anything special in your code - the cropped version will be used when generating URLs and srcsets.
-
-**Size Variants**
-
-The default size variants are:
-- `one-sixth` (190×350px)
-- `one-third` (380×700px)
-- `one-half` (570×700px)
-- `two-thirds` (760×760px)
-- `full` (1140×1140px)
-- `max` (1600×1600px)
-
-These sizes will be used to generate the srcset and can be selected by name for the `getAttachmentUrl()` method:
-
-```
-getAttachmentUrl(image, { size: 'full' })
-```
-
-You can use custom size names in both `getAttachmentUrl()` and the srcset options. For example:
-```js
-const customUrl = getAttachmentUrl(image, { size: 'custom-banner' });
-
-// Custom srcset configuration
-const srcset = getAttachmentSrcset(image, {
-  sizes: [
-    { name: 'small', width: 300 },
-    { name: 'medium', width: 600 },
-    { name: 'large', width: 900 },
-  ]
-});
-```
-
-> Important: These helpers don't generate the image sizes - they just reference sizes that already exist. To use custom sizes, you must configure the [`@apostrophecms/attachment` module](https://docs.apostrophecms.org/reference/modules/attachment.html#configuration) to create those sizes when images are uploaded. You can do this in your backend configuration:
-
-```javascript
-// modules/@apostrophecms/attachment/index.js
-module.exports = {
-  options: {
-    // Define what sizes should be created on upload
-    imageSizes: {
-      'custom-banner': { width: 1200, height: 400 },
-      'square-thumb': { width: 300, height: 300 },
-      'small': { width: 300 },
-      'medium': { width: 600 },
-      'large': { width: 900 }
-    }
-  }
-};
-```
-
-See the [attachment module documentation](https://docs.apostrophecms.org/reference/modules/attachment.html#configuration) for complete configuration options.
-
-### Working with Focal Points
-When using focal points set in the ApostropheCMS admin UI, you'll need to:
-1. Use `object-position` with the focal point value
-2. Set appropriate Bulma image classes (like `is-fullwidth`)
-
-```js
-<figure class="image">
-  <img
-    src={getAttachmentUrl(image)}
-    style={`object-position: ${getFocalPoint(image)}; object-fit: cover;`}
-    class="is-fullwidth"
-    width={getWidth(image)}
-    height={getHeight(image)}
-    alt="Image with focal point"
-  />
-</figure>
-```
-
-The `getFocalPoint()` function returns coordinates in the format "X% Y%" (e.g., "50% 50%" for center). If no focal point is set, it returns the default value (default is "center center").
-
-### Core Functions Reference
-Key functions available (see JSDoc comments in source for detailed documentation):
-- `getAttachmentUrl(attachmentObject, options?)`: Get URL for an image with optional size (defaults to 'full')
-- `getAttachmentSrcset(attachmentObject, options?)`: Generate responsive srcset string
-- `getWidth(imageObject)`: Get image width, respecting crops
-- `getHeight(imageObject)`: Get image height, respecting crops
-- `getFocalPoint(attachmentObject, defaultValue?)`: Get focal point coordinates for styling
+| 注册文件 | 映射内容 |
+|---|---|
+| `frontend/src/templates/index.js` | 页面类型名 → Astro 组件 |
+| `frontend/src/widgets/index.js` | Widget 名 → Astro 组件 |
 
 ---
 
-## 🚀 Deployment Options
+## 🏗️ 构建与部署
 
-### **ApostropheCMS Hosting** (Recommended)
-Apostrophe can provide easy hosting for any ApostropheCMS-Astro monorepo with little or no extra configuration. This can be set up for deployment from GitHub or other code repository.
+### 本地构建验证
 
-Apostrophe hosting comes with zero-config deployment with automatic:
-- Database provisioning and backups
-- SSL certificates
-- Asset optimization and delivery
-- Security updates and monitoring
-- combined logs of both services via our hosting CLI
+```bash
+# 前端构建
+cd frontend
+npm run build
 
-*Learn more about [ApostropheCMS hosting](https://apostrophecms.com/hosting) or [contact us](https://apostrophecms.com/contact-us) for enterprise hosting.*
+# 后端构建
+cd backend
+npm run build
+```
 
-### **DIY Deployment**
-Since this project uses Astro in server mode (SSR), deployment requires careful consideration:
+### 生产部署
 
-Third-party hosting will typically require separate servers for the ApostropheCMS and Astro portions of the repositories. This is the typical pattern seen with other CMS that are used with Astro. You will need to specify whether you want the `backend` ApostropheCMS portion of the repo, or the `frontend` Astro project hosted. How this is accomplished will depend on the provider.
+生产环境需要分别部署前后端两个项目：
 
-#### Backend (ApostropheCMS) Deployment
+#### 后端（ApostropheCMS）
 
-Your ApostropheCMS backend requires:
-- Node.js environment (v22 or later recommended)
-- MongoDB database
-- Asset storage solution (cloud storage like AWS S3)
+所需环境：
 
-There are several examples of common deployment strategies in our [documentation](https://docs.apostrophecms.org/guide/hosting.html)
+- Node.js 环境（建议 v22+）
+- MongoDB 数据库
+- 媒体存储方案（如 AWS S3）
 
-Example deployment steps for a typical provider:
-1. Set up a MongoDB instance (Atlas, DigitalOcean, etc.)
-2. Configure your server with Node.js and PM2
-3. Set up your environment variables:
-   ```bash
-   NODE_ENV=production
-   APOS_MONGODB_URI=YOUR_mongodb_connection_string
-   APOS_EXTERNAL_FRONT_KEY=a_random_string
-   APOS_S3_BUCKET=YOUR-bucket-name
-   APOS_S3_SECRET=YOUR-s3-secret
-   APOS_S3_KEY=YOUR-s3-key
-   APOS_S3_REGION=YOUR-chosen-region
-   ```
-The remainder of the deployment will depend on the hosting platform being used and how that deployment is triggered. Generally, it will comprise a build step followed by bringing up the server. If you are not deploying with Git, you will also need to set the `APOS_RELEASE_ID` to a unique, random value. Again, make sure that you specify that the `backend` folder is to be used as the root for your deployment.
+关键环境变量：
 
-#### Frontend (Astro) Deployment
+```bash
+NODE_ENV=production
+APOS_MONGODB_URI=YOUR_mongodb_connection_string
+APOS_EXTERNAL_FRONT_KEY=a_random_string
+APOS_S3_BUCKET=YOUR-bucket-name
+APOS_S3_SECRET=YOUR-s3-secret
+APOS_S3_KEY=YOUR-s3-key
+APOS_S3_REGION=YOUR-chosen-region
+```
 
-Your Astro frontend can be deployed to any static hosting provider that supports SSR (Server-Side Rendering). Popular options include:
-- Netlify
-- Vercel
-- Cloudflare Pages
-- AWS Amplify
-There are a number of tutorials in the [Astro documentation](https://docs.astro.build/en/guides/deploy/#deployment-guides) to use as a starting point. The only modifications are the extra environment variable, `APOS_EXTERNAL_FRONT_KEY=a_random_string` set to the same string as your backend project, and to make sure that you are specifying the `frontend` folder as the root of the project.
+#### 前端（Astro）
 
-#### Netlify Deployment Example
+本项目使用 Astro SSR（`output: 'server'`）模式，可部署到支持 SSR 的平台（Netlify、Vercel、Cloudflare Pages、AWS Amplify 等）。需要额外设置：
 
-1. Log in to your [Netlify](https://www.netlify.com/) account.
-2. Create a new site by connecting your Git repository.
-3. In the "Build settings" configuration:
-   - **Base directory**: `frontend`
-   - **Build command**: `npm run build`
-   - **Publish directory**: `frontend/dist`
-4. Access Site Settings:
-   -Navigate to the "Site settings" for the selected site.
-5. Scroll down and find the "Environment variables" section under the "Build & deploy" tab. Click "Edit variables". Add a New Variable:
-   - **Key**: `APOS_EXTERNAL_FRONT_KEY`
-   - **Value**: `a_random_string`
-6. Save your configuration and deploy the site.
-
-The build settings can also be supplied through a `netlify.toml` file at the root of your project.
+```bash
+APOS_EXTERNAL_FRONT_KEY=a_random_string   # 必须与后端一致
+APOS_HOST=your-backend-url
+```
 
 ---
 
-## 🚑 Need Help?
+## 🗃️ 数据管理
 
-- **Community Support**: Join our [Discord community](https://discord.com/invite/HwntQpADJr) for help from other developers
-- **Professional Support**: Dedicated support packages are available - [Contact us](https://apostrophecms.com/contact-us) to learn more
-- **Training**: Professional training and consultation services available
+### 数据导入
 
----
+项目为每个页面域提供可重复执行的数据导入任务（需在 `backend/.env` 中配置 `APOS_DB_URI`）：
 
-## 📚 Learn More
+```bash
+# 论文数据（5 篇）
+node app research-paper:import
 
-- **[ApostropheCMS Documentation](https://docs.apostrophecms.org/)** - Complete CMS guide
-- **[Astro Documentation](https://docs.astro.build/)** - Learn more about Astro
-- **[Astro + ApostropheCMS Guide](https://docs.astro.build/en/guides/cms/apostrophecms/)** - Integration details
-- **[Building a Site Tutorial](https://docs.apostrophecms.org/tutorials/astro/apostrophecms-and-astro.html)** - Building a complete site with the Apollo theme
-- **[apostrophe-astro Package](https://github.com/apostrophecms/apostrophe-astro)** - Bridge package docs
+# 核心能力页
+node app core-competency-page:import
 
----
+# 学术研究页（自动关联论文）
+node app research-archive-page:import
+```
 
-## 🎯 Ready to Build Something Amazing?
+> 未使用 `.env` 时，Windows PowerShell 可使用以下等价写法：
+> ```powershell
+> $env:APOS_DB_URI="sqlite://data/spatial-verse-cms.sqlite"; node app research-paper:import
+> ```
 
-This starter kit includes the essentials to get you building:
-- ✅ Basic page templates (home, default, blog)
-- ✅ Core ApostropheCMS widgets plus layout widget
-- ✅ Image optimization helpers
-- ✅ Clean, non-opinionated structure
-- ✅ Production deployment configuration
-- ✅ Development tooling setup
+> **注意**：SQLite 数据库位于 `backend/data/`，已被 Git 忽略，不会随代码仓库同步。克隆仓库后需要重新创建管理员并导入草稿数据。
 
-**A clean foundation** for your project, not a finished product. Perfect for developers who want to start with solid architecture and build their vision on top.
+### 内容发布
 
-*Need advanced features like granular permissions, advanced workflows, or premium support? [Explore ApostropheCMS Pro](https://apostrophecms.com/pro) for enterprise-grade capabilities.*
+目前业务页面均以 **中文草稿（`zh:draft`）** 状态存在，未发布。英文内容后续作为相同文档的 `en` locale 添加。发布管理在 ApostropheCMS 管理后台进行。
 
 ---
 
-*Built with ❤️ by the ApostropheCMS team. [Star us on GitHub](https://github.com/apostrophecms) if this helps your project!*
+## 📚 相关文档
+
+| 文档 | 说明 |
+|---|---|
+| [`ARCHITECTURE.md`](./ARCHITECTURE.md) | 架构快速参考（职责划分、组件注册、`_` 前缀约定等） |
+| [`AGENTS.md`](./AGENTS.md) | Agent 与开发人员执行规则（分工、边界、验收标准） |
+| [`MIGRATION_WORK_SPLIT.md`](./MIGRATION_WORK_SPLIT.md) | 并行迁移分工基线（页面、负责人、交付标准） |
+| [`docs/migration/core-research.md`](./docs/migration/core-research.md) | 核心能力与学术研究迁移记录 |
+
+### 外部文档
+
+- [ApostropheCMS 文档](https://docs.apostrophecms.org/)
+- [Astro 文档](https://docs.astro.build/)
+- [apostrophe-astro 桥接包](https://github.com/apostrophecms/apostrophe-astro)
+- [Astro + ApostropheCMS 集成指南](https://docs.astro.build/en/guides/cms/apostrophecms/)
+
+---
+
+## 🛠️ 常用命令速查
+
+```bash
+# 安装全部依赖（根目录）
+npm install
+
+# 配置后端 .env（backend/，首次使用）
+# 复制 backend/.env.example 为 backend/.env，并设置 APOS_DB_URI
+
+# 启动后端（backend/）
+npm run dev
+
+# 后端构建（backend/）
+npm run build
+
+# 启动前端（frontend/）
+npm run dev
+
+# 前端构建（frontend/）
+npm run build
+
+# 创建管理员（backend/）
+node app @apostrophecms/user:add admin admin
+
+# 前端生产预览（frontend/，构建后执行）
+npm run preview
+```
+
+---
+
+## ⚖️ 许可证
+
+MIT License

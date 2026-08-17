@@ -33,14 +33,6 @@ const nextHeading = '继续探索群核的数据基础设施';
 </section>
 
 <section class="core-capability-stack" aria-label="四项核心能力">
-  <div class="core-capability-index" aria-hidden="true">
-    {capabilities.map((capability, index) => (
-      <a href={`#core-capability-${index + 1}`} key={capability.number}>
-        <span>{capability.number}</span><b>{capability.title}</b>
-      </a>
-    ))}
-  </div>
-
   {capabilities.map((capability, index) => {
     const accent = capabilityAccents[index] || 'cyan';
     return (

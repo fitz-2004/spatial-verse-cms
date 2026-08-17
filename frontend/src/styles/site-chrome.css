@@ -740,46 +740,6 @@ body.spatialverse-body {
   font-size: 7px;
 }
 
-.spatial-secondary-footer {
-  margin-top: 0;
-}
-
-.spatial-secondary-footer .footer-contact-form-section {
-  display: none;
-}
-
-.secondary-route-footer {
-  display: grid;
-  grid-template-columns: 1fr 2fr auto;
-  align-items: center;
-  gap: 30px;
-  width: min(1220px, calc(100% - 96px));
-  min-height: 170px;
-  margin: 0 auto;
-  padding: 36px 0 28px;
-  border-top: 1px solid var(--line);
-  color: var(--subtle);
-  font-family: var(--mono);
-  font-size: 9px;
-}
-
-.secondary-route-footer-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px 22px;
-}
-
-.secondary-route-footer-links a:hover,
-.secondary-route-footer-meta a:hover {
-  color: var(--cyan);
-}
-
-.secondary-route-footer-meta {
-  display: grid;
-  justify-items: end;
-  gap: 7px;
-}
-
 /* Contact drawer */
 .contact-drawer {
   position: fixed;
@@ -1238,19 +1198,10 @@ body.spatialverse-body {
   .footer-bottom {
     justify-content: flex-start;
   }
-
-  .secondary-route-footer {
-    grid-template-columns: 1fr;
-  }
-
-  .secondary-route-footer-meta {
-    justify-items: start;
-  }
 }
 
 @media (max-width: 560px) {
   .content-width,
-  .secondary-route-footer,
   .site-main > h1 {
     width: calc(100% - 36px);
   }

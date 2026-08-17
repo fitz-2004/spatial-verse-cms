@@ -1,8 +1,8 @@
 export default {
   options: {
     session: {
-      // If this still says `undefined`, set a real secret!
-      secret: undefined
+      // 生产环境请更换为随机长字符串（例如：openssl rand -base64 32）
+      secret: 'spatial-verse-cms-dev-secret'
     }
   }
 };

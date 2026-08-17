@@ -1,4 +1,4 @@
-// 核心能力页中文草稿数据导入任务
+// 核心能力页中文数据导入任务
 // 运行：APOS_DB_URI=sqlite://data/spatial-verse-cms.sqlite node app core-competency-page:import
 // 重复运行会更新而不是重复创建（使用稳定 slug /coohomcloud/corecompetency）
 
@@ -7,7 +7,7 @@ function buildData() {
     title: '核心能力',
     slug: '/coohomcloud/corecompetency',
     type: 'core-competency-page',
-    published: false,
+    published: true,
     intro: {
       eyebrow: '02 / CORE COMPETENCY',
       title: '核心能力',
@@ -54,7 +54,7 @@ function buildCapabilities() {
 
 export default (self) => {
   return {
-    usage: '导入核心能力页中文草稿数据。\n运行：node app core-competency-page:import',
+    usage: '导入核心能力页中文数据并发布。\n运行：node app core-competency-page:import',
     async task() {
       const apos = self.apos;
       const pages = apos.modules['@apostrophecms/page'];
@@ -63,15 +63,17 @@ export default (self) => {
 
       const existing = await pages.find(req, { slug: data.slug }).toArray();
       if (existing.length > 0) {
-        await pages.update(req, { ...data, _id: existing[0]._id, aposLocale: 'zh:draft' });
-        console.log(`✅ 核心能力页草稿已更新: ${data.slug}`);
+        const draft = await pages.update(req, { ...data, _id: existing[0]._id, aposLocale: 'zh:draft' });
+        await pages.publish(req, draft);
+        console.log(`✅ 核心能力页已更新并发布: ${data.slug}`);
       } else {
         const home = await pages.find(req, { level: 0 }).toObject();
         if (!home) {
           throw new Error('Home 页面不存在，无法插入子页面');
         }
-        await pages.insert(req, home._id, 'lastChild', { ...data, aposLocale: 'zh:draft', aposMode: 'draft' });
-        console.log(`✅ 核心能力页草稿已创建: ${data.slug}（父页面: ${home.slug}）`);
+        const draft = await pages.insert(req, home._id, 'lastChild', { ...data, aposLocale: 'zh:draft', aposMode: 'draft' });
+        await pages.publish(req, draft);
+        console.log(`✅ 核心能力页已创建并发布: ${data.slug}（父页面: ${home.slug}）`);
       }
     }
   };
