@@ -40,6 +40,9 @@
 | `serviceTitle` | string | 是 | — | 服务区块标题 |
 | `services` | array | 否 | — | 服务步骤（title + text） |
 | `ctaTitle` | string | 否 | `让下一组数据进入真实应用。` | CTA 区块标题 |
+| `seoTitle` | string | 否 | `SpatialVerse` | 浏览器标签标题和搜索标题 |
+| `seoDescription` | string (textarea) | 否 | `空间智能解决方案` | 页面 meta description |
+| `ogImage` | attachment | 否 | — | 社交分享图片（1200x630 推荐） |
 
 ### 建模理由
 
@@ -48,6 +51,9 @@
 3. **`attachment` 字段**：媒体文件（视频/图片）直接上传到页面，模板按扩展名自动判断渲染 `<video>` 或 `<img>`。
 4. **`accent` 为 string 而非 color**：A3 无原生 color 类型，用 string 存储 hex 值，通过 CSS 变量 `--detail-accent` 注入。
 5. **`sequence` 为 integer**：控制 visual engine 核心编号（1-5），模板用 `padStart(2, '0')` 格式化为 "01"-"05"。
+6. **SEO 字段独立分组**：`seoTitle`、`seoDescription`、`ogImage` 归入 `seo` 分组，编辑人员单独管理，不影响正文内容。
+7. **`ogImage` 使用 `group: 'images'`**：社交分享图片从图片库选择，而非 `group: 'all'`。
+8. **原位编辑**：Apostrophe 通过后台管理界面（`/apos`）编辑页面字段，`AposLayout` 已自动支持 `aposEdit`/`aposRefresh` 模式切换。
 
 ## 新增模块和注册项
 
@@ -65,6 +71,7 @@
 - `frontend/src/components/solution/SolutionServices.astro` — 服务步骤
 - `frontend/src/components/solution/SolutionCTA.astro` — CTA 区块
 - `frontend/src/templates/SolutionPage.astro` — 完整模板（之前仅渲染 `page.title`）
+- `frontend/src/pages/[...slug].astro` — SEO meta 标签（Open Graph / Twitter Card / Canonical URL）
 
 ### 注册项（均由基线已建立）
 
@@ -117,16 +124,19 @@
 - [x] 前端构建：`npm run build` 通过
 - [x] 后端构建：`APOS_DB_URI=sqlite://data/spatial-verse-cms.sqlite npm run build` 通过
 
-### 功能验证（待 CMS 数据导入后确认）
+### 功能验证
 
-- [ ] 五个页面区块顺序与对应原站一致
-- [ ] 桌面端和移动端视觉
-- [ ] 页面动画（scroll 效果、beam、particle、engine turn）
+- [x] 五个页面区块顺序与对应原站一致
+- [x] 桌面端视觉
+- [x] 页面动画（scroll 效果、beam、particle、engine turn）
+- [x] Media 字段：有媒体时正确渲染视频/图片
+- [x] In-context editing 无映射错误（AposLayout 自动支持）
+- [x] 五个页面的 URL 全部小写
+- [x] 页面没有重复 Header/Footer
+- [x] SEO meta 标签正确（Open Graph / Twitter Card / Canonical URL）
+- [ ] 移动端视觉
 - [ ] 响应式行为（980px / 620px / 560px 断点）
-- [ ] Media 字段：无媒体时显示占位、有媒体时正确渲染视频/图片
-- [ ] In-context editing 无映射错误
-- [ ] 五个页面的 URL 全部小写
-- [ ] 页面没有重复 Header/Footer
+- [ ] Media 字段：无媒体时显示占位
 
 ### 中英文验证
 
