@@ -1,0 +1,59 @@
+---
+const {
+  title,
+  englishTitle,
+  heroTitle,
+  heroLead,
+  sequence,
+  accent
+} = Astro.props;
+
+const seq = Math.min(Math.max(sequence || 1, 1), 5);
+const total = 5;
+---
+
+<section class="solution-detail-hero" aria-labelledby="solution-detail-title">
+  <div class="solution-detail-grid" aria-hidden="true" />
+  <div class="solution-detail-beam solution-detail-beam-one" aria-hidden="true" />
+  <div class="solution-detail-beam solution-detail-beam-two" aria-hidden="true" />
+  <div class="content-width solution-detail-hero-layout">
+    <div class="solution-detail-hero-copy">
+      <p class="section-index">01 / SOLUTIONS / {englishTitle}</p>
+      <h1 id="solution-detail-title">{title}</h1>
+      <h2>{heroTitle}</h2>
+      <p>{heroLead}</p>
+      <div class="solution-detail-actions">
+        <a class="button button-primary" href="#contact-drawer">开始沟通 <span aria-hidden="true">↗</span></a>
+        <a class="button button-ghost" href="#contact-drawer">免费下载数据集 <span aria-hidden="true">↗</span></a>
+      </div>
+      <div class="solution-detail-hero-meta">
+        <span>SPATIAL INTELLIGENCE / {englishTitle}</span>
+        <span>DATA SYSTEM / ONLINE</span>
+      </div>
+    </div>
+    <div class="solution-detail-hero-visual" aria-label={`${title} 数据引擎`}>
+      <div class="solution-detail-visual-orbit visual-orbit-one" aria-hidden="true" />
+      <div class="solution-detail-visual-orbit visual-orbit-two" aria-hidden="true" />
+      <div class="solution-detail-visual-orbit visual-orbit-three" aria-hidden="true" />
+      <div class="solution-detail-visual-engine" aria-hidden="true">
+        <div class="detail-engine-teeth" />
+        <div class="detail-engine-ring ring-one" />
+        <div class="detail-engine-ring ring-two" />
+        <div class="detail-engine-core">
+          <span>ACTIVE</span>
+          <strong>{String(seq).padStart(2, '0')}</strong>
+          <small>/{String(total).padStart(2, '0')}</small>
+        </div>
+      </div>
+      <span class="detail-visual-label label-one">{englishTitle}</span>
+      <span class="detail-visual-label label-two">DATA / APPLICATION</span>
+      <i class="detail-visual-particle particle-one" /><i class="detail-visual-particle particle-two" /><i class="detail-visual-particle particle-three" />
+      <span class="detail-visual-signal" aria-hidden="true" />
+    </div>
+  </div>
+  <div class="content-width solution-detail-scroll">
+    <span>SCROLL TO EXPLORE</span>
+    <i />
+    <span>{String(seq).padStart(2, '0')} / {String(total).padStart(2, '0')}</span>
+  </div>
+</section>

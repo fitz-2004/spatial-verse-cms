@@ -1,0 +1,36 @@
+---
+const { advantageTitle, advantages } = Astro.props;
+---
+
+<section class="solution-detail-advantage solution-scroll-section section" aria-labelledby="solution-detail-advantage-title">
+  <div class="content-width">
+    <div class="solution-detail-section-heading solution-detail-section-heading-wide solution-scroll-heading">
+      <p class="section-index">03 / SOLUTION ADVANTAGE</p>
+      <h2 id="solution-detail-advantage-title">{advantageTitle}</h2>
+      <span class="solution-scroll-index">SCROLL / BUILD</span>
+    </div>
+    <div class="solution-advantage-layout">
+      <div class="solution-advantage-orbit" aria-hidden="true">
+        <span /><span /><span />
+        <div>
+          <small>DATA</small>
+          <strong>→</strong>
+          <small>VALUE</small>
+        </div>
+      </div>
+      <div class="solution-advantage-list">
+        {advantages.map((advantage, index) => (
+          <article class="solution-advantage-item" data-scroll-card data-scroll-index={index}>
+            <span>0{index + 1}</span>
+            <div>
+              <h3>{advantage.title}</h3>
+              <p>{advantage.text}</p>
+            </div>
+            <span aria-hidden="true">↗</span>
+            <i class="solution-card-signal" aria-hidden="true" />
+          </article>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

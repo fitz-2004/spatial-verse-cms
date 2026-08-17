@@ -8,12 +8,28 @@ import SiteHeader from "../components/SiteHeader.astro";
 import "../styles/app.css";
 import "../styles/styles.css";
 import "../styles/site-chrome.css";
+// TEMPORARY (visual verification only): mock solution pages until CMS pages exist
+import { solutionMockBySlug } from "../lib/solution-mock-data.js";
 
 // aposPageFetch fetches the full page payload from the ApostropheCMS backend for the
 // current URL. It returns an object with: `page` (the page document), `piece` (set on
 // piece-show routes), `global` (global config), and flags like `redirect` and `notFound`.
 // Downstream templates receive this object as `Astro.props.aposData`.
 const aposData = await aposPageFetch(Astro.request);
+
+// TEMPORARY (visual verification only): if the CMS has no page for a known solution
+// slug, render it from mock data so the frontend visuals can be reviewed before the
+// CMS draft pages are imported. Remove once real CMS pages exist.
+if (aposData.notFound) {
+  const mockKey = Astro.url.pathname.replace(/^\/+|\/+$/g, "");
+  const mockPage = solutionMockBySlug.get(mockKey);
+  if (mockPage) {
+    aposData.notFound = false;
+    aposData.template = "solution-page";
+    aposData.page = { ...mockPage, type: "solution-page", slug: mockKey, title: mockPage.title };
+  }
+}
+
 const bodyClass = `spatialverse-body page-type-${aposData.page?.type || 'unknown'}`;
 
 if (aposData.redirect) {

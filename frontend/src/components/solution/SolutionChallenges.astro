@@ -1,0 +1,23 @@
+---
+const { challengeTitle, challenges } = Astro.props;
+---
+
+<section class="solution-detail-intro solution-scroll-section section" aria-labelledby="solution-detail-challenge-title">
+  <div class="content-width solution-detail-section-layout">
+    <div class="solution-detail-section-heading solution-scroll-heading">
+      <p class="section-index">02 / INDUSTRY CHALLENGE</p>
+      <h2 id="solution-detail-challenge-title">{challengeTitle}</h2>
+      <span class="solution-scroll-index">SCROLL / DIAGNOSE</span>
+    </div>
+    <div class="solution-challenge-grid">
+      {challenges.map((challenge, index) => (
+        <article class="solution-challenge-card" data-scroll-card data-scroll-index={index}>
+          <span>0{index + 1}</span>
+          <h3>{challenge.title}</h3>
+          <p>{challenge.text}</p>
+          <i class="solution-card-signal" aria-hidden="true" />
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,13 @@
+---
+const { ctaTitle } = Astro.props;
+---
+
+<section class="solution-detail-cta" aria-labelledby="solution-detail-cta-title">
+  <div class="content-width solution-detail-cta-inner">
+    <p class="section-index">05 / NEXT CONNECTION</p>
+    <h2 id="solution-detail-cta-title">{ctaTitle}</h2>
+    <a class="button button-primary" href="#contact-drawer">
+      联系我们 <span aria-hidden="true">↗</span>
+    </a>
+  </div>
+</section>

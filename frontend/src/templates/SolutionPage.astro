@@ -1,5 +1,72 @@
 ---
+import '../styles/solution.css';
+import SolutionHero from '../components/solution/SolutionHero.astro';
+import SolutionVideoSection from '../components/solution/SolutionVideoSection.astro';
+import SolutionChallenges from '../components/solution/SolutionChallenges.astro';
+import SolutionAdvantages from '../components/solution/SolutionAdvantages.astro';
+import SolutionServices from '../components/solution/SolutionServices.astro';
+import SolutionCTA from '../components/solution/SolutionCTA.astro';
+
 const { page } = Astro.props.aposData;
+const accent = page.accent || '#29f5d1';
 ---
 
-<h1>{page?.title}</h1>
+<div class="solution-detail-page" style="--detail-accent: {accent};">
+  <SolutionHero
+    title={page.title}
+    englishTitle={page.englishTitle}
+    heroTitle={page.heroTitle}
+    heroLead={page.heroLead}
+    sequence={page.sequence}
+    accent={accent}
+  />
+
+  <SolutionVideoSection
+    title={page.title}
+    englishTitle={page.englishTitle}
+    media={page.media}
+    videoDescription={page.videoDescription}
+  />
+
+  <SolutionChallenges
+    challengeTitle={page.challengeTitle}
+    challenges={page.challenges || []}
+  />
+
+  <SolutionAdvantages
+    advantageTitle={page.advantageTitle}
+    advantages={page.advantages || []}
+  />
+
+  <SolutionServices
+    serviceTitle={page.serviceTitle}
+    services={page.services || []}
+  />
+
+  <SolutionCTA
+    ctaTitle={page.ctaTitle || '让下一组数据进入真实应用。'}
+  />
+</div>
+
+<script is:inline>
+  (() => {
+    const cards = Array.from(document.querySelectorAll('[data-scroll-card]'));
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (reducedMotion || !('IntersectionObserver' in window)) {
+      cards.forEach((card) => card.classList.add('is-in-view'));
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) =>
+          entry.target.classList.toggle('is-in-view', entry.isIntersecting)
+        );
+      },
+      { threshold: 0.16, rootMargin: '-10% 0px -12% 0px' }
+    );
+
+    cards.forEach((card) => observer.observe(card));
+  })();
+</script>
