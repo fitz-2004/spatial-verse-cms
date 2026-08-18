@@ -10,6 +10,8 @@
 
 本文记录仓库当前已经完成的内容、仅存在于本机 CMS 数据库中的内容、尚未完成的页面和下一步工作。所有参与迁移的开发人员仍须先阅读根目录的 [`AGENTS.md`](./AGENTS.md) 与 [`MIGRATION_WORK_SPLIT.md`](./MIGRATION_WORK_SPLIT.md)；各页面域的模型细节以 `docs/migration/` 下对应文档为准。
 
+已完成 Page Type 的字段、Widget 与代码文件映射速查见 [`CONTENT_MODEL.md`](./CONTENT_MODEL.md)。
+
 ## 1. 当前架构结论
 
 正式页面统一采用以下链路：
