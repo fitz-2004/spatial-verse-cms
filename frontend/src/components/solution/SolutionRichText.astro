@@ -1,0 +1,19 @@
+---
+import AposArea from '@apostrophecms/apostrophe-astro/components/AposArea.astro';
+
+// Unified rich text renderer for solution pages.
+// Accepts either a plain string (mock data / fallback) or an Apostrophe
+// area object (CMS data). Area objects render via <AposArea>, which enables
+// in-context editing when the editor is logged in.
+const { content, className } = Astro.props;
+
+const isArea = content && typeof content === 'object' && content.metaType === 'area' && Array.isArray(content.items);
+
+const fallback = typeof content === 'string' ? content : '';
+---
+
+{isArea ? (
+  <AposArea area={content} aposClassName={className || ''} />
+) : (
+  <span class={className || ''} set:html={fallback} />
+)}

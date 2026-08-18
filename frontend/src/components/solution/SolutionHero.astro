@@ -1,4 +1,6 @@
 ---
+import SolutionRichText from './SolutionRichText.astro';
+
 const {
   title,
   englishTitle,
@@ -20,8 +22,8 @@ const total = 5;
     <div class="solution-detail-hero-copy">
       <p class="section-index">01 / SOLUTIONS / {englishTitle}</p>
       <h1 id="solution-detail-title">{title}</h1>
-      <h2>{heroTitle}</h2>
-      <p>{heroLead}</p>
+      <SolutionRichText content={heroTitle} className="solution-rich-text hero-subtitle" />
+      <SolutionRichText content={heroLead} className="solution-rich-text hero-lead" />
       <div class="solution-detail-actions">
         <a class="button button-primary" href="#contact-drawer">开始沟通 <span aria-hidden="true">↗</span></a>
         <a class="button button-ghost" href="#contact-drawer">免费下载数据集 <span aria-hidden="true">↗</span></a>

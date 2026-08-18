@@ -26,16 +26,26 @@ export default {
         def: '#29f5d1'
       },
       heroTitle: {
-        type: 'string',
+        type: 'area',
         label: 'Hero Subtitle',
-        help: 'Accent-colored subtitle beneath the page title',
-        required: true
+        help: 'Accent-colored subtitle beneath the page title (click to edit in context)',
+        options: {
+          widgets: {
+            '@apostrophecms/rich-text': {}
+          },
+          max: 1
+        }
       },
       heroLead: {
-        type: 'string',
+        type: 'area',
         label: 'Hero Description',
-        textarea: true,
-        required: true
+        help: 'Hero lead paragraph (click to edit in context)',
+        options: {
+          widgets: {
+            '@apostrophecms/rich-text': {}
+          },
+          max: 1
+        }
       },
       media: {
         type: 'attachment',
@@ -44,15 +54,26 @@ export default {
         group: 'all'
       },
       videoDescription: {
-        type: 'string',
+        type: 'area',
         label: 'Media Section Description',
-        textarea: true,
-        help: 'Text description beside the media frame'
+        help: 'Text description beside the media frame (click to edit in context)',
+        options: {
+          widgets: {
+            '@apostrophecms/rich-text': {}
+          },
+          max: 1
+        }
       },
       challengeTitle: {
-        type: 'string',
+        type: 'area',
         label: 'Challenges Section Title',
-        required: true
+        help: 'Click to edit in context',
+        options: {
+          widgets: {
+            '@apostrophecms/rich-text': {}
+          },
+          max: 1
+        }
       },
       challenges: {
         type: 'array',
@@ -75,9 +96,15 @@ export default {
         }
       },
       advantageTitle: {
-        type: 'string',
+        type: 'area',
         label: 'Advantages Section Title',
-        required: true
+        help: 'Click to edit in context',
+        options: {
+          widgets: {
+            '@apostrophecms/rich-text': {}
+          },
+          max: 1
+        }
       },
       advantages: {
         type: 'array',
@@ -100,9 +127,15 @@ export default {
         }
       },
       serviceTitle: {
-        type: 'string',
+        type: 'area',
         label: 'Services Section Title',
-        required: true
+        help: 'Click to edit in context',
+        options: {
+          widgets: {
+            '@apostrophecms/rich-text': {}
+          },
+          max: 1
+        }
       },
       services: {
         type: 'array',
@@ -125,10 +158,15 @@ export default {
         }
       },
       ctaTitle: {
-        type: 'string',
+        type: 'area',
         label: 'CTA Title',
-        help: 'Large heading above the contact button',
-        def: '让下一组数据进入真实应用。'
+        help: 'Large heading above the contact button (click to edit in context)',
+        options: {
+          widgets: {
+            '@apostrophecms/rich-text': {}
+          },
+          max: 1
+        }
       },
       seoTitle: {
         type: 'string',

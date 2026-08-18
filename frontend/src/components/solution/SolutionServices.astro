@@ -1,4 +1,6 @@
 ---
+import SolutionRichText from './SolutionRichText.astro';
+
 const { serviceTitle, services } = Astro.props;
 ---
 
@@ -6,7 +8,7 @@ const { serviceTitle, services } = Astro.props;
   <div class="content-width">
     <div class="solution-detail-section-heading solution-scroll-heading">
       <p class="section-index">04 / SERVICE CAPABILITY</p>
-      <h2 id="solution-detail-services-title">{serviceTitle}</h2>
+      <h2 id="solution-detail-services-title"><SolutionRichText content={serviceTitle} className="solution-rich-text" /></h2>
       <span class="solution-scroll-index">SCROLL / DEPLOY</span>
     </div>
     <div class="solution-service-rail">
