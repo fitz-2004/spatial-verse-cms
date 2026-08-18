@@ -11,7 +11,7 @@ const { page } = Astro.props.aposData;
 const accent = page.accent || '#29f5d1';
 ---
 
-<div class="solution-detail-page" style="--detail-accent: {accent};">
+<div class="solution-detail-page" style={`--detail-accent: ${accent};`}>
   <SolutionHero
     title={page.title}
     englishTitle={page.englishTitle}

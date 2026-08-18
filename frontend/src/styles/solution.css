@@ -7,29 +7,43 @@
 /* --- Page root & accent --- */
 .solution-detail-page {
   --detail-accent: #29f5d1;
+  /* Align shared palette variables with the original site's final
+     ":root" override (globals.css "Frontier minimal sci-fi system") so
+     solution pages render pixel-identical colors without touching the
+     shared site-chrome.css. */
+  --cyan: #a7ffe9;
+  --purple: #9f8bff;
+  --acid: #eaff9a;
+  --pink: #ff9ed6;
+  --ink: #f5f7fb;
+  --muted: #94a3b8;
+  --subtle: #5f6d80;
+  --line: rgba(203, 226, 255, 0.14);
+  --void: #030507;
+  --surface: #070b10;
   min-height: 100vh;
   overflow-x: clip;
   background: var(--void);
   color: var(--ink);
 }
 
-/* --- Scoped button variants (pulse line style, matches original site) --- */
+/* --- Scoped button variants (pulse-line style, aligned with the original site's final "Action language" override) --- */
 .solution-detail-page .button {
   --pulse-color: var(--cyan);
   position: relative;
+  overflow: hidden;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 18px;
   min-height: 44px;
   padding: 0 0 11px;
-  overflow: hidden;
   border: 0;
   border-radius: 0;
-  background: transparent;
-  box-shadow: none;
-  color: var(--pulse-color);
   cursor: pointer;
+  background: transparent;
+  color: var(--pulse-color);
+  box-shadow: none;
   font-family: var(--mono);
   font-size: 10px;
   letter-spacing: 0.08em;
@@ -62,8 +76,8 @@
   pointer-events: none;
 }
 .solution-detail-page .button-primary,
-.solution-detail-page .button-primary:hover,
 .solution-detail-page .button-ghost,
+.solution-detail-page .button-primary:hover,
 .solution-detail-page .button-ghost:hover {
   --pulse-color: var(--cyan);
   background: transparent;
@@ -76,6 +90,22 @@
   color: #f3fffc;
   outline: none;
   transform: translateY(-2px);
+}
+.solution-detail-page .button:focus-visible {
+  outline: none;
+}
+@keyframes control-pulse-line {
+  0%, 18% { opacity: 0; transform: translateX(0); }
+  45% { opacity: 0.95; }
+  82%, 100% { opacity: 0; transform: translateX(490%); }
+}
+
+/* Section index eyebrow: original site ends at 16px / weight 350 / .2em / mint-green */
+.solution-detail-page .section-index {
+  font-size: 16px;
+  font-weight: 350;
+  letter-spacing: 0.2em;
+  color: var(--cyan);
 }
 
 /* --- Hero section --- */
