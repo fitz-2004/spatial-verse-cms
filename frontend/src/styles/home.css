@@ -254,12 +254,40 @@ html.has-reveal [data-reveal="brand-start-content"] { transform: translate3d(0, 
 html.has-reveal [data-reveal="brand-start-meta"].is-visible, html.has-reveal [data-reveal="brand-start-bottom"].is-visible { transform: translate3d(0, 0, 0); }
 html.has-reveal [data-reveal="brand-start-content"].is-visible { transform: translate3d(0, 0, 0) scale(1); }
 html.has-reveal [data-reveal="brand-start-bottom"] { transition-delay: .18s; }
-.metric .metric-value { margin: 0; color: var(--cyan); font-family: var(--display); font-size: clamp(42px, 5vw, 72px); font-stretch: condensed; font-weight: 300; letter-spacing: -.055em; line-height: 1.5; }
+/*
+ * Apostrophe replaces contextual rich text with a ProseMirror editor while
+ * Edit mode is active. Keep the metric typography on both the rendered h3 and
+ * the temporary editor DOM so Preview and Edit remain visually identical.
+ * A rem-based preferred size avoids the CMS breakpoint canvas changing a vw
+ * value merely because the page is displayed inside the editor viewport.
+ */
+.metric > strong,
+.metric .metric-value,
+.metric [data-apos-widget] > h3,
+.metric .apos-rich-text-editor__editor,
+.metric .apos-rich-text-editor__editor h3 {
+  margin: 0;
+  color: var(--cyan);
+  font-family: var(--display);
+  font-size: clamp(42px, 4.5rem, 72px);
+  font-stretch: condensed;
+  font-weight: 300;
+  letter-spacing: -.055em;
+  line-height: 1.5;
+}
+.metric .metric-value-area,
+.metric [data-apos-widget] {
+  width: 100%;
+}
 @media (prefers-reduced-motion: reduce) {
   html.has-reveal [data-reveal="brand-start-meta"], html.has-reveal [data-reveal="brand-start-content"], html.has-reveal [data-reveal="brand-start-bottom"] { transform: none; }
 }
 @media (max-width: 560px) {
-  .metric .metric-value { font-size: 38px; }
+  .metric > strong,
+  .metric .metric-value,
+  .metric [data-apos-widget] > h3,
+  .metric .apos-rich-text-editor__editor,
+  .metric .apos-rich-text-editor__editor h3 { font-size: 38px; }
 }
 
 /* The opening chapter is static on entry and occupies exactly the first viewport. */
