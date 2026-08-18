@@ -19,7 +19,3 @@ export function attachmentUrl(attachment: any) {
     || attachment?.attachment?._url
     || attachment?.attachment?._urls?.original;
 }
-
-export function hasSingleton(area: any, type: string) {
-  return Boolean(area?.items?.some((item: any) => item?.type === type));
-}

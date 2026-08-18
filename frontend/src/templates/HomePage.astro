@@ -1,36 +1,17 @@
 ---
 import AposArea from '@apostrophecms/apostrophe-astro/components/AposArea.astro';
-import HomeExperience from '../components/home/HomeExperience.tsx';
-import { homeContentFromApostrophe } from '../data/home/fromApostrophe';
-import { hasSingleton } from '../lib/homeWidget';
 import '../styles/home.css';
 
 const { page } = Astro.props.aposData;
-const content = homeContentFromApostrophe(page);
-const contextualAreas = [
-  [ page.homeBrandArea, 'home-brand' ],
-  [ page.homeHeroArea, 'home-hero' ],
-  [ page.homeSolutionsArea, 'home-solutions' ],
-  [ page.homeCapabilitiesArea, 'home-capabilities' ],
-  [ page.homeWhyArea, 'home-why' ],
-  [ page.homeSupportArea, 'home-support' ]
-];
-const hasContextualModel = contextualAreas.every(([ area, type ]) => hasSingleton(area, type));
 ---
 
-{
-  hasContextualModel
-    ? (
-      <div class="site-shell" data-home-contextual>
-        <AposArea area={page.homeBrandArea} />
-        <AposArea area={page.homeHeroArea} />
-        <AposArea area={page.homeSolutionsArea} />
-        <AposArea area={page.homeCapabilitiesArea} />
-        <AposArea area={page.homeWhyArea} />
-        <AposArea area={page.homeSupportArea} />
-      </div>
-    )
-    : <HomeExperience {content} client:load />
-}
+<div class="site-shell" data-home-contextual>
+  <AposArea area={page.homeBrandArea} />
+  <AposArea area={page.homeHeroArea} />
+  <AposArea area={page.homeSolutionsArea} />
+  <AposArea area={page.homeCapabilitiesArea} />
+  <AposArea area={page.homeWhyArea} />
+  <AposArea area={page.homeSupportArea} />
+</div>
 
 <script>import '../lib/homeContextual';</script>

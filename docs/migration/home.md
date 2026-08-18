@@ -69,7 +69,7 @@ Astro/SSR 负责把这些内容真正生成到可抓取 HTML 中；Page fields �
 
 `homeContextual.ts` 负责区块 reveal、方案/能力/支持模式切换和能力轮盘。它监听 Apostrophe 在 Draft/Preview 切换时替换的 DOM 并重新初始化，不保存 CMS 内容。首屏 `DeepSeekHarnessBackground.tsx` 仍是 React island。
 
-旧的已发布首页在尚未执行 Update/Publish 时可能仍是旧 Page fields。Template 会临时回退到已经验收的 `HomeExperience` mock 渲染，所以公开页不会空白；登录后 Draft 读取新 Area 模型并显示编辑控件。等编辑人员审核并发布新草稿后，公开页自动走新的服务端 Area 渲染。
+首页不再保留 React/mock 页面回退。Published、Preview 和 Edit 始终使用同一个 `HomePage.astro`，并按固定顺序由六个服务端 `<AposArea>` 渲染。若数据库缺少必要 Area，应修复或重新导入 CMS 数据，禁止静默切换到另一套页面实现。
 
 ## 草稿数据导入
 
@@ -140,7 +140,7 @@ node app @apostrophecms/home-page:seed-draft
 4. 页面应显示 6 个首页区块编辑入口和各可见文案的 Rich Text 原位编辑入口。
 5. Preview 下验证方案、能力和支持模式切换；不要为检查而执行 Update/Publish。
 
-`Update/Publish` 会把当前草稿复制到公开版本；导入任务只写草稿数据库。公开页面在正式审核前仍保留旧发布版本或 mock 回退。
+`Update/Publish` 会把当前草稿复制到公开版本；导入任务只写草稿数据库。建立或更新首页基线时，必须在审核草稿后完成发布，确保公开版本也具备相同的六个 Area；前端不会再以 mock 内容掩盖不完整的 CMS 数据。
 
 ## 验证与已知事项
 
