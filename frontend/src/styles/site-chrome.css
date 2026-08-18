@@ -96,6 +96,12 @@ body.spatialverse-body {
   backdrop-filter: blur(16px);
 }
 
+/* Apostrophe replaces page DOM when Preview/Edit changes. Keep the shared
+   navigation below its two-row admin bar without relying on component JS. */
+body:has(.apos-admin-bar-wrapper) .site-header {
+  top: 110px;
+}
+
 .brand-lockup {
   position: relative;
   z-index: 2;
