@@ -19,6 +19,16 @@ apostrophe({
     '@apostrophecms/rich-text-widget': {},
     '@apostrophecms/image-widget': {},
     '@apostrophecms/video-widget': {},
+    // Home-only singleton widgets. Keep this registration block together so
+    // the integration branch can resolve app.js conflicts without touching
+    // another owner's content model. Area configuration uses these names
+    // without the required `-widget` module suffix.
+    'home-brand-widget': {},
+    'home-hero-widget': {},
+    'home-solutions-widget': {},
+    'home-capabilities-widget': {},
+    'home-why-widget': {},
+    'home-support-widget': {},
     // The project's first custom page type.
     'default-page': {},
     'solution-page': {},

@@ -78,6 +78,8 @@ git switch -c <your-branch> origin/dev
 
 固定页面结构优先使用 Page fields + Astro Component。不要为了组件化而把所有 section 都做成 Widget，也不要建立覆盖全站的“大一统”内容模型。
 
+需要让固定区块中的可见文字支持 Apostrophe 原位编辑时，允许负责人采用“固定单例 Area + 域内 Widget”这一窄例外，但必须同时满足：Area 位于 Template 的固定位置；只允许一个指定 Widget 类型；`max: 1`；不允许跨区块插入、删除或重排；SEO、slug 等页面技术字段继续放在 Page fields；动画与状态逻辑继续由 Astro Component、TypeScript 或 React island 负责。该例外必须写入本域 `docs/migration/<domain>.md`，不得据此建立跨负责人共享的大型 Widget 模型。
+
 Page Type 名、后端模块名和 Astro Template 映射键必须完全一致。域内新增命名使用前缀：`home-*`、`solution-*`、`core-*`、`research-*`、`dataset-*`、`about-*`。
 
 ## 5. Locale、URL 和页面树
@@ -213,6 +215,7 @@ APOS_DB_URI=sqlite://data/spatial-verse-cms.sqlite npm run build
 - URL 全部小写，locale 遵循 `/` 与 `/en`。
 - 页面没有重复 Header/Footer。
 - 页面内容来自 CMS，不长期硬编码业务文案或媒体 URL。
+- 页面级 SEO 字段由 Page Type 管理，并由公共 Astro 路由服务端输出可抓取的 `<title>`、description、canonical、robots、Open Graph、Twitter Card、语言替代链接和 JSON-LD；Widget 只管理页面可见内容。
 - 页面与 Piece 仍是草稿。
 
 当前后端可能提示 Blog Area 引用了不存在的 `two-column` Widget。这是 Starter 遗留警告，与本轮页面迁移无关；不要在页面功能分支中顺手修复。

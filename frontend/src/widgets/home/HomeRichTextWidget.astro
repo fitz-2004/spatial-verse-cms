@@ -1,0 +1,45 @@
+---
+const {
+  widget,
+  canEdit = false,
+  contentClass,
+  contentId,
+  options = {}
+} = Astro.props;
+const rawContent = typeof widget?.content === 'string' ? widget.content : '';
+const configuredTag = options?.styles?.find((style) => typeof style?.tag === 'string')?.tag;
+const inlineTag = /^(?:h[1-6]|p|div|span)$/i.test(configuredTag || '')
+  ? configuredTag.toLowerCase()
+  : 'p';
+const normalizedContent = rawContent.trim() && !/^<[a-z][a-z0-9-]*(?:\s|>)/i.test(rawContent.trim())
+  ? `<${inlineTag}>${rawContent
+      .replaceAll('&', '&amp;')
+      .replaceAll('<', '&lt;')
+      .replaceAll('>', '&gt;')
+      .replaceAll('"', '&quot;')
+      .replaceAll("'", '&#039;')}</${inlineTag}>`
+  : rawContent;
+const injectedAttributes = [
+  contentClass ? `class="${contentClass}"` : '',
+  contentId ? `id="${contentId}"` : ''
+].filter(Boolean).join(' ');
+const content = injectedAttributes
+  ? normalizedContent.replace(/^<([a-z][a-z0-9-]*)(\s|>)/i, `<$1 ${injectedAttributes}$2`)
+  : normalizedContent;
+const attributes = canEdit
+  ? {
+      'data-apos-widget': widget._id,
+      class: 'home-contextual-text'
+    }
+  : {
+      class: 'home-contextual-text'
+    };
+---
+
+<span {...attributes} set:html={content}></span>
+
+<style>
+  .home-contextual-text {
+    display: contents;
+  }
+</style>

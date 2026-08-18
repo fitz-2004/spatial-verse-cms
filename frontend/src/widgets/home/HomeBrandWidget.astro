@@ -1,0 +1,60 @@
+---
+import AposArea from '@apostrophecms/apostrophe-astro/components/AposArea.astro';
+import DeepSeekHarnessBackground, { spatialVerseFluidParams } from '../../components/home/DeepSeekHarnessBackground.tsx';
+import HomeRichTextWidget from './HomeRichTextWidget.astro';
+
+const { widget } = Astro.props;
+---
+
+<section id="home-brand" class="brand-start-section" data-brand-start data-brand-transition aria-labelledby="brand-start-title">
+  <div class="brand-start-panel" data-brand-panel>
+    <DeepSeekHarnessBackground
+      fluidParams={spatialVerseFluidParams}
+      lineColor="rgba(215, 255, 243,"
+      dotColor="rgba(215, 255, 243,"
+      lineOpacity={0}
+      dotOpacity={0.5}
+      showLines={false}
+      shapeSrc="/spatialverse-logo.png"
+      shapeSize={347}
+      style={{ zIndex: 0 }}
+      client:load
+    />
+    <div class="brand-start-grid" aria-hidden="true"></div>
+    <div class="brand-start-orbit brand-start-orbit-one" aria-hidden="true"></div>
+    <div class="brand-start-orbit brand-start-orbit-two" aria-hidden="true"></div>
+    <div class="brand-start-crosshair" aria-hidden="true"><span></span><span></span></div>
+    <div class="brand-start-topline content-width">
+      <span>00 / BRAND SYSTEM</span>
+      <span>SPATIALVERSE / OFFICIAL PLATFORM</span>
+    </div>
+    <div class="brand-start-content content-width">
+      <div class="brand-start-index"><span>01</span><i></i></div>
+      <div class="brand-start-copy">
+        <AposArea area={widget.kicker} widgetComponent={HomeRichTextWidget} contentClass="brand-start-kicker" aposStyle="display: contents" />
+        <AposArea area={widget.heading} widgetComponent={HomeRichTextWidget} contentId="brand-start-title" aposStyle="display: contents" />
+        <AposArea area={widget.descriptor} widgetComponent={HomeRichTextWidget} contentClass="brand-start-descriptor" aposStyle="display: contents" />
+        <a class="brand-start-enter" href="#hero">ENTER THE PLATFORM <span aria-hidden="true">↗</span></a>
+      </div>
+      <div class="brand-start-visual" aria-hidden="true">
+        <span class="brand-art-caption caption-top">DIGITAL SPATIAL FIELD / 01</span>
+        <span class="brand-art-caption caption-right">DATA IN MOTION</span>
+        <div class="brand-art-architecture">
+          <span class="brand-art-plane-wrap plane-wrap-one"><i class="brand-art-plane plane-one"></i></span>
+          <span class="brand-art-plane-wrap plane-wrap-two"><i class="brand-art-plane plane-two"></i></span>
+          <span class="brand-art-plane-wrap plane-wrap-three"><i class="brand-art-plane plane-three"></i></span>
+          <i class="brand-art-beam beam-one"></i><i class="brand-art-beam beam-two"></i><i class="brand-art-beam beam-three"></i>
+        </div>
+        <div class="brand-art-particles">
+          {Array.from({ length: 12 }).map((_, index) => <i class={`brand-art-particle particle-${['one','two','three','four','five','six','seven','eight','nine','ten','eleven','twelve'][index]}`}></i>)}
+          {Array.from({ length: 12 }).map((_, index) => <i class={`brand-art-particle core-particle core-particle-${['one','two','three','four','five','six','seven','eight','nine','ten','eleven','twelve'][index]}`}></i>)}
+        </div>
+        <div class="brand-art-current-glow">
+          <i class="current-streak current-streak-one"></i><i class="current-streak current-streak-two"></i><i class="current-streak current-streak-three"></i>
+        </div>
+        <span class="brand-art-beacon"><span class="spatialverse-mark beacon-logo"></span></span>
+      </div>
+    </div>
+    <div class="brand-start-bottom content-width"><span>SCROLL TO ENTER</span><i aria-hidden="true"></i><span>01 / 07</span></div>
+  </div>
+</section>

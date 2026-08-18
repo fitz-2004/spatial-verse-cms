@@ -159,6 +159,7 @@ Global 只存真正的全站内容。页面 Hero、页面章节、论文、数�
 
 - Page Type 名、后端模块名与 Astro 映射键完全一致。
 - 只有编辑人员需要自由插入、删除、重排的内容区块才做 Widget。固定结构只需 Page fields + Astro Component。
+- 固定区块如果明确需要可见文字原位编辑，可以使用域前缀的固定单例 Area/Widget：Template 位置固定、Area 仅允许该类型且 `max: 1`、不允许跨区插入或重排。SEO 与页面技术字段仍属于 Page fields，交互仍属于 Astro/TypeScript/React。首页采用的就是这一受控模式；其他负责人如采用，必须记录在自己的迁移文档中。
 - 只有独立生命周期、跨页面查询/复用的实体才做 Piece。本轮已确定的 Piece 只有 `research-paper` 和 `dataset-item`。
 - 动画、Canvas/WebGL、搜索、筛选、弹层、计数器等是普通组件或客户端岛，不是 Widget/Piece。
 - Widget、Piece 和样式使用域前缀：`home-*`、`solution-*`、`core-*`、`research-*`、`dataset-*`、`about-*`。
@@ -188,7 +189,7 @@ Global 只存真正的全站内容。页面 Hero、页面章节、论文、数�
 1. 每个分支只修改自己负责的 Page Type、Template、域组件、域样式、域 Widget/Piece 和数据交付文件。
 2. 不从原站复制 `layout.tsx`、Header、Footer 或整份 `globals.css`。只迁移本域实际使用的规则，并放进本域样式文件。
 3. 必须修改共享注册文件时，把注册修改做成独立 commit，方便沈远卓在集成时选择或手工合并。
-4. 不修改正式路由 `frontend/src/pages/[...slug].astro`。
+4. 不修改正式路由 `frontend/src/pages/[...slug].astro`。公共基线已经通过 `SeoHead.astro` 在该路由输出页面级 SEO；页面分支只补充本 Page Type 的 SEO fields，不复制 `<head>` 实现。如公共 SEO 能力确需改变，由集成负责人单独提交小型公共修改。
 5. 不提交 `node_modules`、构建目录或本地 SQLite 数据库。
 6. 每个分支至少每日 rebase/merge 最新公共基线；不要通过复制其他分支文件解决冲突。
 
