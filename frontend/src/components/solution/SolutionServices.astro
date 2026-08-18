@@ -1,0 +1,30 @@
+---
+import SolutionRichText from './SolutionRichText.astro';
+
+const { serviceTitle, services } = Astro.props;
+---
+
+<section class="solution-detail-services solution-scroll-section section" aria-labelledby="solution-detail-services-title">
+  <div class="content-width">
+    <div class="solution-detail-section-heading solution-scroll-heading">
+      <p class="section-index">04 / SERVICE CAPABILITY</p>
+      <h2 id="solution-detail-services-title"><SolutionRichText content={serviceTitle} className="solution-rich-text" /></h2>
+      <span class="solution-scroll-index">SCROLL / DEPLOY</span>
+    </div>
+    <div class="solution-service-rail">
+      {services.map((service, index) => (
+        <article class="solution-service-step" data-scroll-card data-scroll-index={index}>
+          <div class="solution-service-marker">
+            <span>0{index + 1}</span>
+            <i />
+          </div>
+          <div>
+            <h3>{service.title}</h3>
+            <p>{service.text}</p>
+          </div>
+          <i class="solution-card-signal" aria-hidden="true" />
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
