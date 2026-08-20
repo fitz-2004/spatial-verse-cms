@@ -1,5 +1,50 @@
 ---
-const { page } = Astro.props.aposData;
----
+import AposArea from '@apostrophecms/apostrophe-astro/components/AposArea.astro';
+import { areaText } from '../lib/editableText.js';
+import '../styles/research.css';
 
-<h1>{page?.title}</h1>
+const { page } = Astro.props.aposData;
+const intro = page?.intro || {};
+const groups = Array.isArray(page?.groups) ? page.groups : [];
+const filters = Array.isArray(intro?.filters) ? intro.filters : [];
+---
+<section class="section-capabilities-intro core-page-intro archive-hero" aria-labelledby="datasets-title">
+  <div class="content-width">
+    <div class="section-intro">
+      <span class="section-index"><AposArea area={intro?.eyebrow} /></span>
+      <div>
+        <h1 id="datasets-title"><AposArea area={intro?.title} /></h1>
+        <div class="core-page-intro-lead"><AposArea area={intro?.lead} /></div>
+        <div class="core-page-signal-row" aria-label="数据集筛选标签">
+          {filters.map((filter) => (
+            <span key={areaText(filter?.label)}><AposArea area={filter?.label} /></span>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="core-page-intro-grid" aria-hidden="true" />
+  <div class="core-page-intro-orbit" aria-hidden="true" />
+</section>
+
+<section class="dataset-archive-section section">
+  <div class="content-width">
+    <div class="dataset-group-list">
+      {groups.map((group) => (
+        <article class="dataset-group-item" key={areaText(group?.title)}>
+          <span class="research-archive-year"><AposArea area={group?.number} /></span>
+          <div>
+            <p class="research-archive-venue"><AposArea area={group?.type} /></p>
+            <h3><AposArea area={group?.title} /></h3>
+            <div class="dataset-group-text"><AposArea area={group?.text} /></div>
+            <div class="dataset-group-tags">
+              {(Array.isArray(group?.tags) ? group.tags : []).map((tag) => (
+                <span key={areaText(tag?.label)}><AposArea area={tag?.label} /></span>
+              ))}
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

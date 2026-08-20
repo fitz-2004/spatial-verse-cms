@@ -312,6 +312,13 @@
   letter-spacing: 0.08em;
 }
 
+.core-capability-panel-default-media {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 .core-capability-panel-video-frame::before {
   position: absolute;
   inset: 14px;
@@ -479,7 +486,7 @@
   --gear-accent: var(--cyan);
   position: fixed;
   top: 50%;
-  right: 0;
+  right: -130px;
   z-index: 70;
   visibility: hidden;
   width: 260px;
@@ -727,6 +734,72 @@
 .core-page-next-links a:hover {
   padding-left: 8px;
   color: var(--ink);
+}
+
+/* ---------- 富文本 area 排版适配 ---------- */
+.section-index .rich-text-widget p,
+.section-index .rich-text-widget h1,
+.section-index .rich-text-widget h2,
+.core-page-intro .section-intro h1 .rich-text-widget p,
+.core-page-intro .section-intro h1 .rich-text-widget h1,
+.core-page-intro .section-intro h1 .rich-text-widget h2,
+.core-page-intro-lead .rich-text-widget p,
+.core-page-intro-lead .rich-text-widget h1,
+.core-page-intro-lead .rich-text-widget h2,
+.core-page-intro-subcopy .rich-text-widget p {
+  margin: 0;
+}
+.core-capability-panel-label .rich-text-widget p,
+.core-capability-panel-copy h2 .rich-text-widget p,
+.core-capability-panel-copy h2 .rich-text-widget h1,
+.core-capability-panel-copy h2 .rich-text-widget h2,
+.core-capability-panel-description .rich-text-widget p,
+.core-capability-core strong .rich-text-widget p,
+.core-capability-panel-header span .rich-text-widget p,
+.core-capability-panel-meta span .rich-text-widget p {
+  margin: 0;
+}
+.core-page-next > div:first-child .rich-text-widget p,
+.core-page-next > div:first-child strong .rich-text-widget p,
+.core-page-next > div:first-child strong .rich-text-widget h1,
+.core-page-next > div:first-child strong .rich-text-widget h2,
+.core-page-next-links a span .rich-text-widget p,
+.core-page-next-links a .rich-text-widget p {
+  margin: 0;
+}
+
+/* ---------- 行内 area 排版（防换行） ---------- */
+.core-capability-panel-header .core-capability-panel-header-prefix,
+.core-capability-panel-label,
+.core-capability-panel-meta span,
+.core-capability-core strong {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  min-width: 0;
+}
+
+.core-capability-panel-header .core-capability-panel-header-prefix .rich-text-widget,
+.core-capability-panel-label .rich-text-widget,
+.core-capability-panel-meta span .rich-text-widget,
+.core-capability-core strong .rich-text-widget {
+  display: inline-flex;
+  flex: 0 0 auto;
+}
+
+.core-capability-panel-header .core-capability-panel-header-prefix .rich-text-widget p,
+.core-capability-panel-label .rich-text-widget p,
+.core-capability-panel-meta span .rich-text-widget p,
+.core-capability-core strong .rich-text-widget p {
+  margin: 0;
+  white-space: nowrap;
+}
+
+.core-capability-core strong {
+  display: inline-flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 6px;
 }
 
 /* ---------- Responsive ---------- */

@@ -1,5 +1,49 @@
 ---
-const { page } = Astro.props.aposData;
----
+import AposArea from '@apostrophecms/apostrophe-astro/components/AposArea.astro';
+import { areaText } from '../lib/editableText.js';
+import '../styles/research.css';
 
-<h1>{page?.title}</h1>
+const { page } = Astro.props.aposData;
+const intro = page?.intro || {};
+const story = page?.story || {};
+const focus = Array.isArray(page?.focus) ? page.focus : [];
+const network = page?.network || {};
+---
+<section class="section-capabilities-intro core-page-intro" aria-labelledby="about-title">
+  <div class="content-width">
+    <div class="section-intro">
+      <span class="section-index"><AposArea area={intro?.eyebrow} /></span>
+      <div>
+        <h1 id="about-title"><AposArea area={intro?.title} /></h1>
+        <div class="core-page-intro-lead"><AposArea area={intro?.lead} /></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="about-story section">
+  <div class="content-width">
+    <div class="archive-section-head">
+      <span class="section-index"><AposArea area={story?.index} /></span>
+      <div>
+        <h2><AposArea area={story?.title} /></h2>
+        <div class="core-page-intro-lead"><AposArea area={story?.body} /></div>
+        <div class="core-page-signal-row" aria-label="服务领域">
+          {focus.map((item, index) => (
+            <span key={areaText(item?.label)}><b>0{index + 1}</b> <AposArea area={item?.label} /></span>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="about-network section">
+  <div class="content-width">
+    <div class="archive-section-head">
+      <span class="section-index"><AposArea area={network?.index} /></span>
+      <h2><AposArea area={network?.title} /></h2>
+    </div>
+    <div class="core-page-intro-lead"><AposArea area={network?.body} /></div>
+  </div>
+</section>

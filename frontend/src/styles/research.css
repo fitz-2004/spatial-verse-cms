@@ -90,6 +90,35 @@
   color: var(--acid);
 }
 
+/* ---------- 富文本 area 排版适配 ---------- */
+.archive-hero .section-intro h1 .rich-text-widget p,
+.archive-hero .section-intro h1 .rich-text-widget h1,
+.archive-hero .section-intro h1 .rich-text-widget h2,
+.core-page-intro-lead .rich-text-widget p,
+.core-page-signal-row span .rich-text-widget p,
+.archive-section-head h2 .rich-text-widget p,
+.archive-section-head h2 .rich-text-widget h1,
+.archive-section-head h2 .rich-text-widget h2,
+.research-archive-item h3 .rich-text-widget p,
+.research-archive-item h3 .rich-text-widget h1,
+.research-archive-item h3 .rich-text-widget h2,
+.research-archive-item div > p:last-child .rich-text-widget p,
+.research-archive-venue .rich-text-widget p,
+.research-archive-year .rich-text-widget p,
+.dataset-group-item h3 .rich-text-widget p,
+.dataset-group-text .rich-text-widget p,
+.dataset-group-tags span .rich-text-widget p {
+  margin: 0;
+}
+.core-page-next > div:first-child .rich-text-widget p,
+.core-page-next > div:first-child strong .rich-text-widget p,
+.core-page-next > div:first-child strong .rich-text-widget h1,
+.core-page-next > div:first-child strong .rich-text-widget h2,
+.core-page-next-links a span .rich-text-widget p,
+.core-page-next-links a .rich-text-widget p {
+  margin: 0;
+}
+
 /* ---------- Responsive ---------- */
 @media (max-width: 900px) {
   .archive-section-head {

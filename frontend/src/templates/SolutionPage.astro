@@ -1,5 +1,66 @@
 ---
+import AposArea from '@apostrophecms/apostrophe-astro/components/AposArea.astro';
+import '../styles/solution.css';
+
 const { page } = Astro.props.aposData;
+const intro = page?.intro || {};
+const challenges = page?.challenges || {};
+const challengeItems = Array.isArray(challenges?.items) ? challenges.items : [];
+const advantages = page?.advantages || {};
+const advantageItems = Array.isArray(advantages?.items) ? advantages.items : [];
+const services = page?.services || {};
+const serviceItems = Array.isArray(services?.items) ? services.items : [];
 ---
 
-<h1>{page?.title}</h1>
+<article class="solution-page-article">
+  <section class="solution-hero" aria-labelledby="solution-title">
+    <div class="content-width">
+      <span class="section-index"><AposArea area={intro?.eyebrow} /></span>
+      <h1 id="solution-title"><AposArea area={intro?.title} /></h1>
+      <p class="solution-hero-english"><AposArea area={intro?.englishTitle} /></p>
+      <p class="solution-hero-lead"><AposArea area={intro?.lead} /></p>
+    </div>
+  </section>
+
+  <section class="solution-section solution-challenges" aria-labelledby="solution-challenges-title">
+    <div class="content-width">
+      <h2 id="solution-challenges-title"><AposArea area={challenges?.title} /></h2>
+      <div class="solution-card-grid">
+        {challengeItems.map((item, index) => (
+          <article class="solution-card" key={index}>
+            <h3><AposArea area={item?.title} /></h3>
+            <div class="solution-card-text"><AposArea area={item?.text} /></div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="solution-section solution-advantages" aria-labelledby="solution-advantages-title">
+    <div class="content-width">
+      <h2 id="solution-advantages-title"><AposArea area={advantages?.title} /></h2>
+      <div class="solution-card-grid">
+        {advantageItems.map((item, index) => (
+          <article class="solution-card" key={index}>
+            <h3><AposArea area={item?.title} /></h3>
+            <div class="solution-card-text"><AposArea area={item?.text} /></div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="solution-section solution-services" aria-labelledby="solution-services-title">
+    <div class="content-width">
+      <h2 id="solution-services-title"><AposArea area={services?.title} /></h2>
+      <div class="solution-card-grid">
+        {serviceItems.map((item, index) => (
+          <article class="solution-card" key={index}>
+            <h3><AposArea area={item?.title} /></h3>
+            <div class="solution-card-text"><AposArea area={item?.text} /></div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+</article>

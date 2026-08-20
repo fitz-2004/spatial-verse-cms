@@ -1,6 +1,7 @@
 ---
 import AposArea from '@apostrophecms/apostrophe-astro/components/AposArea.astro';
-import { paths } from '../lib/siteChrome.js';
+import { resolveHref } from '../lib/siteChrome.js';
+import { areaText } from '../lib/editableText.js';
 import '../styles/research.css';
 
 const { page } = Astro.props.aposData;
@@ -8,21 +9,21 @@ const intro = page?.intro || {};
 const sectionHead = page?.sectionHead || {};
 const signals = Array.isArray(intro?.signals) ? intro.signals : [];
 const papers = Array.isArray(page?._papers) ? page._papers : [];
-const coreLinks = [
-  { number: '01', label: '核心能力', href: paths.core[0] },
-  { number: '03', label: '样例数据集', href: paths.core[2] }
-];
+const outro = page?.outro || {};
+const outroLinks = Array.isArray(outro?.links) ? outro.links : [];
 ---
 
 <section class="section-capabilities-intro core-page-intro archive-hero" aria-labelledby="research-title">
   <div class="content-width">
     <div class="section-intro">
-      <p class="section-index">{intro?.eyebrow || '03 / RESEARCH ARCHIVE'}</p>
+      <span class="section-index"><AposArea area={intro?.eyebrow} /></span>
       <div>
-        <h1 id="research-title">{intro?.title || '学术研究'}</h1>
-        <p>{intro?.lead || ''}</p>
+        <h1 id="research-title"><AposArea area={intro?.title} /></h1>
+        <div class="core-page-intro-lead"><AposArea area={intro?.lead} /></div>
         <div class="core-page-signal-row">
-          {signals.map((signal) => <span key={signal.label}>{signal.label}</span>)}
+          {signals.map((signal) => (
+            <span key={areaText(signal?.label)}><AposArea area={signal?.label} /></span>
+          ))}
         </div>
       </div>
     </div>
@@ -34,8 +35,8 @@ const coreLinks = [
 <section class="research-archive-section section" aria-labelledby="research-archive-title">
   <div class="content-width">
     <div class="archive-section-head">
-      <p class="section-index">{sectionHead?.index || 'RESEARCH ARCHIVE / 2018—NOW'}</p>
-      <h2 id="research-archive-title">{sectionHead?.heading || '从空间数据到智能系统'}</h2>
+      <span class="section-index"><AposArea area={sectionHead?.index} /></span>
+      <h2 id="research-archive-title"><AposArea area={sectionHead?.heading} /></h2>
     </div>
     <div class="research-archive-list">
       {papers.map((paper) => (
@@ -54,10 +55,11 @@ const coreLinks = [
 </section>
 
 <section class="core-page-next content-width" aria-label="核心页面导航">
-  <div><span>RESEARCH ARCHIVE / COMPLETE</span><strong>返回核心能力，继续探索群核的数据基础设施</strong></div>
+  <div><span><AposArea area={outro?.eyebrow} /></span><strong><AposArea area={outro?.heading} /></strong></div>
   <div class="core-page-next-links">
-    {coreLinks.map((item, index) => (
-      <a href={item.href} key={item.href}><span>{item.number}</span>{item.label}<b>↗</b></a>
-    ))}
+    {outroLinks.map((item) => {
+      const href = resolveHref(item, 'zh');
+      return <a href={href} key={href}><span><AposArea area={item?.number} /></span><AposArea area={item?.label} /><b>↗</b></a>;
+    })}
   </div>
 </section>

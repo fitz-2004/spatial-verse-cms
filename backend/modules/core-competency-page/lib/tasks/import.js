@@ -1,55 +1,68 @@
 // 核心能力页中文数据导入任务
-// 运行：APOS_DB_URI=sqlite://data/spatial-verse-cms.sqlite node app core-competency-page:import
-// 重复运行会更新而不是重复创建（使用稳定 slug /coohomcloud/corecompetency）
+// 运行：node app core-competency-page:import
+// 重复运行会更新而不是重复创建（稳定 slug /coohomcloud/corecompetency）
 
-function buildData() {
+function buildData(self) {
+  const textArea = (text) => self.apos.area.fromPlaintext(text);
+
   return {
     title: '核心能力',
     slug: '/coohomcloud/corecompetency',
     type: 'core-competency-page',
     published: true,
     intro: {
-      eyebrow: '02 / CORE COMPETENCY',
-      title: '核心能力',
-      lead: '基于群核丰富的数据库资源，我们通过技术能力驱动的数据产品，满足 AIGC、计算机视觉与机器人等行业的数据需求。',
-      subcopy: '通过专用数据引擎，将海量数据库转换为适配不同应用平台的 3D 模型、3D 环境与衍生图像数据。',
+      eyebrow: textArea('02 / CORE COMPETENCY'),
+      title: textArea('核心能力'),
+      lead: textArea('基于群核丰富的数据库资源，我们通过技术能力驱动的数据产品，满足 AIGC、计算机视觉与机器人等行业的数据需求。'),
+      subcopy: textArea('通过专用数据引擎，将海量数据库转换为适配不同应用平台的 3D 模型、3D 环境与衍生图像数据。'),
       signals: [
-        { label: '3D MODEL DATA' },
-        { label: 'ENVIRONMENT DATA' },
-        { label: 'DERIVED IMAGE DATA' }
+        { label: textArea('3D MODEL DATA') },
+        { label: textArea('ENVIRONMENT DATA') },
+        { label: textArea('DERIVED IMAGE DATA') }
       ]
     },
-    capabilities: buildCapabilities()
+    capabilities: [
+      {
+        number: textArea('01'),
+        header: textArea('CORE CAPABILITY / 01'),
+        label: textArea('01 / PHYSICAL ENHANCEMENT'),
+        title: textArea('物理增强能力'),
+        text: textArea('赋予模型密度，摩擦力，弹性，阻尼等真实的物理性质信息，同时还可以对活动部件进行可活动的物理约束')
+        // media 由 CMS 后台数组编辑器添加
+      },
+      {
+        number: textArea('02'),
+        header: textArea('CORE CAPABILITY / 02'),
+        label: textArea('02 / SEGMENTATION & ANNOTATION'),
+        title: textArea('分割标注能力'),
+        text: textArea('自动化结合人工标注技术，可实现包含语义，材质，状态等多种形态信息标注')
+      },
+      {
+        number: textArea('03'),
+        header: textArea('CORE CAPABILITY / 03'),
+        label: textArea('03 / SCENE ENHANCEMENT'),
+        title: textArea('场景增强能力'),
+        text: textArea('通过场景设计工具、场景繁化、模型变形、场景光线模拟等能力，使场景数据更多样')
+      },
+      {
+        number: textArea('04'),
+        header: textArea('CORE CAPABILITY / 04'),
+        label: textArea('04 / MULTI-CHANNEL SUPPORT'),
+        title: textArea('多通道支持能力'),
+        text: textArea('支持多平台、高效率、更完整的3D模型数据导出，以及3D环境和衍生图片生成能力')
+      }
+    ],
+    outro: {
+      eyebrow: textArea('CORE COMPETENCY / COMPLETE'),
+      heading: textArea('继续探索群核的数据基础设施'),
+      links: [
+        { number: textArea('02'), label: textArea('学术研究') },
+        { number: textArea('03'), label: textArea('样例数据集') }
+      ]
+    },
+    seoDescription: '群核空间智能平台面向 AIGC、计算机视觉与机器人行业的数据核心能力。',
+    seoKeywords: '3D 数据, 核心能力, 群核, 空间智能'
   };
-}
-
-function buildCapabilities() {
-  return [
-    {
-      number: '01',
-      label: 'PHYSICAL ENHANCEMENT',
-      title: '物理增强能力',
-      text: '赋予模型密度，摩擦力，弹性，阻尼等真实的物理性质信息，同时还可以对活动部件进行可活动的物理约束'
-    },
-    {
-      number: '02',
-      label: 'SEGMENTATION & ANNOTATION',
-      title: '分割标注能力',
-      text: '自动化结合人工标注技术，可实现包含语义，材质，状态等多种形态信息标注'
-    },
-    {
-      number: '03',
-      label: 'SCENE ENHANCEMENT',
-      title: '场景增强能力',
-      text: '通过场景设计工具、场景繁化、模型变形、场景光线模拟等能力，使场景数据更多样'
-    },
-    {
-      number: '04',
-      label: 'MULTI-CHANNEL SUPPORT',
-      title: '多通道支持能力',
-      text: '支持多平台、高效率、更完整的3D模型数据导出，以及3D环境和衍生图片生成能力'
-    }
-  ];
 }
 
 export default (self) => {
@@ -59,7 +72,7 @@ export default (self) => {
       const apos = self.apos;
       const pages = apos.modules['@apostrophecms/page'];
       const req = apos.task.getReq();
-      const data = buildData();
+      const data = buildData(self);
 
       const existing = await pages.find(req, { slug: data.slug }).toArray();
       if (existing.length > 0) {
