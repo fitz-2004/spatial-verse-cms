@@ -1,66 +1,72 @@
 ---
-import AposArea from '@apostrophecms/apostrophe-astro/components/AposArea.astro';
 import '../styles/solution.css';
+import SolutionHero from '../components/solution/SolutionHero.astro';
+import SolutionVideoSection from '../components/solution/SolutionVideoSection.astro';
+import SolutionChallenges from '../components/solution/SolutionChallenges.astro';
+import SolutionAdvantages from '../components/solution/SolutionAdvantages.astro';
+import SolutionServices from '../components/solution/SolutionServices.astro';
+import SolutionCTA from '../components/solution/SolutionCTA.astro';
 
 const { page } = Astro.props.aposData;
-const intro = page?.intro || {};
-const challenges = page?.challenges || {};
-const challengeItems = Array.isArray(challenges?.items) ? challenges.items : [];
-const advantages = page?.advantages || {};
-const advantageItems = Array.isArray(advantages?.items) ? advantages.items : [];
-const services = page?.services || {};
-const serviceItems = Array.isArray(services?.items) ? services.items : [];
+const accent = page.accent || '#29f5d1';
 ---
 
-<article class="solution-page-article">
-  <section class="solution-hero" aria-labelledby="solution-title">
-    <div class="content-width">
-      <span class="section-index"><AposArea area={intro?.eyebrow} /></span>
-      <h1 id="solution-title"><AposArea area={intro?.title} /></h1>
-      <p class="solution-hero-english"><AposArea area={intro?.englishTitle} /></p>
-      <p class="solution-hero-lead"><AposArea area={intro?.lead} /></p>
-    </div>
-  </section>
+<div class="solution-detail-page" style={`--detail-accent: ${accent};`}>
+  <SolutionHero
+    title={page.title}
+    englishTitle={page.englishTitle}
+    heroTitle={page.heroTitle}
+    heroLead={page.heroLead}
+    sequence={page.sequence}
+    accent={accent}
+  />
 
-  <section class="solution-section solution-challenges" aria-labelledby="solution-challenges-title">
-    <div class="content-width">
-      <h2 id="solution-challenges-title"><AposArea area={challenges?.title} /></h2>
-      <div class="solution-card-grid">
-        {challengeItems.map((item, index) => (
-          <article class="solution-card" key={index}>
-            <h3><AposArea area={item?.title} /></h3>
-            <div class="solution-card-text"><AposArea area={item?.text} /></div>
-          </article>
-        ))}
-      </div>
-    </div>
-  </section>
+  <SolutionVideoSection
+    title={page.title}
+    englishTitle={page.englishTitle}
+    media={page.media}
+    videoDescription={page.videoDescription}
+  />
 
-  <section class="solution-section solution-advantages" aria-labelledby="solution-advantages-title">
-    <div class="content-width">
-      <h2 id="solution-advantages-title"><AposArea area={advantages?.title} /></h2>
-      <div class="solution-card-grid">
-        {advantageItems.map((item, index) => (
-          <article class="solution-card" key={index}>
-            <h3><AposArea area={item?.title} /></h3>
-            <div class="solution-card-text"><AposArea area={item?.text} /></div>
-          </article>
-        ))}
-      </div>
-    </div>
-  </section>
+  <SolutionChallenges
+    challengeTitle={page.challengeTitle}
+    challenges={page.challenges || []}
+  />
 
-  <section class="solution-section solution-services" aria-labelledby="solution-services-title">
-    <div class="content-width">
-      <h2 id="solution-services-title"><AposArea area={services?.title} /></h2>
-      <div class="solution-card-grid">
-        {serviceItems.map((item, index) => (
-          <article class="solution-card" key={index}>
-            <h3><AposArea area={item?.title} /></h3>
-            <div class="solution-card-text"><AposArea area={item?.text} /></div>
-          </article>
-        ))}
-      </div>
-    </div>
-  </section>
-</article>
+  <SolutionAdvantages
+    advantageTitle={page.advantageTitle}
+    advantages={page.advantages || []}
+  />
+
+  <SolutionServices
+    serviceTitle={page.serviceTitle}
+    services={page.services || []}
+  />
+
+  <SolutionCTA
+    ctaTitle={page.ctaTitle || '让下一组数据进入真实应用。'}
+  />
+</div>
+
+<script is:inline>
+  (() => {
+    const cards = Array.from(document.querySelectorAll('[data-scroll-card]'));
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (reducedMotion || !('IntersectionObserver' in window)) {
+      cards.forEach((card) => card.classList.add('is-in-view'));
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) =>
+          entry.target.classList.toggle('is-in-view', entry.isIntersecting)
+        );
+      },
+      { threshold: 0.16, rootMargin: '-10% 0px -12% 0px' }
+    );
+
+    cards.forEach((card) => observer.observe(card));
+  })();
+</script>

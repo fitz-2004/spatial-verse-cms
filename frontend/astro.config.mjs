@@ -21,7 +21,7 @@ export default defineConfig({
   integrations: [
     react(),
     apostrophe({
-      aposHost: 'http://localhost:3000',
+      aposHost: env.APOS_HOST || 'http://localhost:3000',
       widgetsMapping: './src/widgets',
       templatesMapping: './src/templates',
       includeResponseHeaders: [

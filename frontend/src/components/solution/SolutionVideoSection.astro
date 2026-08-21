@@ -1,0 +1,53 @@
+---
+import SolutionRichText from './SolutionRichText.astro';
+
+const {
+  title,
+  englishTitle,
+  media,
+  videoDescription
+} = Astro.props;
+
+const attachment = media;
+const hasMedia = attachment && attachment._url;
+const ext = hasMedia ? (attachment.extension || '').toLowerCase() : '';
+const isVideo = ['mp4', 'mov', 'webm'].includes(ext);
+const mediaUrl = hasMedia ? attachment._url : null;
+const slotLabel = `${title} CMS media`;
+---
+
+<section class="solution-detail-video-section" aria-labelledby="solution-detail-video-title">
+  <div class="content-width solution-detail-video-layout">
+    <div class="solution-detail-video-copy">
+      <p class="section-index">02 / LIVE DATA SIGNAL</p>
+      <h2 id="solution-detail-video-title">
+        {title}<br /><span>IN MOTION</span>
+      </h2>
+      <SolutionRichText content={videoDescription} className="solution-rich-text video-description" fallback="首页解决方案中的对应视频已同步到本页面，用于展示该方向的数据生成、空间理解与应用状态。" />
+      <div class="solution-detail-video-meta">
+        <span>CMS / MEDIA FIELD</span>
+        <span>IMAGE OR VIDEO / BIND AT BUILD</span>
+      </div>
+    </div>
+    <div class="solution-detail-video-frame">
+      {hasMedia && isVideo && (
+        <video autoplay loop muted playsinline preload="metadata" aria-label={slotLabel}>
+          <source src={mediaUrl} />
+        </video>
+      )}
+      {hasMedia && !isVideo && (
+        <img src={mediaUrl} alt={slotLabel} loading="lazy" />
+      )}
+      {!hasMedia && (
+        <div class="solution-detail-cms-slot" aria-label={slotLabel}>
+          <span>MEDIA SLOT / CMS</span>
+          <strong>--</strong>
+          <small>预留图片 / 视频字段</small>
+        </div>
+      )}
+      <span class="solution-detail-video-corner corner-top-left" aria-hidden="true" />
+      <span class="solution-detail-video-corner corner-bottom-right" aria-hidden="true" />
+      <span class="solution-detail-video-label">{englishTitle} / MEDIA FEED</span>
+    </div>
+  </div>
+</section>

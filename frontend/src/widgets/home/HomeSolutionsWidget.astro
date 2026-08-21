@@ -1,0 +1,80 @@
+---
+import AposArea from '@apostrophecms/apostrophe-astro/components/AposArea.astro';
+import HomeMediaSlot from '../../components/home/HomeMediaSlot.tsx';
+import { areaText, attachmentUrl } from '../../lib/homeWidget';
+import HomeRichTextWidget from './HomeRichTextWidget.astro';
+
+const { widget } = Astro.props;
+const solutions = Array.isArray(widget.solutions) ? widget.solutions : [];
+---
+
+<section id="solutions" class="section section-solutions solution-intro-page" aria-label="解决方案" aria-labelledby="solutions-title">
+  <div class="content-width">
+    <div class="section-intro" data-reveal="section-intro">
+      <AposArea area={widget.introEyebrow} widgetComponent={HomeRichTextWidget} contentClass="section-index" aposStyle="display: contents" />
+      <div>
+        <AposArea area={widget.introHeading} widgetComponent={HomeRichTextWidget} contentId="solutions-title" aposStyle="display: contents" />
+        <AposArea area={widget.introDescription} widgetComponent={HomeRichTextWidget} aposStyle="display: contents" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="mission" class="hero-section mission-page-section" aria-label="空间智能数据中枢" data-home-solutions>
+  <div class="hero-atmosphere" aria-hidden="true">
+    <span class="orbit orbit-one"></span><span class="orbit orbit-two"></span><span class="orbit orbit-three"></span>
+    <span class="data-point point-one"></span><span class="data-point point-two"></span><span class="data-point point-three"></span><span class="data-point point-four"></span>
+  </div>
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="mission-layout content-width">
+    <div class="mission-visual-column">
+      <div class="hero-console mission-console" data-reveal="hero-console" aria-label="群核空间智能平台 AI 数据任务链">
+        <div class="console-head"><span>COOHOM CLOUD / DATA PLATFORM</span></div>
+        <div class="console-stage mission-stage">
+          <span class="mission-path mission-path-one" aria-hidden="true"></span><span class="mission-path mission-path-two" aria-hidden="true"></span><span class="mission-path mission-path-three" aria-hidden="true"></span>
+          <span class="mission-scan-line" aria-hidden="true"></span>
+          <div class="mission-orbit-field" aria-label="空间智能核心轨道">
+            {solutions.map((solution, index) => (
+              <button
+                type="button"
+                class={`mission-node mission-node-${index + 1} ${index === 0 ? 'is-active' : ''}`}
+                aria-pressed={index === 0 ? 'true' : 'false'}
+                title={areaText(solution.heading)}
+                data-home-solution-tab={index}
+                data-signal={solution.stageSignal}
+              >
+                <span>{String(index + 1).padStart(2, '0')}</span>
+                <strong>{areaText(solution.heading)}</strong>
+                <small>{solution.stageLabel}</small>
+              </button>
+            ))}
+          </div>
+          <div class="console-core" aria-hidden="true"><span>{widget.coreTop}</span><b>{widget.coreBottom}</b></div>
+        </div>
+        <div class="console-foot"><span>ACTIVE DATA SIGNAL</span><strong data-home-solution-stage>{solutions[0]?.stageLabel}</strong><span class="console-coordinates" data-home-solution-signal>{solutions[0]?.stageSignal}</span></div>
+      </div>
+    </div>
+    <div class="home-solution-panels">
+      {solutions.map((solution, index) => (
+        <aside class="mission-explanation" data-reveal="mission-explanation" data-home-solution-panel={index} hidden={index !== 0} aria-live="polite">
+          <p class="mission-explanation-status">{solution.stageStatus}</p>
+          <AposArea area={solution.heading} widgetComponent={HomeRichTextWidget} aposStyle="display: contents" />
+          <AposArea area={solution.stageInsight} widgetComponent={HomeRichTextWidget} contentClass="mission-explanation-insight" aposStyle="display: contents" />
+          <AposArea area={solution.description} widgetComponent={HomeRichTextWidget} contentClass="mission-explanation-detail" aposStyle="display: contents" />
+          <div class="mission-video-frame">
+            <HomeMediaSlot
+              slotId={`home/mission/${solution.key}`}
+              label={`${areaText(solution.heading)} 官方媒体`}
+              kind="video"
+              cmsField={`homeSolutionsArea.${index}.media`}
+              src={attachmentUrl(solution.media)}
+              className="mission-video"
+            />
+            <span class="mission-video-source">CMS / MEDIA FIELD</span>
+          </div>
+        </aside>
+      ))}
+    </div>
+  </div>
+  <div class="hero-bottom content-width"><span>SCROLL TO SOLUTIONS</span><span class="scroll-line" aria-hidden="true"></span><span>{widget.missionTitle}</span></div>
+</section>

@@ -1,0 +1,27 @@
+---
+import AposArea from '@apostrophecms/apostrophe-astro/components/AposArea.astro';
+import HomeRichTextWidget from './HomeRichTextWidget.astro';
+
+const { widget } = Astro.props;
+const primaryTarget = String(widget.primaryCtaTarget || 'solutions').replace(/^#/, '');
+---
+
+<section id="hero" class="hero-section hero-text-page" aria-labelledby="hero-title">
+  <div class="hero-atmosphere" aria-hidden="true">
+    <span class="orbit orbit-one"></span><span class="orbit orbit-two"></span><span class="orbit orbit-three"></span>
+    <span class="data-point point-one"></span><span class="data-point point-two"></span><span class="data-point point-three"></span><span class="data-point point-four"></span>
+  </div>
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="hero-content content-width" style="position:relative;z-index:2">
+    <div class="hero-copy" data-reveal="hero-copy">
+      <div class="eyebrow"><span class="status-dot"></span><AposArea area={widget.eyebrow} widgetComponent={HomeRichTextWidget} aposStyle="display: contents" /></div>
+      <AposArea area={widget.heading} widgetComponent={HomeRichTextWidget} contentClass="hero-title" contentId="hero-title" aposStyle="display: contents" />
+      <AposArea area={widget.description} widgetComponent={HomeRichTextWidget} contentClass="hero-description" aposStyle="display: contents" />
+      <div class="hero-actions">
+        <a class="button button-primary" href={`#${primaryTarget}`}>{widget.primaryCtaLabel} <span aria-hidden="true">↗</span></a>
+        <a class="button button-ghost" href={widget.secondaryCtaHref}>{widget.secondaryCtaLabel} <span aria-hidden="true">↗</span></a>
+      </div>
+    </div>
+  </div>
+  <div class="hero-bottom content-width" data-reveal="hero-bottom" style="position:relative;z-index:2"><span>SCROLL TO EXPLORE</span><span class="scroll-line" aria-hidden="true"></span><span>群核空间智能平台</span></div>
+</section>

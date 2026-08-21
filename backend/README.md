@@ -6,6 +6,10 @@ The headless CMS backend for the ApostropheCMS + Astro hybrid demo — it owns a
 
 ```bash
 # From this directory
+cd /Users/yuanzhuoshen/Desktop/官网/spatial-verse-cms/backend
+
+PATH=/opt/homebrew/opt/node@22/bin:$PATH \
+APOS_DB_URI=sqlite://data/spatial-verse-cms.sqlite \
 npm run dev
 ```
 

@@ -1,0 +1,80 @@
+---
+import { getSiteChrome, localeName } from '../lib/siteChrome.js';
+
+const { aposData, requestUrl } = Astro.props;
+const page = aposData?.page || {};
+const locale = localeName(aposData?.locale || page.aposLocale);
+const languageTag = locale === 'en' ? 'en' : 'zh-CN';
+const ogLocale = locale === 'en' ? 'en_US' : 'zh_CN';
+const chrome = getSiteChrome(aposData?.global, locale);
+const title = page.seoTitle || page.title || chrome.brandName;
+const description = page.seoDescription || '';
+const socialTitle = page.seoOgTitle || title;
+const socialDescription = page.seoOgDescription || description;
+const robotsMap = {
+  'index-follow': 'index, follow',
+  'noindex-follow': 'noindex, follow',
+  'index-nofollow': 'index, nofollow',
+  'noindex-nofollow': 'noindex, nofollow'
+};
+const robots = robotsMap[page.seoRobots] || robotsMap['index-follow'];
+const configuredOrigin = String(import.meta.env.PUBLIC_SITE_URL || '').replace(/\/$/, '');
+const origin = configuredOrigin || requestUrl.origin;
+const canonical = page.seoCanonicalUrl || new URL(requestUrl.pathname, origin).href;
+const rawImage = page.seoOgImage?._url
+  || page.seoOgImage?._urls?.original
+  || page.seoOgImage?.attachment?._url
+  || page.seoOgImage?.attachment?._urls?.original;
+const socialImage = rawImage ? new URL(rawImage, origin).href : undefined;
+const localizations = Array.isArray(page._localizations)
+  ? page._localizations
+  : Object.values(page._localizations || {}).filter(Boolean);
+const alternateLinks = localizations
+  .map((localization) => {
+    const href = localization?._url || localization?.url;
+    const localizedLocale = localeName(localization?.aposLocale || localization?.locale);
+    return href
+      ? {
+          href: new URL(href, origin).href,
+          hreflang: localizedLocale === 'en' ? 'en' : 'zh-CN'
+        }
+      : null;
+  })
+  .filter(Boolean)
+  .filter((item, index, links) => links.findIndex((candidate) => candidate.hreflang === item.hreflang) === index);
+const jsonLd = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': page.type === '@apostrophecms/home-page' ? 'WebSite' : 'WebPage',
+  name: title,
+  url: canonical,
+  inLanguage: languageTag,
+  ...(description ? { description } : {}),
+  ...(socialImage ? { image: socialImage } : {}),
+  publisher: {
+    '@type': 'Organization',
+    name: chrome.brandName,
+    url: new URL('/', origin).href
+  }
+}).replace(/</g, '\\u003c');
+---
+
+<meta name="description" content={description} />
+<meta name="robots" content={robots} />
+<link rel="canonical" href={canonical} />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content={chrome.brandName} />
+<meta property="og:locale" content={ogLocale} />
+<meta property="og:title" content={socialTitle} />
+<meta property="og:description" content={socialDescription} />
+<meta property="og:url" content={canonical} />
+{socialImage && <meta property="og:image" content={socialImage} />}
+{socialImage && <meta property="og:image:alt" content={socialTitle} />}
+<meta name="twitter:card" content={page.seoTwitterCard || 'summary_large_image'} />
+<meta name="twitter:title" content={socialTitle} />
+<meta name="twitter:description" content={socialDescription} />
+{socialImage && <meta name="twitter:image" content={socialImage} />}
+{alternateLinks.map((item) => <link rel="alternate" hreflang={item.hreflang} href={item.href} />)}
+{alternateLinks.some((item) => item.hreflang === 'zh-CN') && (
+  <link rel="alternate" hreflang="x-default" href={alternateLinks.find((item) => item.hreflang === 'zh-CN')?.href} />
+)}
+<script type="application/ld+json" is:inline set:html={jsonLd}></script>

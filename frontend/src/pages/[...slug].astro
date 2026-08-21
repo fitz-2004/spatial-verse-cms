@@ -3,6 +3,7 @@ import aposPageFetch from "@apostrophecms/apostrophe-astro/lib/aposPageFetch.js"
 import AposLayout from "@apostrophecms/apostrophe-astro/components/layouts/AposLayout.astro";
 import AposTemplate from "@apostrophecms/apostrophe-astro/components/AposTemplate.astro";
 import ContactDrawer from "../components/ContactDrawer.astro";
+import SeoHead from "../components/SeoHead.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import SiteHeader from "../components/SiteHeader.astro";
 import "../styles/app.css";
@@ -15,6 +16,7 @@ import "../styles/site-chrome.css";
 // Downstream templates receive this object as `Astro.props.aposData`.
 const aposData = await aposPageFetch(Astro.request);
 const bodyClass = `spatialverse-body page-type-${aposData.page?.type || 'unknown'}`;
+const documentTitle = aposData.page?.seoTitle || aposData.page?.title;
 
 if (aposData.redirect) {
   return Astro.redirect(aposData.url, aposData.status);
@@ -24,9 +26,9 @@ if (aposData.notFound) {
 }
 ---
 
-<AposLayout title={aposData.page?.title} {aposData} {bodyClass}>
+<AposLayout title={documentTitle} {aposData} {bodyClass}>
   <Fragment slot="standardHead">
-    <meta name="description" content={aposData.page?.seoDescription} />
+    <SeoHead {aposData} requestUrl={Astro.url} />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta charset="UTF-8" />
   </Fragment>

@@ -1,0 +1,72 @@
+---
+import AposArea from '@apostrophecms/apostrophe-astro/components/AposArea.astro';
+import HomeMediaSlot from '../../components/home/HomeMediaSlot.tsx';
+import { areaText, attachmentUrl } from '../../lib/homeWidget';
+import HomeRichTextWidget from './HomeRichTextWidget.astro';
+
+const { widget } = Astro.props;
+const capabilities = Array.isArray(widget.capabilities) ? widget.capabilities : [];
+---
+
+<section id="capabilities" class="section section-capabilities-intro" aria-labelledby="capabilities-title">
+  <div class="content-width">
+    <div class="section-intro capabilities-intro" data-reveal="section-intro">
+      <AposArea area={widget.introEyebrow} widgetComponent={HomeRichTextWidget} contentClass="section-index" aposStyle="display: contents" />
+      <div>
+        <AposArea area={widget.introHeading} widgetComponent={HomeRichTextWidget} contentId="capabilities-title" aposStyle="display: contents" />
+        <AposArea area={widget.introDescription} widgetComponent={HomeRichTextWidget} aposStyle="display: contents" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="capability-scroll-track" data-home-capabilities>
+  <section id="capability-dashboard" class="section section-capabilities capability-dashboard" aria-label="核心能力仪表盘">
+    <div class="capability-page-content content-width">
+      <div class="capability-system" data-reveal="capability-grid">
+        <div class="capability-rail capability-active-1" style="--capability-angle:51deg" aria-label="核心能力导航" data-home-capability-rail>
+          <div class="capability-rail-grid" aria-hidden="true"></div>
+          <div class="capability-rail-arc capability-rail-arc-one" aria-hidden="true"></div>
+          <div class="capability-rail-arc capability-rail-arc-two" aria-hidden="true"></div>
+          <div class="capability-rail-ticks" aria-hidden="true"></div>
+          <div class="capability-rail-pointer" aria-hidden="true"></div>
+          <div class="capability-rail-heading"><span>CAPABILITY MATRIX</span><strong>CORE / 04</strong></div>
+          <div class="capability-rail-hint">SCROLL / SWITCH CAPABILITY</div>
+          <div class="capability-rail-center" aria-hidden="true"><span>ACTIVE</span><strong data-home-capability-number>01</strong></div>
+          <div class="capability-rail-readout"><span>ACTIVE CAPABILITY</span><strong data-home-capability-label>{capabilities[0]?.label}</strong></div>
+        </div>
+        <div class="capability-selector-list" role="tablist" aria-label="核心能力选择">
+          {capabilities.map((capability, index) => (
+            <button type="button" role="tab" aria-selected={index === 0 ? 'true' : 'false'} class={index === 0 ? 'is-active' : ''} data-home-capability-tab={index} data-label={capability.label}>
+              <span>{capability.number}</span><strong>{areaText(capability.heading)}</strong><small>{capability.label}</small>
+            </button>
+          ))}
+        </div>
+        <div class="home-capability-panels">
+          {capabilities.map((capability, index) => (
+            <article class="capability-detail" role="tabpanel" data-home-capability-panel={index} hidden={index !== 0} aria-live="polite">
+              <div class="capability-detail-media">
+                <HomeMediaSlot
+                  slotId={`home/capabilities/${capability.key}`}
+                  label={`${areaText(capability.heading)} 官方媒体`}
+                  kind="video"
+                  cmsField={`homeCapabilitiesArea.${index}.media`}
+                  src={attachmentUrl(capability.media)}
+                  className="capability-detail-video"
+                />
+                <span class="capability-detail-corner capability-detail-corner-one" aria-hidden="true"></span><span class="capability-detail-corner capability-detail-corner-two" aria-hidden="true"></span>
+                <span class="capability-detail-source">CMS / MEDIA FIELD</span>
+              </div>
+              <div class="capability-detail-copy">
+                <p class="capability-detail-status">{capability.number} / {capability.label}</p>
+                <AposArea area={capability.heading} widgetComponent={HomeRichTextWidget} aposStyle="display: contents" />
+                <AposArea area={capability.description} widgetComponent={HomeRichTextWidget} aposStyle="display: contents" />
+                <div class="capability-detail-meta"><span>DATA CAPABILITY / {String(index + 1).padStart(2, '0')}</span><span>ONLINE</span></div>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

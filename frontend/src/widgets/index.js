@@ -10,6 +10,14 @@ import LayoutColumnWidget from '@apostrophecms/apostrophe-astro/widgets/LayoutCo
 import NestedLayoutWidget from '@apostrophecms/apostrophe-astro/widgets/LayoutWidget.astro';
 import NestedLayoutColumnWidget from '@apostrophecms/apostrophe-astro/widgets/LayoutColumnWidget.astro';
 import FileWidget from './FileWidget.astro';
+// Homepage-only contextual widgets. Keeping these mappings in one isolated block
+// avoids coupling another page team's template to the homepage content model.
+import HomeBrandWidget from './home/HomeBrandWidget.astro';
+import HomeHeroWidget from './home/HomeHeroWidget.astro';
+import HomeSolutionsWidget from './home/HomeSolutionsWidget.astro';
+import HomeCapabilitiesWidget from './home/HomeCapabilitiesWidget.astro';
+import HomeWhyWidget from './home/HomeWhyWidget.astro';
+import HomeSupportWidget from './home/HomeSupportWidget.astro';
 
 const widgetComponents = {
   '@apostrophecms/rich-text': RichTextWidget,
@@ -20,6 +28,12 @@ const widgetComponents = {
   'nested-layout': NestedLayoutWidget,
   'nested-column': NestedLayoutColumnWidget,
   '@apostrophecms/file': FileWidget,
+  'home-brand': HomeBrandWidget,
+  'home-hero': HomeHeroWidget,
+  'home-solutions': HomeSolutionsWidget,
+  'home-capabilities': HomeCapabilitiesWidget,
+  'home-why': HomeWhyWidget,
+  'home-support': HomeSupportWidget,
 };
 
 export default widgetComponents;

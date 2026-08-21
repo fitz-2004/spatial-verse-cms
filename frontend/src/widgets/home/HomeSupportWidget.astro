@@ -1,0 +1,40 @@
+---
+import AposArea from '@apostrophecms/apostrophe-astro/components/AposArea.astro';
+import { areaText } from '../../lib/homeWidget';
+import HomeRichTextWidget from './HomeRichTextWidget.astro';
+
+const { widget } = Astro.props;
+const modes = Array.isArray(widget.modes) ? widget.modes : [];
+---
+
+<section id="support" class="support-combined-page" aria-labelledby="support-title" data-home-support>
+  <div class="content-width">
+    <div class="section-intro" data-reveal="section-intro">
+      <AposArea area={widget.eyebrow} widgetComponent={HomeRichTextWidget} contentClass="section-index" aposStyle="display: contents" />
+      <div>
+        <AposArea area={widget.heading} widgetComponent={HomeRichTextWidget} contentId="support-title" aposStyle="display: contents" />
+        <AposArea area={widget.description} widgetComponent={HomeRichTextWidget} aposStyle="display: contents" />
+      </div>
+    </div>
+    <div class="support-layout" data-reveal="support-layout">
+      <div class="support-list" role="tablist" aria-label="支持模式">
+        {modes.map((mode, index) => (
+          <button type="button" role="tab" aria-selected={index === 0 ? 'true' : 'false'} class={index === 0 ? 'is-active' : ''} data-home-support-tab={index}>
+            <span>0{index + 1}</span><strong>{areaText(mode.heading)}</strong><span aria-hidden="true">↗</span>
+          </button>
+        ))}
+      </div>
+      <div class="home-support-panels">
+        {modes.map((mode, index) => (
+          <div class="support-card" role="tabpanel" data-home-support-panel={index} hidden={index !== 0} aria-live="polite">
+            <span class="support-card-number">0{index + 1}</span>
+            <p>{widget.platformLabel}</p>
+            <AposArea area={mode.heading} widgetComponent={HomeRichTextWidget} aposStyle="display: contents" />
+            <AposArea area={widget.description} widgetComponent={HomeRichTextWidget} aposStyle="display: contents" />
+            <a class="text-link" href={widget.linkHref}>{widget.linkLabel} <span aria-hidden="true">↗</span></a>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
