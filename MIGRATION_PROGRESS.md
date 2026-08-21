@@ -1,8 +1,8 @@
 # SpatialVerse CMS 当前迁移进度
 
-> 更新日期：2026-08-18
+> 更新日期：2026-08-21
 >
-> 当前工作分支：`migration/home`
+> 当前工作分支：`dev`
 >
 > 整理基准提交：`e4a6775`（删除首页 React mock 回退分支）
 >
@@ -49,12 +49,12 @@ Widget 包含两个不同层次，不能混为一谈：
 |---|---|---|---|---|
 | 首页 | `/` | `@apostrophecms/home-page` | 已完成 Astro + ApostropheCMS 接入、视觉迁移、原位编辑、交互和 SEO | 本机已有 `zh:draft` 与对应公开版本；均使用六个 CMS Area |
 | 五个 Solution 页面 | `/coohomcloud/solutions/*` | `solution-page` | 已整合楼博涵的 Astro + ApostropheCMS 实现 | 本机已导入 5 个 `zh:draft`；尚未发布 |
-| 核心能力 | `/coohomcloud/corecompetency` | `core-competency-page` | 仅有 Page Type 与最小 Template 占位 | 正文未迁移 |
-| 学术研究 | `/coohomcloud/corecompetency/paper` | `research-archive-page` | 仅有 Page Type 与最小 Template 占位 | `research-paper` Piece 与正文未迁移 |
+| 核心能力 | `/coohomcloud/corecompetency` | `core-competency-page` | 已整合 Astro + ApostropheCMS、4 个能力面板、原位编辑与交互导航 | 本机已导入 1 个 `zh:draft`；尚未发布 |
+| 学术研究 | `/coohomcloud/corecompetency/paper` | `research-archive-page` | 已整合 Astro + ApostropheCMS、论文 Piece 关系及列表视觉 | 本机已导入页面草稿与 5 个 `research-paper` 草稿；尚未发布 |
 | 样例数据集 | `/coohomcloud/corecompetency/data` | `dataset-library-page` | 仅有 Page Type 与最小 Template 占位 | `dataset-item` Piece 与正文未迁移 |
 | 关于我们 | `/coohomcloud/about` | `about-page` | 仅有 Page Type 与最小 Template 占位 | 正文未迁移 |
 
-其中五个 Solution URL、字段、组件、导入任务和已知差异见 [`docs/migration/solutions.md`](./docs/migration/solutions.md)。首页完整内容模型见 [`docs/migration/home.md`](./docs/migration/home.md)。
+其中五个 Solution URL、字段、组件、导入任务和已知差异见 [`docs/migration/solutions.md`](./docs/migration/solutions.md)。核心能力与学术研究见 [`docs/migration/core-research.md`](./docs/migration/core-research.md)。首页完整内容模型见 [`docs/migration/home.md`](./docs/migration/home.md)。
 
 ## 3. 首页完成情况
 
@@ -119,7 +119,17 @@ Widget 包含两个不同层次，不能混为一谈：
 
 Astro 本身负责把 SEO 标签生成到 HTML；Page fields 负责让 CMS 编辑人员无需修改代码即可管理这些标签的内容。生产环境仍需配置正确的 `PUBLIC_SITE_URL`。
 
-## 6. Git 与本机 CMS 数据边界
+## 6. 核心能力与学术研究整合情况
+
+- 核心能力页使用 `core-competency-page`，固定输出简介、四项能力和收尾链接。
+- 学术研究页使用 `research-archive-page`，通过 relationship 关联 `research-paper` Piece。
+- 核心能力的 React 组件仅作为交互 island，CMS 内容由 Astro Template 服务端渲染。
+- 已纳入四项能力实际使用的回退媒体，CMS Area 上传媒体后优先显示 CMS 内容。
+- 已提供 `core-research-import:import-drafts` 范围化导入任务，只写这两个页面和论文的中文草稿。
+- 本机已导入 2 个页面草稿与 5 个论文草稿，没有创建任何公开版本。
+- 已验证 Frontend/Backend production build、4 个能力面板、5 篇论文及单套公共 Header/Footer。
+
+## 7. Git 与本机 CMS 数据边界
 
 当前代码分支相对 `origin/dev` 为领先状态，尚未推送本次最新提交。仓库中的代码提交不包含以下本机状态：
 
@@ -137,27 +147,25 @@ backend/data/spatial-verse-cms.sqlite
 
 `-wal` 与 `-shm` 是 SQLite 在进程运行时自动创建的配套文件，不是额外数据库，后端正常关闭后通常会合并或消失。团队同步不能只依赖 `git pull`：各页面负责人还必须提供范围受控、可重复执行的草稿导入任务和所需媒体，禁止用整个 SQLite 覆盖其他人的数据库。
 
-## 7. 当前尚未完成
+## 8. 当前尚未完成
 
-1. 核心能力页面的正式内容模型、视觉、交互、CMS 数据及媒体。
-2. 学术研究页面和 `research-paper` Piece。
-3. 数据集页面和 `dataset-item` Piece，包括真实下载选项；不得迁移访客图片上传逻辑。
-4. 关于我们页面的正式迁移。
-5. Solution 移动端、响应式断点和无媒体状态验收。
-6. 英文 `en` 页面内容与对应 locale 文档。
-7. 四个页面域全部完成后的共享注册冲突复核、全路由回归和最终数据汇总。
-8. 正式部署域名确定后配置 `PUBLIC_SITE_URL` 并复查 canonical、分享链接和 `hreflang`。
+1. 数据集页面和 `dataset-item` Piece，包括真实下载选项；不得迁移访客图片上传逻辑。
+2. 关于我们页面的正式迁移。
+3. Solution、核心能力和学术研究的完整移动端与全部响应式断点验收。
+4. 英文 `en` 页面内容与对应 locale 文档。
+5. 四个页面域全部完成后的共享注册冲突复核、全路由回归和最终数据汇总。
+6. 正式部署域名确定后配置 `PUBLIC_SITE_URL` 并复查 canonical、分享链接和 `hreflang`。
 
-## 8. 下一步建议顺序
+## 9. 下一步建议顺序
 
-1. 将当前 `migration/home` 的最新提交审核并合入 `dev`。
-2. 其他三位负责人从更新后的 `origin/dev` 同步公共基线，不复制首页或 Solution 的内容模型。
+1. 审核当前 `dev` 中首页、Solution、核心能力与学术研究的集成结果。
+2. 其他负责人从更新后的 `origin/dev` 同步公共基线，不复制已完成页面域的内容模型。
 3. 各负责人完成自己页面域的模型、Astro 视觉、CMS 连接、草稿导入任务和域内迁移文档。
 4. 每个域分别完成前后端 build、Preview/Edit 一致性、桌面和移动端验收。
 5. 集成负责人只合并共享注册、依赖、路由和公共层变更，不重构其他负责人的域内模型。
 6. 最后统一导入各域草稿，逐页审核后再决定哪些页面发布为公开版本。
 
-## 9. 开发检查原则
+## 10. 开发检查原则
 
 - 匿名访问：检查公开版本，即外部访客将看到的 CMS 内容。
 - Preview：检查当前草稿的只读视觉，不应出现编辑框。

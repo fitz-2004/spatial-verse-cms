@@ -1,10 +1,10 @@
 # SpatialVerse CMS 内容模型速查
 
-> 当前范围：已完成的 `@apostrophecms/home-page` 与 `solution-page`
+> 当前范围：已完成的 Home、Solution、核心能力与学术研究页面域
 >
 > 面向：后续 CMS、Astro、视觉与交互开发人员
 >
-> 详细迁移记录：[`docs/migration/home.md`](./docs/migration/home.md)、[`docs/migration/solutions.md`](./docs/migration/solutions.md)
+> 详细迁移记录：[`docs/migration/home.md`](./docs/migration/home.md)、[`docs/migration/solutions.md`](./docs/migration/solutions.md)、[`docs/migration/core-research.md`](./docs/migration/core-research.md)
 
 ## 1. 一眼看懂
 
@@ -12,6 +12,9 @@
 |---|---|---|---|---|
 | `@apostrophecms/home-page` | 每个 locale 唯一根首页 `/`；只编辑已有首页，不新建 | `backend/modules/@apostrophecms/home-page/index.js` | `frontend/src/templates/HomePage.astro` | Page SEO fields + 6 个固定单例 Area/Widget |
 | `solution-page` | 可重复创建；当前 5 个 Solution URL 共用 | `backend/modules/solution-page/index.js` | `frontend/src/templates/SolutionPage.astro` | 固定 Page fields、数组与 Rich Text Area；没有自定义 Solution Widget |
+| `core-competency-page` | 核心能力页 `/coohomcloud/corecompetency` | `backend/modules/core-competency-page/index.js` | `frontend/src/templates/CoreCompetencyPage.astro` | Page fields、固定数组、Rich Text/媒体 Area |
+| `research-archive-page` | 学术研究归档页 `/coohomcloud/corecompetency/paper` | `backend/modules/research-archive-page/index.js` | `frontend/src/templates/ResearchArchivePage.astro` | Page fields、Rich Text Area、`research-paper` relationship |
+| `research-paper` | 可独立管理和关联的论文 Piece | `backend/modules/research-paper/index.js` | 由 `ResearchArchivePage.astro` 列表渲染 | Piece fields；不是 Page Type |
 
 统一渲染链路：
 
@@ -22,7 +25,7 @@ CMS Page 数据 → Astro Page Template → Astro Component / AposArea → HTML
 - `Page field`：字段直接属于页面文档。
 - `Area`：页面文档或 Widget 中可以容纳 Widget 的字段。
 - `Widget`：Area 中的内容实例；Widget 类型由后端模块定义，并在 Astro Widget registry 中映射。
-- `Piece`：可跨页面管理和查询的独立实体；当前这两个 Page Type 都没有 Piece。
+- `Piece`：可跨页面管理和查询的独立实体；当前 `research-paper` 用于学术研究论文。
 - `Astro Component`：固定结构、视觉与前端交互，不是 CMS 内容类型。
 
 ## 2. 公共注册位置
@@ -261,7 +264,59 @@ Rich Text Area 的统一渲染 helper：`frontend/src/components/solution/Soluti
 
 范围化草稿导入任务：`node app solution-page:import-drafts`。它只处理上述五个 `zh:draft` 页面，不自动发布。
 
-## 5. 编辑方式速查
+## 5. 核心能力与学术研究内容模型
+
+### 5.1 核心能力页
+
+- Page Type：`core-competency-page`
+- 模型：`backend/modules/core-competency-page/index.js`
+- Template：`frontend/src/templates/CoreCompetencyPage.astro`
+- 样式：`frontend/src/styles/core.css`
+- 交互 island：`frontend/src/components/core/CoreCapabilityNavigation.tsx`
+
+| 字段 | 类型 | 前端用途 |
+|---|---|---|
+| `intro` | object | 眉题、标题、说明和数据标签 |
+| `capabilities[]` | array | 四项固定能力；编号、标题、说明和媒体 |
+| `capabilities[].media` | area | CMS 图片/视频；为空时显示 `public/media/core-panels/` 回退媒体 |
+| `outro` | object | 收尾标题及内部页面 relationship |
+| `seo*` | string/select/image | 完整公共 SEO 输出 |
+
+可见文本主要使用受控 Rich Text Area，支持 Edit 原位编辑。React 只接收 Astro 从 CMS 数据中提取的文本并处理交互，不创建第二套页面内容。
+
+### 5.2 学术研究页
+
+- Page Type：`research-archive-page`
+- 模型：`backend/modules/research-archive-page/index.js`
+- Template：`frontend/src/templates/ResearchArchivePage.astro`
+- 样式：`frontend/src/styles/research.css`
+
+| 字段 | 类型 | 前端用途 |
+|---|---|---|
+| `intro` | object | 页面眉题、标题、说明和信号标签 |
+| `sectionHead` | object | 论文列表区编号与标题 |
+| `_papers` | relationship | 关联并输出 `research-paper` Pieces |
+| `outro` | object | 收尾标题及内部页面链接 |
+| `seo*` | string/select/image | 完整公共 SEO 输出 |
+
+### 5.3 论文 Piece
+
+- Piece Type：`research-paper`
+- 模型：`backend/modules/research-paper/index.js`
+- 管理入口：Apostrophe 顶部“论文”
+
+| 字段 | 类型 | 用途 |
+|---|---|---|
+| `title` / `slug` | string | 论文名称与稳定标识 |
+| `year` | string | 发表年份 |
+| `venue` | string | 期刊或会议 |
+| `abstract` | textarea string | 摘要 |
+| `externalUrl` | URL string | 外部论文链接 |
+| `cover` | area | 封面媒体 |
+
+范围化草稿导入任务：`core-research-import:import-drafts`。实现位于 `backend/modules/core-research-import/index.js`，只导入 2 个页面与 5 个论文中文草稿，不发布、不清库、不修改其他页面域。
+
+## 6. 编辑方式速查
 
 | 字段类型 | 编辑位置 | 适用内容 |
 |---|---|---|
@@ -272,7 +327,7 @@ Rich Text Area 的统一渲染 helper：`frontend/src/components/solution/Soluti
 
 Preview 与 Edit 使用同一个 Astro Template；Edit 只额外显示 CMS 编辑 UI。匿名访客读取 `published`，登录后的 Preview/Edit 读取 `draft`。`visibility: public` 不等于已经发布。
 
-## 6. 后续开发必须遵守
+## 7. 后续开发必须遵守
 
 1. Page Type 名、后端模块名和 `frontend/src/templates/index.js` 映射键必须完全一致。
 2. Widget 后端模块使用 `*-widget`，Area item type 与 Astro registry key 去掉 `-widget`。

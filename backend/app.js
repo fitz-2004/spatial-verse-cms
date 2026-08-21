@@ -34,6 +34,8 @@ apostrophe({
     'solution-page': {},
     'core-competency-page': {},
     'research-archive-page': {},
+    'research-paper': {},
+    'core-research-import': {},
     'dataset-library-page': {},
     'about-page': {},
     '@apostrophecms/blog': {},

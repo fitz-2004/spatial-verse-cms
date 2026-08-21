@@ -1,5 +1,99 @@
 ---
-const { page } = Astro.props.aposData;
----
+import AposArea from '@apostrophecms/apostrophe-astro/components/AposArea.astro';
+import CoreCapabilityNavigation from '../components/core/CoreCapabilityNavigation.tsx';
+import { resolveHref } from '../lib/siteChrome.js';
+import { areaText } from '../lib/editableText.js';
+import '../styles/core.css';
 
-<h1>{page?.title}</h1>
+const { page } = Astro.props.aposData;
+const intro = page?.intro || {};
+const capabilities = Array.isArray(page?.capabilities) ? page.capabilities : [];
+const signals = Array.isArray(intro?.signals) ? intro.signals : [];
+const outro = page?.outro || {};
+const outroLinks = Array.isArray(outro?.links) ? outro.links : [];
+const capabilityAccents = ['cyan', 'purple', 'acid', 'pink'];
+const panelDefaultMedia = ['panel-1.gif', 'panel-2.png', 'panel-3.jpg', 'panel-4.png'];
+---
+<section class="section-capabilities-intro core-page-intro" aria-labelledby="core-capability-title">
+  <div class="content-width">
+    <div class="section-intro">
+      <span class="section-index"><AposArea area={intro?.eyebrow} /></span>
+      <div>
+        <h1 id="core-capability-title"><AposArea area={intro?.title} /></h1>
+        <div class="core-page-intro-lead"><AposArea area={intro?.lead} /></div>
+        <p class="core-page-intro-subcopy"><AposArea area={intro?.subcopy} /></p>
+        <div class="core-page-signal-row" aria-label="核心能力数据类型">
+          {signals.map((signal) => (
+            <span key={areaText(signal?.label)}><AposArea area={signal?.label} /></span>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="core-page-intro-grid" aria-hidden="true" />
+  <div class="core-page-intro-orbit" aria-hidden="true" />
+</section>
+
+<section class="core-capability-stack" aria-label="四项核心能力">
+  {capabilities.map((capability, index) => {
+    const accent = capabilityAccents[index] || 'cyan';
+    const key = areaText(capability?.number) || String(index);
+    return (
+      <article className={`core-capability-panel core-capability-panel-${index + 1} accent-${accent}`} id={`core-capability-${index + 1}`} key={key}>
+        <div class="content-width core-capability-panel-inner">
+          <header class="core-capability-panel-header"><span class="core-capability-panel-header-prefix"><AposArea area={capability?.header} /></span></header>
+          <div class="core-capability-panel-layout">
+            <div class="core-capability-panel-copy">
+              <div class="core-capability-panel-label"><AposArea area={capability?.label} /></div>
+              <h2><AposArea area={capability?.title} /></h2>
+              <div class="core-capability-panel-description"><AposArea area={capability?.text} /></div>
+              <div class="core-capability-panel-meta"><span>SPATIALVERSE ENGINE</span><span>CAPABILITY <AposArea area={capability?.number} /></span></div>
+            </div>
+            <div class="core-capability-panel-visual" aria-label={`${areaText(capability?.title)}媒体插槽`}>
+              <div class="core-capability-panel-video-frame">
+                <div class="core-capability-media-slot" aria-label={`${areaText(capability?.title)} CMS 媒体插槽`}>
+                  {capability?.media?.items?.length ? (
+                    <AposArea area={capability?.media} />
+                  ) : (
+                    <img class="core-capability-panel-default-media" src={`/media/core-panels/${panelDefaultMedia[index] || 'panel-1.gif'}`} alt={`${areaText(capability?.title)} 示意图`} loading="lazy" />
+                  )}
+                </div>
+                <span class="core-video-corner core-video-corner-one" aria-hidden="true" />
+                <span class="core-video-corner core-video-corner-two" aria-hidden="true" />
+                <span class="core-capability-panel-source">CMS / MEDIA FIELD</span>
+              </div>
+              <div class="core-capability-orbit-scene" aria-hidden="true">
+                <div class="core-capability-orbit core-capability-orbit-one" />
+                <div class="core-capability-orbit core-capability-orbit-two" />
+                <div class="core-capability-orbit core-capability-orbit-three" />
+                <div class="core-capability-gear"><i /><i /><i /><i /><i /><i /><i /><i /></div>
+                <div class="core-capability-core"><span>CORE</span><strong><AposArea area={capability?.number} /></strong></div>
+              </div>
+            </div>
+          </div>
+          <footer class="core-capability-panel-footer"><span>{index === capabilities.length - 1 ? 'CORE SYSTEM / COMPLETE' : 'SCROLL TO NEXT CAPABILITY'}</span><span>{String(index + 1).padStart(2, '0')} / 04</span></footer>
+        </div>
+      </article>
+    );
+  })}
+</section>
+
+<CoreCapabilityNavigation
+  client:visible
+  capabilities={capabilities.map((c) => ({
+    number: areaText(c?.number),
+    label: areaText(c?.label),
+    title: areaText(c?.title),
+    text: areaText(c?.text)
+  }))}
+/>
+
+<section class="core-page-next content-width" aria-label="核心能力下一层级">
+  <div><span><AposArea area={outro?.eyebrow} /></span><strong><AposArea area={outro?.heading} /></strong></div>
+  <div class="core-page-next-links">
+    {outroLinks.map((item) => {
+      const href = resolveHref(item, 'zh');
+      return <a href={href} key={href}><span><AposArea area={item?.number} /></span><AposArea area={item?.label} /><b>↗</b></a>;
+    })}
+  </div>
+</section>

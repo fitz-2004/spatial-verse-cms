@@ -1,5 +1,65 @@
 ---
+import AposArea from '@apostrophecms/apostrophe-astro/components/AposArea.astro';
+import { resolveHref } from '../lib/siteChrome.js';
+import { areaText } from '../lib/editableText.js';
+import '../styles/research.css';
+
 const { page } = Astro.props.aposData;
+const intro = page?.intro || {};
+const sectionHead = page?.sectionHead || {};
+const signals = Array.isArray(intro?.signals) ? intro.signals : [];
+const papers = Array.isArray(page?._papers) ? page._papers : [];
+const outro = page?.outro || {};
+const outroLinks = Array.isArray(outro?.links) ? outro.links : [];
 ---
 
-<h1>{page?.title}</h1>
+<section class="section-capabilities-intro core-page-intro archive-hero" aria-labelledby="research-title">
+  <div class="content-width">
+    <div class="section-intro">
+      <span class="section-index"><AposArea area={intro?.eyebrow} /></span>
+      <div>
+        <h1 id="research-title"><AposArea area={intro?.title} /></h1>
+        <div class="core-page-intro-lead"><AposArea area={intro?.lead} /></div>
+        <div class="core-page-signal-row">
+          {signals.map((signal) => (
+            <span key={areaText(signal?.label)}><AposArea area={signal?.label} /></span>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="core-page-intro-grid" aria-hidden="true" />
+  <div class="core-page-intro-orbit" aria-hidden="true" />
+</section>
+
+<section class="research-archive-section section" aria-labelledby="research-archive-title">
+  <div class="content-width">
+    <div class="archive-section-head">
+      <span class="section-index"><AposArea area={sectionHead?.index} /></span>
+      <h2 id="research-archive-title"><AposArea area={sectionHead?.heading} /></h2>
+    </div>
+    <div class="research-archive-list">
+      {papers.map((paper) => (
+        <article class="research-archive-item" key={paper._id}>
+          <span class="research-archive-year">{paper.year}</span>
+          <div>
+            <p class="research-archive-venue">{paper.venue}</p>
+            <h3>{paper.title}</h3>
+            <p>{paper.abstract}</p>
+          </div>
+          <a href={paper.externalUrl} target="_blank" rel="noreferrer" aria-label={`查看 ${paper.title}`}>↗</a>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<section class="core-page-next content-width" aria-label="核心页面导航">
+  <div><span><AposArea area={outro?.eyebrow} /></span><strong><AposArea area={outro?.heading} /></strong></div>
+  <div class="core-page-next-links">
+    {outroLinks.map((item) => {
+      const href = resolveHref(item, 'zh');
+      return <a href={href} key={href}><span><AposArea area={item?.number} /></span><AposArea area={item?.label} /><b>↗</b></a>;
+    })}
+  </div>
+</section>
