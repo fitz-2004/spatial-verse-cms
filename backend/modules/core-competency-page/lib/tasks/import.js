@@ -114,7 +114,8 @@ function buildData(self) {
         number: textArea('04'),
         header: textArea('CORE CAPABILITY / 04'),
         label: textArea('04 / MULTI-CHANNEL SUPPORT'),
-        title: textArea('支持多平台、高效率、更完整的3D模型数据导出，以及3D环境和衍生图片生成能力')
+        title: textArea('多通道支持能力'),
+        text: textArea('支持多平台、高效率、更完整的3D模型数据导出，以及3D环境和衍生图片生成能力')
       }
     ],
     outro: {
