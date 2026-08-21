@@ -69,6 +69,11 @@ Piece 类型：`research-paper`（论文）
 - `frontend/src/lib/editableText.js` — `areaText()` 工具，area → 纯文本
 - 联动更新（顺带补齐，非本域核心）：`solution-page` / `about-page` / `dataset-library-page` 的可见文本同样 area 化 + 补全模板与 SEO 字段，新增 `frontend/src/templates/SolutionPage.astro` 样式 `solution.css`
 
+## 配套文档
+
+- [`docs/onboarding.md`](../onboarding.md) — 对接文档：环境准备、内容模型、数据导入、已知坑位、验收清单（对接人员 / 开发人员）
+- [`docs/marketing-operations-manual.md`](../marketing-operations-manual.md) — 市场部操作手册：登录、原地编辑、**新增学术论文**（EDIT → `···` More Options → Edit → 下滑到关联论文 → Browse → New 论文）、论文关联 / 排序、发布与 FAQ
+
 ## 数据导入方法
 
 ```bash
@@ -96,6 +101,7 @@ node app research-archive-page:import
 - **侧边导航重复**：核心能力页曾同时存在静态 `.core-capability-index` 与 React 齿轮导航两套跳转按钮造成重叠。已删除前者，保留带齿轮动画的 React 导航。
 - **发布后 slug 被加后缀导致 404**：数据库中残留 slug 带数字后缀的脏文档（如 `corecompetency28`、`paper8`、`_id` 为 `undefined` 的论文），重新发布时 Apostrophe 自动为 slug 去重加后缀，访客访问干净的 `/coohomcloud/corecompetency` 返回 404。已清理这三类文档后按顺序重新导入，draft 与 published slug 一致。
 - **published 版论文关联丢失**：学术研究页 draft 含 `papersIds`，但发布后 published 版 `papersIds` 为空导致列表 `_papers` 为 0。已把 draft 的 `papersIds` 复制到 `zh:published` 文档，API 验证返回 5 篇论文。
+- **published 版论文关联再次丢失 + 重复页面连锁**：数据库仅剩 `zh:draft`（slug `/paper`）而 published 版为脏数据（slug `/paper2`、`docId` undefined）时，`research-archive-page:import` 的 `pages.find`（默认 published 模式）查不到稳定 slug → 走 insert 分支 → 每次重跑都新建带数字后缀页面（`/paper1`、`/paper6`…），且新 published 版 `papersIds` 为空。已彻底清空该类型脏文档后重新导入，并把 draft 的 `papersIds` 同步到 `zh:published`；另在 import 任务中增强查找：published 查不到时回退查 `zh:draft`，避免误走 insert 分支。
 - **文本字段原位编辑改造**：标题/副标题/eyebrow/标签/卡片文本由 `string` 改为 `area`（rich-text），模板改用 `<AposArea />` 渲染；React 齿轮导航、aria 属性、key 通过 `areaText()` 取纯文本；`outro` 链接通过 `resolveHref()` 解析 `_page` 关系，移除模板内硬编码链接数组。
 - **`--pink` 变量缺失**：面板第 4 项 `accent-pink` 背景不生效，根因是 `site-chrome.css` 未定义 `--pink` 令牌。已补充 `--pink: #ff7ab6`。
 - **齿轮导航遮挡版面**：React 齿轮导航固定定位 `right: 0` 会重叠面板内容。已改为 `right: -130px`，使其悬停滑出、平时在视口外不遮挡。
@@ -121,7 +127,8 @@ node app research-archive-page:import
   - `GET /coohomcloud/corecompetency/paper` → 200，`_papers` 返回 5 篇论文，`intro.title`、`sectionHead.heading`、`outro.heading` 均为 area
 - 数据库验证：
   - 5 篇论文 `zh:published`（另有 `zh:draft` 供编辑）
-  - 学术研究页 `zh:published` 关联 5 篇论文
+  - 学术研究页 `zh:published` 关联 5 篇论文（draft 与 published 均含 `papersIds`）
+  - 学术研究页 draft 与 published slug 一致（`/coohomcloud/corecompetency/paper`，无数字后缀）
   - 核心能力页 `zh:published` 正常
 - 侧边导航去重后仅保留一套 React 齿轮导航；齿轮悬停滑出不遮挡面板
 - `--pink` 令牌生效，四项 accent 正常；rich-text 文本无异常换行

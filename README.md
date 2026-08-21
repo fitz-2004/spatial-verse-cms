@@ -389,6 +389,8 @@ node app research-archive-page:import
 | [`ARCHITECTURE.md`](./ARCHITECTURE.md) | 架构快速参考（职责划分、组件注册、`_` 前缀约定等） |
 | [`AGENTS.md`](./AGENTS.md) | Agent 与开发人员执行规则（分工、边界、验收标准） |
 | [`MIGRATION_WORK_SPLIT.md`](./MIGRATION_WORK_SPLIT.md) | 并行迁移分工基线（页面、负责人、交付标准） |
+| [`docs/onboarding.md`](./docs/onboarding.md) | 对接文档（环境准备、内容模型、数据导入、验收清单） |
+| [`docs/marketing-operations-manual.md`](./docs/marketing-operations-manual.md) | 市场部操作手册（登录、原地编辑、新增学术论文等） |
 | [`docs/migration/core-research.md`](./docs/migration/core-research.md) | 核心能力与学术研究迁移记录 |
 
 ### 外部文档
