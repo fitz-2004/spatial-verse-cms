@@ -26,6 +26,14 @@
 | 前端（Astro） | `http://localhost:4321` |
 | 管理后台 / 登录 | `http://localhost:4321/login` |
 
+### 数据库位置
+
+| 项 | 位置 |
+|---|---|
+| SQLite 本地库 | `backend/data/spatial-verse-cms.sqlite`（连接串：`APOS_DB_URI=sqlite://data/spatial-verse-cms.sqlite`） |
+| 数据库目录 | `backend/data/`（已 Git 忽略，含历史备份与 WAL 日志） |
+| 生产库 | MongoDB（`APOS_MONGODB_URI`，见后端 `.env`） |
+
 ---
 
 ## 2. 快速启动
