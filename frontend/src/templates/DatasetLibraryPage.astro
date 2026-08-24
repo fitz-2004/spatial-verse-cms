@@ -1,5 +1,76 @@
 ---
+import { getAttachmentUrl } from '@apostrophecms/apostrophe-astro/lib/attachment.js';
+import DatasetLibraryExperience from '../components/dataset/DatasetLibraryExperience.tsx';
+import '../components/dataset/dataset-library.css';
+
 const { page } = Astro.props.aposData;
+const intro = page?.intro || {};
+const library = page?.library || {};
+const relatedItems = Array.isArray(page?._items) ? page._items : [];
+
+const text = (value) => typeof value === 'string' ? value : '';
+const imageUrl = (image) => image ? getAttachmentUrl(image) : '';
+const items = relatedItems.map((item) => {
+  const previewImage = item?.preview?.items?.[0]?._image?.[0];
+  const gallery = Array.isArray(item?._gallery) ? item._gallery : [];
+  return {
+    id: text(item?.slug) || text(item?._id),
+    category: [ 'model', 'scene', 'image' ].includes(item?.category)
+      ? item.category
+      : 'model',
+    categoryLabel: text(item?.categoryLabel),
+    title: text(item?.title),
+    summary: text(item?.summary),
+    description: text(item?.description),
+    formats: Array.isArray(item?.formats)
+      ? item.formats.map((format) => text(format?.label)).filter(Boolean)
+      : [],
+    tags: Array.isArray(item?.tags)
+      ? item.tags.map((tag) => text(tag?.label)).filter(Boolean)
+      : [],
+    previewUrl: imageUrl(previewImage),
+    galleryUrls: gallery.map(imageUrl).filter(Boolean),
+    downloads: Array.isArray(item?.downloads)
+      ? item.downloads
+        .map((download) => ({
+          label: text(download?.label),
+          url: text(download?.url)
+        }))
+        .filter((download) => download.label && download.url)
+      : []
+  };
+});
+
+const copy = {
+  eyebrow: text(library?.eyebrow),
+  title: text(library?.title),
+  description: text(library?.description),
+  searchLabel: text(library?.searchLabel),
+  searchPlaceholder: text(library?.searchPlaceholder),
+  filterAllLabel: text(library?.filterAllLabel),
+  filterModelLabel: text(library?.filterModelLabel),
+  filterSceneLabel: text(library?.filterSceneLabel),
+  filterImageLabel: text(library?.filterImageLabel),
+  emptyTitle: text(library?.emptyTitle),
+  emptyText: text(library?.emptyText),
+  downloadHeading: text(library?.downloadHeading),
+  downloadButtonLabel: text(library?.downloadButtonLabel),
+  unavailableLabel: text(library?.unavailableLabel)
+};
 ---
 
-<h1>{page?.title}</h1>
+<section class="dataset-page-intro" aria-labelledby="dataset-page-title">
+  <div class="content-width">
+    <div class="dataset-page-intro-copy">
+      <p class="section-index">{text(intro?.eyebrow)}</p>
+      <div>
+        <h1 id="dataset-page-title">{text(intro?.title) || text(page?.title)}</h1>
+        <p class="dataset-page-intro-lead">{text(intro?.lead)}</p>
+      </div>
+    </div>
+  </div>
+  <div class="dataset-page-intro-grid" aria-hidden="true"></div>
+  <div class="dataset-page-intro-orbit" aria-hidden="true"></div>
+</section>
+
+<DatasetLibraryExperience client:visible {items} {copy} />
