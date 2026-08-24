@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: spatial-verse-cms
+    runtime: node
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: npm run serve
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: APOS_DB_URI
+        value: postgresql://neondb_owner:npg_HU1BpRuYr7ez@ep-orange-smoke-azm0k0ko.c-3.ap-southeast-1.aws.neon.tech/neondb?sslmode=require
+      - key: APOS_EXTERNAL_FRONT_KEY
+        value: dev
