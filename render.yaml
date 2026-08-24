@@ -9,6 +9,6 @@ services:
       - key: NODE_ENV
         value: production
       - key: APOS_DB_URI
-        value: postgresql://neondb_owner:npg_HU1BpRuYr7ez@ep-orange-smoke-azm0k0ko.c-3.ap-southeast-1.aws.neon.tech/neondb?sslmode=require
+        value: postgresql://neondb_owner:npg_x7yzTXwW5URG@ep-red-leaf-azi88lo7.c-3.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
       - key: APOS_EXTERNAL_FRONT_KEY
         value: dev
