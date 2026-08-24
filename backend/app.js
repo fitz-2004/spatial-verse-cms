@@ -41,6 +41,8 @@ apostrophe({
     'dataset-item': {},
     'dataset-import': {},
     'about-page': {},
+    // Shared registration file: keep About import in a separate commit.
+    'about-import': {},
     '@apostrophecms/blog': {},
     '@apostrophecms/blog-page': {},
     'nested-layout-widget': {},
