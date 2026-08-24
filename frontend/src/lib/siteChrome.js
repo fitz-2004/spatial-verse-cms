@@ -83,7 +83,7 @@ const defaults = {
     submittedMessage: 'Thank you. We will contact you soon.',
     backToTopLabel: 'Back to top ↑',
     datasetHeading: 'Our Dataset Products',
-    registrationText: 'Registration number: 浙ICP备12022366号',
+    registrationText: 'Registration number: Zhejiang ICP 12022366',
     businessLicenseText: 'Business License'
   }
 };

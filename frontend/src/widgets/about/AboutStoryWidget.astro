@@ -1,0 +1,5 @@
+---
+import AposArea from '@apostrophecms/apostrophe-astro/components/AposArea.astro'; import AboutRichTextWidget from './AboutRichTextWidget.astro';
+const { widget } = Astro.props; const focus = Array.isArray(widget.focus) ? widget.focus : [];
+---
+<section class="about-story section" aria-labelledby="about-story-title"><div class="content-width about-story-layout"><div class="about-editable"><AposArea area={widget.eyebrow} widgetComponent={AboutRichTextWidget} contentClass="section-index" aposStyle="display: contents" /></div><div><div class="about-editable"><AposArea area={widget.heading} widgetComponent={AboutRichTextWidget} contentId="about-story-title" aposStyle="display: contents" /></div><div class="about-editable"><AposArea area={widget.body} widgetComponent={AboutRichTextWidget} aposStyle="display: contents" /></div><div class="about-focus-list" aria-label="服务领域">{focus.map((item, index) => <span><b>0{index + 1}</b>{item.label}</span>)}</div></div></div></section>

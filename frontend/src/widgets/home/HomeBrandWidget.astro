@@ -31,9 +31,13 @@ const { widget } = Astro.props;
     <div class="brand-start-content content-width">
       <div class="brand-start-index"><span>01</span><i></i></div>
       <div class="brand-start-copy">
-        <AposArea area={widget.kicker} widgetComponent={HomeRichTextWidget} contentClass="brand-start-kicker" aposStyle="display: contents" />
+        <div class="home-editable home-editable--brand-kicker">
+          <AposArea area={widget.kicker} widgetComponent={HomeRichTextWidget} contentClass="brand-start-kicker" aposStyle="display: contents" />
+        </div>
         <AposArea area={widget.heading} widgetComponent={HomeRichTextWidget} contentId="brand-start-title" aposStyle="display: contents" />
-        <AposArea area={widget.descriptor} widgetComponent={HomeRichTextWidget} contentClass="brand-start-descriptor" aposStyle="display: contents" />
+        <div class="home-editable home-editable--brand-descriptor">
+          <AposArea area={widget.descriptor} widgetComponent={HomeRichTextWidget} contentClass="brand-start-descriptor" aposStyle="display: contents" />
+        </div>
         <a class="brand-start-enter" href="#hero">ENTER THE PLATFORM <span aria-hidden="true">↗</span></a>
       </div>
       <div class="brand-start-visual" aria-hidden="true">

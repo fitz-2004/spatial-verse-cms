@@ -14,7 +14,9 @@ import "../styles/site-chrome.css";
 // current URL. It returns an object with: `page` (the page document), `piece` (set on
 // piece-show routes), `global` (global config), and flags like `redirect` and `notFound`.
 // Downstream templates receive this object as `Astro.props.aposData`.
-const aposData = await aposPageFetch(Astro.request);
+const aposData = await aposPageFetch(Astro.request); 
+//Astro.request就是这次访问的信息。把“用户当前访问的请求”交给 ApostropheCMS，让 CMS 根据这个请求的 URL 找到对应页面。aposPageFetch(Astro.request);得到CMS里的data然后储存在aposData里。
+
 const bodyClass = `spatialverse-body page-type-${aposData.page?.type || 'unknown'}`;
 const documentTitle = aposData.page?.seoTitle || aposData.page?.title;
 
@@ -34,8 +36,9 @@ if (aposData.notFound) {
   </Fragment>
   <SiteHeader {aposData} pathname={Astro.url.pathname} slot="beforeMain" />
   <main slot="main" class="main site-main" id="top">
-    <AposTemplate {aposData} />
+    <AposTemplate {aposData} />  <!-- AposTemplate 根据 aposData.page.type 选择 templates 文件夹中的对应模板 -->
   </main>
   <SiteFooter {aposData} slot="afterMain" />
   <ContactDrawer {aposData} slot="afterMain" />
 </AposLayout>
+

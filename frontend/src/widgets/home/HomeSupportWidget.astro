@@ -10,7 +10,9 @@ const modes = Array.isArray(widget.modes) ? widget.modes : [];
 <section id="support" class="support-combined-page" aria-labelledby="support-title" data-home-support>
   <div class="content-width">
     <div class="section-intro" data-reveal="section-intro">
-      <AposArea area={widget.eyebrow} widgetComponent={HomeRichTextWidget} contentClass="section-index" aposStyle="display: contents" />
+      <div class="home-editable home-editable--section-index">
+        <AposArea area={widget.eyebrow} widgetComponent={HomeRichTextWidget} contentClass="section-index" aposStyle="display: contents" />
+      </div>
       <div>
         <AposArea area={widget.heading} widgetComponent={HomeRichTextWidget} contentId="support-title" aposStyle="display: contents" />
         <AposArea area={widget.description} widgetComponent={HomeRichTextWidget} aposStyle="display: contents" />

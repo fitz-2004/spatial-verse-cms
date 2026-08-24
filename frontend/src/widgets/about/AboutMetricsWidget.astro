@@ -1,0 +1,5 @@
+---
+import AposArea from '@apostrophecms/apostrophe-astro/components/AposArea.astro'; import AboutRichTextWidget from './AboutRichTextWidget.astro'; import AboutMetricCounter from '../../components/about/AboutMetricCounter.tsx';
+const { widget } = Astro.props; const metrics = Array.isArray(widget.metrics) ? widget.metrics : [];
+---
+<section class="about-metrics section" aria-labelledby="about-metrics-title"><div class="content-width"><div class="about-section-heading"><div class="about-editable"><AposArea area={widget.eyebrow} widgetComponent={AboutRichTextWidget} contentClass="section-index" aposStyle="display: contents" /></div><div class="about-editable"><AposArea area={widget.heading} widgetComponent={AboutRichTextWidget} contentId="about-metrics-title" aposStyle="display: contents" /></div></div><div class="about-metric-grid">{metrics.map((metric) => <div class="about-metric"><AboutMetricCounter value={metric.value} client:visible /><span>{metric.label}</span></div>)}</div></div></section>

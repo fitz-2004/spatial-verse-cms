@@ -11,7 +11,9 @@ const capabilities = Array.isArray(widget.capabilities) ? widget.capabilities : 
 <section id="capabilities" class="section section-capabilities-intro" aria-labelledby="capabilities-title">
   <div class="content-width">
     <div class="section-intro capabilities-intro" data-reveal="section-intro">
-      <AposArea area={widget.introEyebrow} widgetComponent={HomeRichTextWidget} contentClass="section-index" aposStyle="display: contents" />
+      <div class="home-editable home-editable--section-index">
+        <AposArea area={widget.introEyebrow} widgetComponent={HomeRichTextWidget} contentClass="section-index" aposStyle="display: contents" />
+      </div>
       <div>
         <AposArea area={widget.introHeading} widgetComponent={HomeRichTextWidget} contentId="capabilities-title" aposStyle="display: contents" />
         <AposArea area={widget.introDescription} widgetComponent={HomeRichTextWidget} aposStyle="display: contents" />

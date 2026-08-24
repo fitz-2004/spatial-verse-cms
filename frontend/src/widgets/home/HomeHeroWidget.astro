@@ -4,6 +4,7 @@ import HomeRichTextWidget from './HomeRichTextWidget.astro';
 
 const { widget } = Astro.props;
 const primaryTarget = String(widget.primaryCtaTarget || 'solutions').replace(/^#/, '');
+const isEnglish = Astro.url.pathname === '/en' || Astro.url.pathname.startsWith('/en/');
 ---
 
 <section id="hero" class="hero-section hero-text-page" aria-labelledby="hero-title">
@@ -14,7 +15,7 @@ const primaryTarget = String(widget.primaryCtaTarget || 'solutions').replace(/^#
   <div class="hero-grid" aria-hidden="true"></div>
   <div class="hero-content content-width" style="position:relative;z-index:2">
     <div class="hero-copy" data-reveal="hero-copy">
-      <div class="eyebrow"><span class="status-dot"></span><AposArea area={widget.eyebrow} widgetComponent={HomeRichTextWidget} aposStyle="display: contents" /></div>
+      <div class="eyebrow"><span class="status-dot"></span><div class="home-editable home-editable--hero-eyebrow"><AposArea area={widget.eyebrow} widgetComponent={HomeRichTextWidget} aposStyle="display: contents" /></div></div>
       <AposArea area={widget.heading} widgetComponent={HomeRichTextWidget} contentClass="hero-title" contentId="hero-title" aposStyle="display: contents" />
       <AposArea area={widget.description} widgetComponent={HomeRichTextWidget} contentClass="hero-description" aposStyle="display: contents" />
       <div class="hero-actions">
@@ -23,5 +24,5 @@ const primaryTarget = String(widget.primaryCtaTarget || 'solutions').replace(/^#
       </div>
     </div>
   </div>
-  <div class="hero-bottom content-width" data-reveal="hero-bottom" style="position:relative;z-index:2"><span>SCROLL TO EXPLORE</span><span class="scroll-line" aria-hidden="true"></span><span>群核空间智能平台</span></div>
+  <div class="hero-bottom content-width" data-reveal="hero-bottom" style="position:relative;z-index:2"><span>SCROLL TO EXPLORE</span><span class="scroll-line" aria-hidden="true"></span><span>{isEnglish ? 'Spatial Intelligence Platform' : '群核空间智能平台'}</span></div>
 </section>

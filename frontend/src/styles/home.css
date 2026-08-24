@@ -179,8 +179,89 @@ body { background: var(--void); }
 .hero-description { max-width: 520px; color: #a7b4c6; font-size: 15px; font-weight: 350; letter-spacing: .025em; line-height: 2; }.hero-actions .button { font-weight: 350; letter-spacing: .14em; }.mission-stage .console-core b { font-weight: 300; letter-spacing: .18em; }.mission-node strong { font-weight: 400; letter-spacing: .2em; }.mission-node small { font-weight: 350; letter-spacing: .03em; }
 .section-intro h2, .contact-section h2, .why-copy h2 { font-family: var(--display); font-size: clamp(58px, 7.2vw, 112px); font-stretch: condensed; font-weight: 300; letter-spacing: -.065em; line-height: .9; text-shadow: 0 0 32px rgba(167,255,233,.04); }.section-intro > div > p, .why-copy > p:not(.section-index), .support-card > p:nth-of-type(2) { font-weight: 350; letter-spacing: .018em; line-height: 2; }.support-card h3, .dataset-info h3 { font-family: var(--display); font-stretch: condensed; font-weight: 300; letter-spacing: -.055em; }.metric strong { font-family: var(--display); font-weight: 300; letter-spacing: -.055em; }.metric span { font-weight: 350; letter-spacing: .2em; }.support-list button strong { font-family: var(--display); font-weight: 300; letter-spacing: -.02em; }.dataset-info p { font-weight: 350; letter-spacing: .035em; }.contact-form input, .contact-form textarea { font-weight: 350; letter-spacing: .02em; }
 .section-index, .eyebrow, .console-head, .console-foot, .dataset-info > div > span { font-weight: 350; letter-spacing: .2em; }
+
+/* Apostrophe replaces a contextual Area with its own editor container. The
+   second and third direct children are respectively the Hero title and
+   description Areas; preserve the Preview typography inside that DOM. */
+.hero-copy > [data-apos-area-editable]:nth-child(2) .tiptap.ProseMirror h2 {
+  max-width: 680px;
+  margin: 38px 0 32px;
+  color: #dce9ee;
+  font-family: var(--display);
+  font-size: clamp(56px, 6.4vw, 106px);
+  font-stretch: condensed;
+  font-weight: 300;
+  letter-spacing: -.065em;
+  line-height: .92;
+  text-shadow: 0 0 36px rgba(167,255,233,.07);
+  text-wrap: balance;
+}
+.hero-copy > [data-apos-area-editable]:nth-child(3) .tiptap.ProseMirror p {
+  max-width: 520px;
+  margin: 0;
+  color: #a7b4c6;
+  font-family: var(--body);
+  font-size: 15px;
+  font-weight: 350;
+  letter-spacing: .025em;
+  line-height: 2;
+}
+.home-editable { display: contents; }
+.home-editable--brand-kicker .tiptap.ProseMirror p {
+  margin: 0 0 26px;
+  color: var(--cyan);
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 350;
+  letter-spacing: .16em;
+  line-height: 1.5;
+}
+.home-editable--brand-descriptor .tiptap.ProseMirror p {
+  margin: 28px 0 0;
+  color: #a5b7ca;
+  font-family: var(--mono);
+  font-size: var(--content-micro-size);
+  font-weight: 350;
+  letter-spacing: .2em;
+  line-height: 1.5;
+}
+.home-editable--hero-eyebrow .tiptap.ProseMirror p,
+.home-editable--section-index .tiptap.ProseMirror p {
+  margin: 0;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: var(--content-micro-size);
+  font-weight: 350;
+  letter-spacing: .2em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+.home-editable--solution-insight .tiptap.ProseMirror p {
+  max-width: 430px;
+  margin: 0;
+  color: #cdd8ed;
+  font-size: 19px;
+  font-weight: 350;
+  letter-spacing: normal;
+  line-height: 1.65;
+}
+.home-editable--solution-detail .tiptap.ProseMirror p {
+  max-width: 470px;
+  margin: 15px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 350;
+  letter-spacing: normal;
+  line-height: 1.75;
+}
 @media (max-width: 560px) {
   .hero-copy .hero-title { font-size: clamp(56px, 16.5vw, 88px); letter-spacing: -.07em; line-height: .97; }.hero-description { font-size: 14px; line-height: 1.9; }.section-intro h2, .contact-section h2, .why-copy h2 { font-size: clamp(52px, 15vw, 78px); }.support-card h3 { font-size: 48px; }.dataset-info h3 { font-size: 36px; }
+  .hero-copy > [data-apos-area-editable]:nth-child(2) .tiptap.ProseMirror h2 { font-size: clamp(45px, 13.5vw, 72px); letter-spacing: -.07em; line-height: .98; }
+  .hero-copy > [data-apos-area-editable]:nth-child(3) .tiptap.ProseMirror p { font-size: 14px; line-height: 1.9; }
+  .home-editable--brand-kicker .tiptap.ProseMirror p { margin-bottom: 20px; font-size: 8px; letter-spacing: .1em; }
+  .home-editable--brand-descriptor .tiptap.ProseMirror p { margin-top: 22px; font-size: 9px; letter-spacing: .11em; }
+  .home-editable--solution-insight .tiptap.ProseMirror p { font-size: 16px; }
+  .home-editable--solution-detail .tiptap.ProseMirror p { font-size: 12px; }
 }
 
 /* Solid header surface: keep navigation readable above the spatial field. */

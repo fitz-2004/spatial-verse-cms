@@ -9,7 +9,9 @@ const metrics = Array.isArray(widget.metrics) ? widget.metrics : [];
 <section id="why" class="why-section" aria-labelledby="why-title">
   <div class="content-width why-layout" data-reveal="why-layout">
     <div class="why-copy">
-      <AposArea area={widget.eyebrow} widgetComponent={HomeRichTextWidget} contentClass="section-index" aposStyle="display: contents" />
+      <div class="home-editable home-editable--section-index">
+        <AposArea area={widget.eyebrow} widgetComponent={HomeRichTextWidget} contentClass="section-index" aposStyle="display: contents" />
+      </div>
       <AposArea area={widget.heading} widgetComponent={HomeRichTextWidget} contentId="why-title" aposStyle="display: contents" />
       <AposArea area={widget.description} widgetComponent={HomeRichTextWidget} aposStyle="display: contents" />
       <a class="button button-ghost" href={widget.linkHref}>{widget.linkLabel} <span aria-hidden="true">↗</span></a>

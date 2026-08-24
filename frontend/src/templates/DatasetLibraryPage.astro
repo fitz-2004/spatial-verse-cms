@@ -1,5 +1,31 @@
 ---
+import DatasetLibraryExperience from '../components/dataset/DatasetLibraryExperience.tsx';
+import '../styles/core.css';
+import '../styles/dataset.css';
+
 const { page } = Astro.props.aposData;
+const datasets = Array.isArray(page?._datasets) ? page._datasets : [];
+const filters = Array.isArray(page?.categoryFilters) ? page.categoryFilters : [];
 ---
 
-<h1>{page?.title}</h1>
+<section class="section-capabilities-intro core-page-intro archive-hero" aria-labelledby="datasets-title">
+  <div class="content-width">
+    <div class="section-intro">
+      <p class="section-index">{page?.introEyebrow}</p>
+      <div><h1 id="datasets-title">{page?.introTitle || page?.title}</h1><p>{page?.introLead}</p></div>
+    </div>
+  </div>
+  <div class="core-page-intro-grid" aria-hidden="true" /><div class="core-page-intro-orbit" aria-hidden="true" />
+</section>
+
+<DatasetLibraryExperience
+  client:visible
+  datasets={datasets}
+  filters={filters}
+  eyebrow={page?.libraryEyebrow}
+  title={page?.libraryTitle}
+  lead={page?.libraryLead}
+  searchPlaceholder={page?.searchPlaceholder}
+  emptyTitle={page?.emptyTitle}
+  emptyMessage={page?.emptyMessage}
+/>

@@ -18,6 +18,12 @@ import HomeSolutionsWidget from './home/HomeSolutionsWidget.astro';
 import HomeCapabilitiesWidget from './home/HomeCapabilitiesWidget.astro';
 import HomeWhyWidget from './home/HomeWhyWidget.astro';
 import HomeSupportWidget from './home/HomeSupportWidget.astro';
+import AboutHeroWidget from './about/AboutHeroWidget.astro';
+import AboutStoryWidget from './about/AboutStoryWidget.astro';
+import AboutNetworkWidget from './about/AboutNetworkWidget.astro';
+import AboutMetricsWidget from './about/AboutMetricsWidget.astro';
+import AboutQuoteWidget from './about/AboutQuoteWidget.astro';
+import AboutCtaWidget from './about/AboutCtaWidget.astro';
 
 const widgetComponents = {
   '@apostrophecms/rich-text': RichTextWidget,
@@ -34,6 +40,12 @@ const widgetComponents = {
   'home-capabilities': HomeCapabilitiesWidget,
   'home-why': HomeWhyWidget,
   'home-support': HomeSupportWidget,
+  'about-hero': AboutHeroWidget,
+  'about-story': AboutStoryWidget,
+  'about-network': AboutNetworkWidget,
+  'about-metrics': AboutMetricsWidget,
+  'about-quote': AboutQuoteWidget,
+  'about-cta': AboutCtaWidget,
 };
 
 export default widgetComponents;

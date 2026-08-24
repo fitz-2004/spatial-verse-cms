@@ -1,0 +1,2 @@
+import { inlineTextField, stringField } from '../about-page/lib/aboutWidgetFields.js';
+export default { extend: '@apostrophecms/widget-type', options: { label: '关于我们 · 平台规模' }, fields: { add: { eyebrow: inlineTextField('索引标签'), heading: inlineTextField('标题', 'h2'), metrics: { type: 'array', label: '平台指标', min: 5, max: 5, fields: { add: { value: stringField('数值', { required: true }), label: stringField('说明', { required: true }) } } } } } };

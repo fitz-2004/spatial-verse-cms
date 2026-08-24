@@ -1,0 +1,13 @@
+---
+const { widget, contentClass, contentId, options = {} } = Astro.props;
+const raw = typeof widget?.content === 'string' ? widget.content.trim() : '';
+const tag = options?.styles?.find((style) => typeof style?.tag === 'string')?.tag || 'p';
+const safeTag = /^(h[1-6]|p|blockquote|strong|span)$/i.test(tag) ? tag : 'p';
+const content = raw && /^<[a-z][a-z0-9-]*(?:\s|>)/i.test(raw) ? raw : `<${safeTag}>${raw}</${safeTag}>`;
+const injected = [contentClass ? `class="${contentClass}"` : '', contentId ? `id="${contentId}"` : ''].filter(Boolean).join(' ');
+const rendered = injected ? content.replace(/^<([a-z][a-z0-9-]*)(\s|>)/i, `<$1 ${injected}$2`) : content;
+---
+
+<span class="about-contextual-text" set:html={rendered}></span>
+
+<style>.about-contextual-text { display: contents; }</style>

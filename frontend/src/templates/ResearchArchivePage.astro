@@ -4,7 +4,8 @@ import { resolveHref } from '../lib/siteChrome.js';
 import { areaText } from '../lib/editableText.js';
 import '../styles/research.css';
 
-const { page } = Astro.props.aposData;
+const { page, locale } = Astro.props.aposData;
+const activeLocale = String(locale || page?.aposLocale || 'zh').split(':')[0] === 'en' ? 'en' : 'zh';
 const intro = page?.intro || {};
 const sectionHead = page?.sectionHead || {};
 const signals = Array.isArray(intro?.signals) ? intro.signals : [];
@@ -58,7 +59,7 @@ const outroLinks = Array.isArray(outro?.links) ? outro.links : [];
   <div><span><AposArea area={outro?.eyebrow} /></span><strong><AposArea area={outro?.heading} /></strong></div>
   <div class="core-page-next-links">
     {outroLinks.map((item) => {
-      const href = resolveHref(item, 'zh');
+      const href = resolveHref(item, activeLocale);
       return <a href={href} key={href}><span><AposArea area={item?.number} /></span><AposArea area={item?.label} /><b>↗</b></a>;
     })}
   </div>

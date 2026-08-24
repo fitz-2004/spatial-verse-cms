@@ -1,5 +1,14 @@
 ---
+import AposArea from '@apostrophecms/apostrophe-astro/components/AposArea.astro';
+import '../styles/about.css';
 const { page } = Astro.props.aposData;
 ---
 
-<h1>{page?.title}</h1>
+<div class="about-page-shell" data-about-contextual>
+  <AposArea area={page.aboutHeroArea} />
+  <AposArea area={page.aboutStoryArea} />
+  <AposArea area={page.aboutNetworkArea} />
+  <AposArea area={page.aboutMetricsArea} />
+  <AposArea area={page.aboutQuoteArea} />
+  <AposArea area={page.aboutCtaArea} />
+</div>

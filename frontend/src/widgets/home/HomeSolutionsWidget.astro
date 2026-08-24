@@ -11,7 +11,9 @@ const solutions = Array.isArray(widget.solutions) ? widget.solutions : [];
 <section id="solutions" class="section section-solutions solution-intro-page" aria-label="解决方案" aria-labelledby="solutions-title">
   <div class="content-width">
     <div class="section-intro" data-reveal="section-intro">
-      <AposArea area={widget.introEyebrow} widgetComponent={HomeRichTextWidget} contentClass="section-index" aposStyle="display: contents" />
+      <div class="home-editable home-editable--section-index">
+        <AposArea area={widget.introEyebrow} widgetComponent={HomeRichTextWidget} contentClass="section-index" aposStyle="display: contents" />
+      </div>
       <div>
         <AposArea area={widget.introHeading} widgetComponent={HomeRichTextWidget} contentId="solutions-title" aposStyle="display: contents" />
         <AposArea area={widget.introDescription} widgetComponent={HomeRichTextWidget} aposStyle="display: contents" />
@@ -59,8 +61,12 @@ const solutions = Array.isArray(widget.solutions) ? widget.solutions : [];
         <aside class="mission-explanation" data-reveal="mission-explanation" data-home-solution-panel={index} hidden={index !== 0} aria-live="polite">
           <p class="mission-explanation-status">{solution.stageStatus}</p>
           <AposArea area={solution.heading} widgetComponent={HomeRichTextWidget} aposStyle="display: contents" />
-          <AposArea area={solution.stageInsight} widgetComponent={HomeRichTextWidget} contentClass="mission-explanation-insight" aposStyle="display: contents" />
-          <AposArea area={solution.description} widgetComponent={HomeRichTextWidget} contentClass="mission-explanation-detail" aposStyle="display: contents" />
+          <div class="home-editable home-editable--solution-insight">
+            <AposArea area={solution.stageInsight} widgetComponent={HomeRichTextWidget} contentClass="mission-explanation-insight" aposStyle="display: contents" />
+          </div>
+          <div class="home-editable home-editable--solution-detail">
+            <AposArea area={solution.description} widgetComponent={HomeRichTextWidget} contentClass="mission-explanation-detail" aposStyle="display: contents" />
+          </div>
           <div class="mission-video-frame">
             <HomeMediaSlot
               slotId={`home/mission/${solution.key}`}

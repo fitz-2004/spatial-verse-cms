@@ -1,0 +1,4 @@
+---
+import AposArea from '@apostrophecms/apostrophe-astro/components/AposArea.astro'; import AboutRichTextWidget from './AboutRichTextWidget.astro'; const { widget } = Astro.props;
+---
+<section class="about-cta section" aria-labelledby="about-cta-title"><div class="content-width about-cta-inner"><div class="about-editable"><AposArea area={widget.eyebrow} widgetComponent={AboutRichTextWidget} contentClass="section-index" aposStyle="display: contents" /></div><div class="about-editable"><AposArea area={widget.heading} widgetComponent={AboutRichTextWidget} contentId="about-cta-title" aposStyle="display: contents" /></div><a class="button button-primary" href={widget.ctaHref || '#contact-drawer'}><div class="about-editable about-editable--inline"><AposArea area={widget.cta} widgetComponent={AboutRichTextWidget} aposStyle="display: contents" /></div><span aria-hidden="true">↗</span></a></div></section>

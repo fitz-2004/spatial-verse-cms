@@ -7,7 +7,8 @@ import SolutionAdvantages from '../components/solution/SolutionAdvantages.astro'
 import SolutionServices from '../components/solution/SolutionServices.astro';
 import SolutionCTA from '../components/solution/SolutionCTA.astro';
 
-const { page } = Astro.props.aposData;
+const { page, locale } = Astro.props.aposData;
+const isEnglish = String(locale || page?.aposLocale || 'zh').split(':')[0] === 'en';
 const accent = page.accent || '#29f5d1';
 ---
 
@@ -19,6 +20,8 @@ const accent = page.accent || '#29f5d1';
     heroLead={page.heroLead}
     sequence={page.sequence}
     accent={accent}
+    primaryActionLabel={isEnglish ? 'Start a Conversation' : '开始沟通'}
+    secondaryActionLabel={isEnglish ? 'Download Dataset' : '免费下载数据集'}
   />
 
   <SolutionVideoSection
@@ -44,7 +47,8 @@ const accent = page.accent || '#29f5d1';
   />
 
   <SolutionCTA
-    ctaTitle={page.ctaTitle || '让下一组数据进入真实应用。'}
+    ctaTitle={page.ctaTitle || (isEnglish ? 'Bring the Next Dataset into Real Applications.' : '让下一组数据进入真实应用。')}
+    ctaLabel={isEnglish ? 'Contact Us' : '联系我们'}
   />
 </div>
 

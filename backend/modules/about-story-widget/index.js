@@ -1,0 +1,2 @@
+import { inlineTextField, stringField } from '../about-page/lib/aboutWidgetFields.js';
+export default { extend: '@apostrophecms/widget-type', options: { label: '关于我们 · 平台起源' }, fields: { add: { eyebrow: inlineTextField('索引标签'), heading: inlineTextField('标题', 'h2'), body: inlineTextField('正文'), focus: { type: 'array', label: '服务领域', fields: { add: { label: stringField('名称', { required: true }) } } } } } };

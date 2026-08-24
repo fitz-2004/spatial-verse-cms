@@ -26,10 +26,18 @@ const rawImage = page.seoOgImage?._url
   || page.seoOgImage?.attachment?._url
   || page.seoOgImage?.attachment?._urls?.original;
 const socialImage = rawImage ? new URL(rawImage, origin).href : undefined;
+const localizedPageTypes = new Set([
+  '@apostrophecms/home-page',
+  'solution-page',
+  'core-competency-page',
+  'research-archive-page',
+  'dataset-library-page',
+  'about-page'
+]);
 const localizations = Array.isArray(page._localizations)
   ? page._localizations
   : Object.values(page._localizations || {}).filter(Boolean);
-const alternateLinks = localizations
+const responseAlternateLinks = localizations
   .map((localization) => {
     const href = localization?._url || localization?.url;
     const localizedLocale = localeName(localization?.aposLocale || localization?.locale);
@@ -40,7 +48,24 @@ const alternateLinks = localizations
         }
       : null;
   })
-  .filter(Boolean)
+  .filter(Boolean);
+const pathnameWithoutLocale = requestUrl.pathname.replace(/^\/en(?=\/|$)/, '') || '/';
+const derivedAlternateLinks = page.aposDocId && localizedPageTypes.has(page.type)
+  ? [
+      {
+        href: new URL(pathnameWithoutLocale, origin).href,
+        hreflang: 'zh-CN'
+      },
+      {
+        href: new URL(
+          pathnameWithoutLocale === '/' ? '/en' : `/en${pathnameWithoutLocale}`,
+          origin
+        ).href,
+        hreflang: 'en'
+      }
+    ]
+  : [];
+const alternateLinks = [ ...responseAlternateLinks, ...derivedAlternateLinks ]
   .filter((item, index, links) => links.findIndex((candidate) => candidate.hreflang === item.hreflang) === index);
 const jsonLd = JSON.stringify({
   '@context': 'https://schema.org',

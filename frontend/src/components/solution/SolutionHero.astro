@@ -7,7 +7,9 @@ const {
   heroTitle,
   heroLead,
   sequence,
-  accent
+  accent,
+  primaryActionLabel,
+  secondaryActionLabel
 } = Astro.props;
 
 const seq = Math.min(Math.max(sequence || 1, 1), 5);
@@ -25,8 +27,8 @@ const total = 5;
       <SolutionRichText content={heroTitle} className="solution-rich-text hero-subtitle" />
       <SolutionRichText content={heroLead} className="solution-rich-text hero-lead" />
       <div class="solution-detail-actions">
-        <a class="button button-primary" href="#contact-drawer">开始沟通 <span aria-hidden="true">↗</span></a>
-        <a class="button button-ghost" href="#contact-drawer">免费下载数据集 <span aria-hidden="true">↗</span></a>
+        <a class="button button-primary" href="#contact-drawer">{primaryActionLabel} <span aria-hidden="true">↗</span></a>
+        <a class="button button-ghost" href="#contact-drawer">{secondaryActionLabel} <span aria-hidden="true">↗</span></a>
       </div>
       <div class="solution-detail-hero-meta">
         <span>SPATIAL INTELLIGENCE / {englishTitle}</span>
