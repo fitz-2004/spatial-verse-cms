@@ -1,5 +1,159 @@
 ---
+import AboutMetrics from '../components/about/AboutMetrics.tsx';
+import '../components/about/about-page.css';
+
 const { page } = Astro.props.aposData;
+const hero = page?.hero || {};
+const story = page?.story || {};
+const network = page?.network || {};
+const metrics = page?.metrics || {};
+const quote = page?.quote || {};
+const cta = page?.cta || {};
+
+const text = (value, fallback = '') => (
+  typeof value === 'string' && value.trim() ? value : fallback
+);
+const orbitNodes = Array.isArray(hero.orbitNodes)
+  ? hero.orbitNodes.map((node) => text(node?.label)).filter(Boolean)
+  : [];
+const focusItems = Array.isArray(story.focus)
+  ? story.focus.map((item) => text(item?.label)).filter(Boolean)
+  : [];
+const portals = Array.isArray(network.portals)
+  ? network.portals
+    .map((portal) => ({
+      index: text(portal?.index),
+      label: text(portal?.label),
+      href: text(portal?.href)
+    }))
+    .filter((portal) => portal.label && portal.href)
+  : [];
+const metricItems = Array.isArray(metrics.items)
+  ? metrics.items
+    .map((item) => ({
+      value: text(item?.value),
+      label: text(item?.label)
+    }))
+    .filter((item) => item.value && item.label)
+  : [];
+const nodeClass = [ 'about-node-one', 'about-node-two', 'about-node-three' ];
 ---
 
-<h1>{page?.title}</h1>
+<div class="about-page">
+  <section id="about" class="about-hero" aria-labelledby="about-title">
+    <div class="about-grid" aria-hidden="true"></div>
+    <div class="about-scan about-scan-one" aria-hidden="true"></div>
+    <div class="about-scan about-scan-two" aria-hidden="true"></div>
+    <div class="content-width about-hero-layout">
+      <div class="about-hero-copy">
+        <p class="section-index">{text(hero.eyebrow)}</p>
+        <h1 id="about-title">{text(hero.title, text(page?.title))}</h1>
+        <p class="about-hero-lead">{text(hero.lead)}</p>
+        {text(hero.ctaLabel) && (
+          <a class="button button-primary" href={text(hero.ctaHref, '#contact-drawer')}>
+            {text(hero.ctaLabel)} <span aria-hidden="true">↗</span>
+          </a>
+        )}
+      </div>
+      <div class="about-orbit-scene" aria-label={text(hero.orbitAria, '群核空间智能平台数据核心')}>
+        <div class="about-orbit about-orbit-outer" aria-hidden="true"></div>
+        <div class="about-orbit about-orbit-middle" aria-hidden="true"></div>
+        <div class="about-orbit about-orbit-inner" aria-hidden="true"></div>
+        {orbitNodes.map((label, index) => (
+          <span class={`about-orbit-node ${nodeClass[index] || ''}`}>{label}</span>
+        ))}
+        <div class="about-core-mark">
+          <span>{text(hero.orbitCoreKicker)}</span>
+          <strong>{text(hero.orbitCoreTitle)}</strong>
+          <small>{text(hero.orbitCoreCaption)}</small>
+        </div>
+      </div>
+    </div>
+    <div class="content-width about-hero-footer">
+      <span>{text(hero.statusLeft)}</span>
+      <span>{text(hero.statusRight)}</span>
+    </div>
+  </section>
+
+  <section class="about-story section" aria-labelledby="about-story-title">
+    <div class="content-width about-story-layout">
+      <p class="section-index">{text(story.eyebrow)}</p>
+      <div>
+        <h2 id="about-story-title">{text(story.title)}</h2>
+        <p>{text(story.body)}</p>
+        <div class="about-focus-list" aria-label="服务领域">
+          {focusItems.map((item, index) => (
+            <span>
+              <b>{String(index + 1).padStart(2, '0')}</b>
+              {item}
+            </span>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="about-network section" aria-labelledby="about-network-title">
+    <div class="content-width">
+      <div class="about-section-heading">
+        <p class="section-index">{text(network.eyebrow)}</p>
+        <h2 id="about-network-title">{text(network.title)}</h2>
+      </div>
+      <div class="about-network-layout">
+        <div class="about-network-rail" aria-hidden="true">
+          <span class="about-rail-line"></span>
+          <span class="about-rail-line about-rail-line-two"></span>
+          <span class="about-rail-pulse"></span>
+          <strong>{text(network.railCaption)}</strong>
+        </div>
+        <div class="about-network-copy">
+          <p>{text(network.body)}</p>
+          <div class="about-portal-grid">
+            {portals.map((portal) => (
+              <a class="about-portal-link" href={portal.href}>
+                <span>{portal.index}</span>
+                <strong>{portal.label}</strong>
+                <span aria-hidden="true">↗</span>
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="about-metrics section" aria-labelledby="about-metrics-title">
+    <div class="content-width">
+      <div class="about-section-heading">
+        <p class="section-index">{text(metrics.eyebrow)}</p>
+        <h2 id="about-metrics-title">{text(metrics.title)}</h2>
+      </div>
+      <AboutMetrics client:visible items={metricItems} />
+    </div>
+  </section>
+
+  <section class="about-quote section" aria-labelledby="about-quote-title">
+    <div class="content-width about-quote-layout">
+      <p class="section-index">{text(quote.eyebrow)}</p>
+      <figure>
+        <blockquote id="about-quote-title">“{text(quote.text)}”</blockquote>
+        <figcaption>
+          <strong>{text(quote.name)}</strong>
+          <span>{text(quote.organization)}</span>
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="about-cta section" aria-labelledby="about-cta-title">
+    <div class="content-width about-cta-inner">
+      <p class="section-index">{text(cta.eyebrow)}</p>
+      <h2 id="about-cta-title">{text(cta.title)}</h2>
+      {text(cta.buttonLabel) && (
+        <a class="button button-primary" href={text(cta.buttonHref, '#contact-drawer')}>
+          {text(cta.buttonLabel)} <span aria-hidden="true">↗</span>
+        </a>
+      )}
+    </div>
+  </section>
+</div>
