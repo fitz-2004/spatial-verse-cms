@@ -37,6 +37,9 @@ apostrophe({
     'research-paper': {},
     'core-research-import': {},
     'dataset-library-page': {},
+    // Shared registration file: keep Dataset registrations in a separate commit.
+    'dataset-item': {},
+    'dataset-import': {},
     'about-page': {},
     '@apostrophecms/blog': {},
     '@apostrophecms/blog-page': {},
