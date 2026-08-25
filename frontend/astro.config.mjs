@@ -1,6 +1,6 @@
 import { defineConfig } from 'astro/config';
 import { loadEnv } from 'vite';
-import node from '@astrojs/node';
+import vercel from '@astrojs/vercel';
 import react from '@astrojs/react';
 import apostrophe from '@apostrophecms/apostrophe-astro';
 
@@ -15,9 +15,7 @@ export default defineConfig({
     // Required for some hosting, like Heroku
     // host: true
   },
-  adapter: node({
-    mode: 'standalone'
-  }),
+  adapter: vercel(),
   integrations: [
     react(),
     apostrophe({
