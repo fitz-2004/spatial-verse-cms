@@ -12,5 +12,7 @@ services:
         sync: false
       - key: APOS_EXTERNAL_FRONT_KEY
         sync: false
+      - key: APOS_SESSION_SECRET
+        sync: false
       - key: NODE_VERSION
         value: "22"
