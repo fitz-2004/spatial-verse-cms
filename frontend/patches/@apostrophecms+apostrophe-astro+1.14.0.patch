@@ -1,0 +1,15 @@
+diff --git a/node_modules/@apostrophecms/apostrophe-astro/lib/aposResponse.js b/node_modules/@apostrophecms/apostrophe-astro/lib/aposResponse.js
+index 946b878..fa5089a 100644
+--- a/node_modules/@apostrophecms/apostrophe-astro/lib/aposResponse.js
++++ b/node_modules/@apostrophecms/apostrophe-astro/lib/aposResponse.js
+@@ -138,6 +138,10 @@ export default async function aposResponse(req) {
+ 
+       // Create response with decoded data and remove content-encoding header
+       responseHeaders.delete('content-encoding');
++      // The body is now decompressed, so the upstream compressed byte length
++      // is no longer valid. Keeping it causes serverless adapters such as
++      // Vercel to truncate JavaScript and other proxied assets.
++      responseHeaders.delete('content-length');
+ 
+       return new Response(buffer, {
+         ...rest,

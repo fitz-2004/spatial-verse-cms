@@ -3,6 +3,7 @@
   "type": "module",
   "version": "1.0.0",
   "scripts": {
+    "postinstall": "patch-package",
     "dev": "cross-env APOS_EXTERNAL_FRONT_KEY=dev astro dev",
     "start": "astro dev",
     "build": "astro build",
@@ -26,5 +27,8 @@
     "esbuild": true,
     "fsevents": true,
     "sharp": true
+  },
+  "devDependencies": {
+    "patch-package": "^8.0.1"
   }
 }
