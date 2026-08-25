@@ -3,7 +3,7 @@ services:
     name: spatial-verse-cms
     runtime: node
     rootDir: backend
-    buildCommand: npm install && NODE_OPTIONS=--max-old-space-size=1536 npm run build
+    buildCommand: npm install && NODE_OPTIONS=--max-old-space-size=1536 npm run build && NODE_OPTIONS=--max-old-space-size=1536 npm run migrate
     startCommand: npm run serve
     envVars:
       - key: NODE_ENV

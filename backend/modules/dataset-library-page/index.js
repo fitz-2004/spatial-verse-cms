@@ -43,6 +43,12 @@ export default {
     label: '样例数据集页面',
     pluralLabel: '样例数据集页面'
   },
+  init(self) {
+    self.apos.migration.add(
+      'dataset-library-page-publish-seed-content-v1',
+      self.publishSeedContent
+    );
+  },
   fields: {
     add: {
       introEyebrow: { type: 'string', label: '页首索引标签' },
@@ -150,6 +156,36 @@ export default {
         console.log(`- 页面：${page.slug}`);
         console.log(`- Dataset Item：${datasetIds.length}`);
         console.log('- Published：0（本任务不会发布）');
+      },
+      async publishSeedContent() {
+        const req = self.apos.task.getReq({ locale: 'zh', mode: 'draft' });
+        const pageManager = self.apos.modules['@apostrophecms/page'];
+        const datasetManager = self.apos.modules['dataset-item'];
+        const page = await pageManager.find(req, {
+          type: 'dataset-library-page',
+          slug: '/coohomcloud/corecompetency/data'
+        }).toObject();
+        if (!page) {
+          console.log('未找到样例数据集中文草稿页面，跳过 seed 内容发布。');
+          return;
+        }
+
+        let publishedCount = 0;
+        for (const seed of datasetSeed) {
+          const dataset = await datasetManager.find(req, {
+            sourceKey: seed.sourceKey
+          }).toObject();
+          if (!dataset) {
+            throw new Error(`未找到 Dataset 中文草稿：${seed.sourceKey}`);
+          }
+          await datasetManager.publish(req, dataset, { permissions: false });
+          publishedCount += 1;
+        }
+
+        await pageManager.publish(req, page, { permissions: false });
+        console.log('已发布 Dataset 中文内容：');
+        console.log(`- Dataset Item：${publishedCount}`);
+        console.log(`- 页面：${page.slug}`);
       }
     };
   },
@@ -158,6 +194,10 @@ export default {
       'import-drafts': {
         usage: 'node app dataset-library-page:import-drafts\n\n导入样例数据集页面与 15 个 dataset-item 中文草稿，复用稳定 sourceKey 更新已有数据；不导入 Global、archive 或其他页面，也不会发布。',
         task: self.importDrafts
+      },
+      'publish-seed-content': {
+        usage: 'node app dataset-library-page:publish-seed-content\n\n仅发布固定样例数据集页面及 seed 清单中的 15 个 dataset-item 中文草稿，不修改或发布其他内容。',
+        task: self.publishSeedContent
       }
     };
   }
