@@ -8,7 +8,7 @@
     "start": "node app",
     "dev": "cross-env APOS_EXTERNAL_FRONT_KEY=dev nodemon",
     "build": "cross-env NODE_ENV=production node app @apostrophecms/asset:build",
-    "serve": "cross-env NODE_ENV=production node app",
+    "serve": "npm run build && cross-env NODE_ENV=production node app",
     "release": "npm install && npm run build && npm run migrate",
     "migrate": "cross-env NODE_ENV=production node app @apostrophecms/migration:migrate"
   },

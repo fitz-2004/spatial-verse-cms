@@ -4,6 +4,9 @@ services:
     runtime: node
     rootDir: backend
     buildCommand: npm install && npm run build
+    # Build again in the runtime filesystem. Render has occasionally started
+    # this service without the gitignored Apostrophe asset artifacts produced
+    # in its build phase, which leaves /login as an empty shell.
     startCommand: npm run serve
     envVars:
       - key: NODE_ENV
