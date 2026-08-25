@@ -1,36 +1,27 @@
 import { defineConfig } from 'astro/config';
 import { loadEnv } from 'vite';
-import vercel from '@astrojs/vercel';
+import node from '@astrojs/node';
 import react from '@astrojs/react';
 import apostrophe from '@apostrophecms/apostrophe-astro';
 
 // Load .env variables into the config file context.
 // process.env is used as a fallback for variables set via the CLI or shell.
 const env = loadEnv(process.env.NODE_ENV || 'development', process.cwd(), '');
-const aposUrl = new URL(env.APOS_HOST || 'http://localhost:3000');
 
 export default defineConfig({
   output: 'server',
-  // Apostrophe's Astro proxy forwards the backend host in X-Forwarded-Host.
-  // Astro must explicitly trust it for state-changing requests such as logout.
-  security: {
-    allowedDomains: [
-      {
-        hostname: aposUrl.hostname,
-        protocol: aposUrl.protocol.slice(0, -1)
-      }
-    ]
-  },
   server: {
     port: env.PORT ? parseInt(env.PORT) : 4321,
     // Required for some hosting, like Heroku
     // host: true
   },
-  adapter: vercel(),
+  adapter: node({
+    mode: 'standalone'
+  }),
   integrations: [
     react(),
     apostrophe({
-      aposHost: aposUrl.origin,
+      aposHost: env.APOS_HOST || 'http://localhost:3000',
       widgetsMapping: './src/widgets',
       templatesMapping: './src/templates',
       includeResponseHeaders: [
@@ -42,7 +33,7 @@ export default defineConfig({
       ],
       excludeRequestHeaders: [
         // Must exclude this for separate apostrophe and astro hosting to work
-        'host'
+        // 'host'
       ]
     })
   ],

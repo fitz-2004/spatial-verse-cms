@@ -2,6 +2,3 @@ package-lock.json
 /node_modules
 .DS_Store
 backend/data/
-.env
-.env.*
-!.env.example

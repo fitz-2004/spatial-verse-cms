@@ -3,7 +3,6 @@
   "type": "module",
   "version": "1.0.0",
   "scripts": {
-    "postinstall": "patch-package",
     "dev": "cross-env APOS_EXTERNAL_FRONT_KEY=dev astro dev",
     "start": "astro dev",
     "build": "astro build",
@@ -13,8 +12,8 @@
   },
   "dependencies": {
     "@apostrophecms/apostrophe-astro": "^1.4.0",
+    "@astrojs/node": "^9.4.3",
     "@astrojs/react": "^6.0.2",
-    "@astrojs/vercel": "^9.0.5",
     "astro": "^5.13.7",
     "cross-env": "^10.1.0",
     "dayjs": "^1.11.10",
@@ -27,8 +26,5 @@
     "esbuild": true,
     "fsevents": true,
     "sharp": true
-  },
-  "devDependencies": {
-    "patch-package": "^8.0.1"
   }
 }
