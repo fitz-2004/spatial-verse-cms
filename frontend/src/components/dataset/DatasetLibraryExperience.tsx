@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState, type CSSProperties } from 'react';
+import { datasetSeedMedia, datasetSeedMediaUrl } from '../../data/datasetSeedMedia';
 
 type Download = { label?: string; url?: string };
 type LabeledValue = { label?: string } | string;
@@ -35,9 +36,13 @@ const labels = (values?: LabeledValue[]) => (values || [])
   .map((value) => typeof value === 'string' ? value : value?.label || '')
   .filter(Boolean);
 
-function DatasetMedia({ dataset, src, compact = false }: { dataset: DatasetItem; src?: string; compact?: boolean }) {
+function DatasetMedia({ dataset, src, fallbackSrc, compact = false }: { dataset: DatasetItem; src?: string; fallbackSrc?: string; compact?: boolean }) {
   const key = dataset.sourceKey || dataset._id || '00';
-  if (src) return <img className="dataset-library-image" src={src} alt={`${dataset.title || '数据集'}预览图`} loading="lazy" />;
+  const [activeSrc, setActiveSrc] = useState(src || fallbackSrc);
+  useEffect(() => setActiveSrc(src || fallbackSrc), [src, fallbackSrc]);
+  if (activeSrc) return <img className="dataset-library-image" src={activeSrc} alt={`${dataset.title || '数据集'}预览图`} loading="lazy" onError={() => {
+    if (fallbackSrc && activeSrc !== fallbackSrc) setActiveSrc(fallbackSrc);
+  }} />;
   return (
     <div className={`dataset-library-placeholder ${compact ? 'is-compact' : ''}`} aria-label={`${dataset.title || '数据集'}图片插口`}>
       <div className="dataset-placeholder-lines" aria-hidden="true"><i /><i /><i /></div>
@@ -103,11 +108,16 @@ export default function DatasetLibraryExperience({
     setSelectedPreviewIndex(0);
     setSelectedDownloadIndex(0);
   };
+  const selectedSeedMedia = selected?.sourceKey ? datasetSeedMedia[selected.sourceKey] : undefined;
   const gallery = selected
-    ? (selected.gallery || []).map((entry) => attachmentUrl(entry.image)).filter((url): url is string => Boolean(url))
+    ? (selected.gallery || []).map((entry, index) => ({
+      src: attachmentUrl(entry.image),
+      fallbackSrc: datasetSeedMediaUrl(selectedSeedMedia?.gallery?.[index])
+    })).filter((image) => Boolean(image.src || image.fallbackSrc))
     : [];
   const selectedCover = selected ? attachmentUrl(selected.cover) : undefined;
-  const activeImage = gallery[selectedPreviewIndex] || selectedCover;
+  const activeImage = gallery[selectedPreviewIndex];
+  const selectedCoverFallback = datasetSeedMediaUrl(selectedSeedMedia?.cover);
   const activeDownload = selected?.downloads?.[selectedDownloadIndex];
 
   return (
@@ -145,11 +155,12 @@ export default function DatasetLibraryExperience({
               const formats = labels(dataset.formats);
               const tags = labels(dataset.tags);
               const cover = attachmentUrl(dataset.cover);
+              const coverFallback = datasetSeedMediaUrl(dataset.sourceKey ? datasetSeedMedia[dataset.sourceKey]?.cover : undefined);
               return (
                 <article className="dataset-library-card dataset-apple-card" style={{ '--dataset-index': index } as CSSProperties} key={dataset._id || dataset.sourceKey} role="button" tabIndex={0} onClick={() => openDataset(dataset)} onKeyDown={(event) => {
                   if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); openDataset(dataset); }
                 }}>
-                  <div className="dataset-library-card-media"><div className="dataset-cms-media-slot"><DatasetMedia dataset={dataset} src={cover} /></div><span className="dataset-card-code">{categoryLabel[dataset.category || ''] || 'DATASET'}</span></div>
+                  <div className="dataset-library-card-media"><div className="dataset-cms-media-slot"><DatasetMedia dataset={dataset} src={cover} fallbackSrc={coverFallback} /></div><span className="dataset-card-code">{categoryLabel[dataset.category || ''] || 'DATASET'}</span></div>
                   <div className="dataset-library-card-copy"><div><span>{(dataset.category || 'dataset').toUpperCase()} / {formats.join(' · ')}</span><b>↗</b></div><h3>{dataset.title}</h3><p>{dataset.summary}</p><div className="dataset-card-tags">{tags.map((tag) => <small key={tag}>{tag}</small>)}</div></div>
                 </article>
               );
@@ -161,8 +172,10 @@ export default function DatasetLibraryExperience({
       {selected && <div className="dataset-lightbox-backdrop dataset-apple-backdrop" role="presentation" onMouseDown={() => setSelected(null)}>
         <div className="dataset-lightbox dataset-apple-sheet" role="dialog" aria-modal="true" aria-labelledby="dataset-lightbox-title" onMouseDown={(event) => event.stopPropagation()}>
           <button className="dataset-lightbox-close" type="button" onClick={() => setSelected(null)} aria-label="关闭数据集详情">×</button>
-          <div className="dataset-lightbox-media"><DatasetMedia dataset={selected} src={activeImage} compact />
-            {gallery.length > 1 && <div className="dataset-lightbox-thumbs">{gallery.map((image, index) => <button type="button" className={index === selectedPreviewIndex ? 'is-active' : ''} onClick={() => setSelectedPreviewIndex(index)} key={image}><img src={image} alt="" /></button>)}</div>}
+          <div className="dataset-lightbox-media"><DatasetMedia dataset={selected} src={activeImage?.src || selectedCover} fallbackSrc={activeImage?.fallbackSrc || selectedCoverFallback} compact />
+            {gallery.length > 1 && <div className="dataset-lightbox-thumbs">{gallery.map((image, index) => <button type="button" className={index === selectedPreviewIndex ? 'is-active' : ''} onClick={() => setSelectedPreviewIndex(index)} key={`${image.src || image.fallbackSrc}-${index}`}><img src={image.src || image.fallbackSrc} alt="" onError={(event) => {
+              if (image.fallbackSrc && event.currentTarget.src !== new URL(image.fallbackSrc, window.location.href).href) event.currentTarget.src = image.fallbackSrc;
+            }} /></button>)}</div>}
             <p>MEDIA PREVIEW / {categoryLabel[selected.category || ''] || 'DATASET'}</p>
           </div>
           <div className="dataset-lightbox-info"><p className="section-index">DATASET / {(selected.category || 'dataset').toUpperCase()}</p><h2 id="dataset-lightbox-title">{selected.title}</h2><p className="dataset-lightbox-description">{selected.description}</p>
