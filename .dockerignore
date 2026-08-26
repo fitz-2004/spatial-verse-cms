@@ -1,0 +1,14 @@
+.git
+.gitignore
+.DS_Store
+**/.DS_Store
+**/node_modules
+**/dist
+**/.astro
+**/.vercel
+backend/data
+backend/public/uploads
+backend/public/apos-frontend
+backend/public/apos-build
+*.log
+spatial-verse-cms-local-sqlite-*.zip

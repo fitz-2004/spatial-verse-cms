@@ -106,6 +106,19 @@ Unlike typical headless setups where content editors work in separate admin pane
 
 ## 🚀 Quick Start
 
+### Local Docker (recommended for this restored SQLite snapshot)
+
+This repository includes a Mac-compatible Docker setup that runs the
+ApostropheCMS backend and Astro frontend while persisting the restored SQLite
+database and CMS uploads on the host:
+
+```bash
+docker compose up --build -d
+```
+
+Open `http://localhost:4321`. See [DOCKER.md](./DOCKER.md) for persistence,
+logs, admin commands, stopping and rebuilding instructions.
+
 ### Prerequisites
 - Node.js v22 or later
 - MongoDB v6.0 or later ([setup guide](https://docs.apostrophecms.org/guide/development-setup.html))
