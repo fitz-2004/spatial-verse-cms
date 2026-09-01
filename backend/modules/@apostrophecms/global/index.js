@@ -37,38 +37,33 @@ export default {
         type: 'string',
         label: 'Brand Descriptor'
       },
-      homeLabel: {
-        type: 'string',
-        label: 'Home Label'
-      },
-      solutionsLabel: {
-        type: 'string',
-        label: 'Solutions Label'
-      },
-      coreLabel: {
-        type: 'string',
-        label: 'Core Competency Label'
-      },
-      aboutLabel: {
-        type: 'string',
-        label: 'About Label'
-      },
       contactLabel: {
         type: 'string',
         label: 'Contact Label'
       },
-      solutionLinks: {
+      primaryNav: {
         type: 'array',
-        label: 'Solution Navigation Links',
+        label: 'Primary Navigation',
+        help: '主导航：统一在此配置全部一级导航项。可增删、排序。填写「子链接」后该项会渲染为下拉菜单。',
         fields: {
-          add: linkFields()
-        }
-      },
-      coreLinks: {
-        type: 'array',
-        label: 'Core Navigation Links',
-        fields: {
-          add: linkFields()
+          add: {
+            label: {
+              type: 'string',
+              label: 'Label',
+              required: true
+            },
+            _page: linkFields()._page,
+            href: linkFields().href,
+            newTab: linkFields().newTab,
+            children: {
+              type: 'array',
+              label: 'Dropdown Children (optional)',
+              help: '留空表示普通链接；填写后渲染为下拉菜单。',
+              fields: {
+                add: linkFields()
+              }
+            }
+          }
         }
       },
       contactTitle: {
@@ -181,13 +176,7 @@ export default {
       navigation: {
         label: 'Navigation',
         fields: [
-          'homeLabel',
-          'solutionsLabel',
-          'coreLabel',
-          'aboutLabel',
-          'contactLabel',
-          'solutionLinks',
-          'coreLinks'
+          'primaryNav'
         ]
       },
       contact: {

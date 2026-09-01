@@ -1,18 +1,6 @@
 const paths = {
   home: '/',
-  about: '/coohomcloud/about',
-  solutions: [
-    '/coohomcloud/solutions/aiagent',
-    '/coohomcloud/solutions/aigc',
-    '/coohomcloud/solutions/roboticsimulation',
-    '/coohomcloud/solutions/visualizedproductpromotion',
-    '/coohomcloud/solutions/xr'
-  ],
-  core: [
-    '/coohomcloud/corecompetency',
-    '/coohomcloud/corecompetency/paper',
-    '/coohomcloud/corecompetency/data'
-  ]
+  about: '/coohomcloud/about'
 };
 
 const defaults = {
@@ -20,22 +8,28 @@ const defaults = {
     brandName: '群核空间智能平台',
     brandEnglish: 'SPATIALVERSE',
     brandDescriptor: 'AI数据解决方案先行者',
-    homeLabel: '首页',
-    solutionsLabel: '解决方案',
-    coreLabel: '核心能力',
-    aboutLabel: '关于我们',
     contactLabel: '联系我们',
-    solutionLinks: [
-      { label: '智能体感知', href: paths.solutions[0] },
-      { label: 'AIGC', href: paths.solutions[1] },
-      { label: '机器人仿真', href: paths.solutions[2] },
-      { label: '产品可视化推广', href: paths.solutions[3] },
-      { label: '拓展现实', href: paths.solutions[4] }
-    ],
-    coreLinks: [
-      { label: '核心能力', href: paths.core[0] },
-      { label: '学术研究', href: paths.core[1] },
-      { label: '样例数据集', href: paths.core[2] }
+    primaryNav: [
+      { label: '首页', href: paths.home },
+      {
+        label: '解决方案',
+        children: [
+          { label: '智能体感知', href: '/coohomcloud/solutions/aiagent' },
+          { label: 'AIGC', href: '/coohomcloud/solutions/aigc' },
+          { label: '机器人仿真', href: '/coohomcloud/solutions/roboticsimulation' },
+          { label: '产品可视化推广', href: '/coohomcloud/solutions/visualizedproductpromotion' },
+          { label: '拓展现实', href: '/coohomcloud/solutions/xr' }
+        ]
+      },
+      {
+        label: '核心能力',
+        children: [
+          { label: '核心能力', href: '/coohomcloud/corecompetency' },
+          { label: '学术研究', href: '/coohomcloud/corecompetency/paper' },
+          { label: '样例数据集', href: '/coohomcloud/corecompetency/data' }
+        ]
+      },
+      { label: '关于我们', href: paths.about }
     ],
     contactTitle: '联系我们',
     contactDescription: '借助群核空间智能平台专业的数据集服务释放定制数据解决方案的力量。我们的团队专注于生成和定制2D和3D数据集，为您提供经济高效、高质量的数据获取服务。',
@@ -55,22 +49,28 @@ const defaults = {
     brandName: 'SpatialVerse',
     brandEnglish: 'SPATIALVERSE',
     brandDescriptor: 'Pioneering AI Data Solutions',
-    homeLabel: 'Home',
-    solutionsLabel: 'Solutions',
-    coreLabel: 'Core Competency',
-    aboutLabel: 'About Us',
     contactLabel: 'Contact Us',
-    solutionLinks: [
-      { label: 'Agent Perception', href: paths.solutions[0] },
-      { label: 'AIGC', href: paths.solutions[1] },
-      { label: 'Robotic Simulation', href: paths.solutions[2] },
-      { label: 'Product Visualization', href: paths.solutions[3] },
-      { label: 'XR', href: paths.solutions[4] }
-    ],
-    coreLinks: [
-      { label: 'Core Competency', href: paths.core[0] },
-      { label: 'Research', href: paths.core[1] },
-      { label: 'Sample Datasets', href: paths.core[2] }
+    primaryNav: [
+      { label: 'Home', href: paths.home },
+      {
+        label: 'Solutions',
+        children: [
+          { label: 'Agent Perception', href: '/coohomcloud/solutions/aiagent' },
+          { label: 'AIGC', href: '/coohomcloud/solutions/aigc' },
+          { label: 'Robotic Simulation', href: '/coohomcloud/solutions/roboticsimulation' },
+          { label: 'Product Visualization', href: '/coohomcloud/solutions/visualizedproductpromotion' },
+          { label: 'XR', href: '/coohomcloud/solutions/xr' }
+        ]
+      },
+      {
+        label: 'Core Competency',
+        children: [
+          { label: 'Core Competency', href: '/coohomcloud/corecompetency' },
+          { label: 'Research', href: '/coohomcloud/corecompetency/paper' },
+          { label: 'Sample Datasets', href: '/coohomcloud/corecompetency/data' }
+        ]
+      },
+      { label: 'About Us', href: paths.about }
     ],
     contactTitle: 'Contact Us',
     contactDescription: 'Unlock custom data solutions with SpatialVerse dataset services. Our team creates and customizes high-quality 2D and 3D datasets for efficient acquisition and delivery.',
@@ -155,20 +155,18 @@ function list(value, fallback) {
 export function getSiteChrome(global = {}, locale = 'zh') {
   const language = locale === 'en' ? 'en' : 'zh';
   const fallback = defaults[language];
-  const solutionLinks = list(global.solutionLinks, fallback.solutionLinks);
-  const coreLinks = list(global.coreLinks, fallback.coreLinks);
   const fallbackGroups = [
     {
-      title: fallback.solutionsLabel,
-      links: solutionLinks
+      title: language === 'en' ? 'Solutions' : '解决方案',
+      links: fallback.primaryNav[1]?.children || []
     },
     {
-      title: fallback.coreLabel,
-      links: coreLinks
+      title: language === 'en' ? 'Core Competency' : '核心能力',
+      links: fallback.primaryNav[2]?.children || []
     },
     {
-      title: fallback.aboutLabel,
-      links: [ { label: fallback.aboutLabel, href: paths.about } ]
+      title: language === 'en' ? 'About Us' : '关于我们',
+      links: [ { label: language === 'en' ? 'About Us' : '关于我们', href: paths.about } ]
     }
   ];
 
@@ -176,13 +174,8 @@ export function getSiteChrome(global = {}, locale = 'zh') {
     brandName: value(global.brandName, fallback.brandName),
     brandEnglish: value(global.brandEnglish, fallback.brandEnglish),
     brandDescriptor: value(global.brandDescriptor, fallback.brandDescriptor),
-    homeLabel: value(global.homeLabel, fallback.homeLabel),
-    solutionsLabel: value(global.solutionsLabel, fallback.solutionsLabel),
-    coreLabel: value(global.coreLabel, fallback.coreLabel),
-    aboutLabel: value(global.aboutLabel, fallback.aboutLabel),
     contactLabel: value(global.contactLabel, fallback.contactLabel),
-    solutionLinks,
-    coreLinks,
+    primaryNav: list(global.primaryNav, fallback.primaryNav),
     contactTitle: value(global.contactTitle, fallback.contactTitle),
     contactDescription: value(global.contactDescription, fallback.contactDescription),
     contactEmail: value(global.contactEmail, fallback.contactEmail),

@@ -1,4 +1,4 @@
-FROM node:22-bookworm-slim AS backend
+FROM docker.m.daocloud.io/library/node:22-bookworm-slim AS backend
 
 RUN apt-get update \
   && apt-get install -y --no-install-recommends python3 make g++ \
@@ -25,7 +25,7 @@ EXPOSE 3000
 CMD [ "npm", "run", "dev" ]
 
 
-FROM node:22-bookworm-slim AS frontend
+FROM docker.m.daocloud.io/library/node:22-bookworm-slim AS frontend
 
 WORKDIR /app/frontend
 
