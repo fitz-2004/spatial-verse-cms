@@ -68,6 +68,8 @@ docker compose start backend
 
 当前 Compose 使用开发模式：后端 `npm run dev`、前端 `astro dev`。它适用于当前验收和内容编辑，但不是最终的生产运行方式。后续应由接手人完成生产镜像构建、Nginx HTTPS 反代、域名和证书配置。
 
+Nginx 模板向当前 Astro 开发服务器转发时会固定内部 `Host: 127.0.0.1:4321`，以避免 Vite 对陌生公网域名返回 `403`；原始域名保存在 `X-Forwarded-Host`。这是当前开发模式的兼容处理，切换为生产版 Astro server 后可按需改为转发原始 `Host`。
+
 运行时环境变量位于项目根目录 `.env`，至少包括：
 
 ```dotenv
