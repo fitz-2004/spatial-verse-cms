@@ -216,7 +216,15 @@ export function localizeHref(href, locale = 'zh') {
   if (!href || /^(?:[a-z]+:|#|\/\/)/i.test(href)) {
     return href || '#';
   }
-  if (locale !== 'en' || !href.startsWith('/') || href === '/login') {
+  // Posters are static files served directly by Nginx, outside Astro's
+  // localized route tree. Keep their URL identical in every locale.
+  if (
+    locale !== 'en' ||
+    !href.startsWith('/') ||
+    href === '/login' ||
+    href === '/poster' ||
+    href.startsWith('/poster/')
+  ) {
     return href;
   }
   if (href === '/en' || href.startsWith('/en/')) {

@@ -33,10 +33,14 @@ docker compose ps
 docker compose logs -f backend frontend
 ```
 
-访问地址：
+访问地址（仅在本机开放）：
 
 - Astro 网站及 CMS 登录入口：http://localhost:4321
 - ApostropheCMS 后端：http://localhost:3000
+
+`docker-compose.yml` 将两个端口绑定到 `127.0.0.1`。这是有意的安全设置：开发机可直接访问；云服务器应由宿主机 Nginx 反向代理到前端 `127.0.0.1:4321`，不要公开 `3000` 或 `4321`。
+
+静态临时海报由 Nginx 直接从 `/var/www/posters/` 提供，统一使用主域名下的 `/poster/` 路径。完整的 Nginx 模板与云端交接流程见 [CLOUD_DEPLOYMENT_HANDOFF.md](./CLOUD_DEPLOYMENT_HANDOFF.md)。海报不需要进入 CMS、Astro 或 Docker 镜像。
 
 ## 停止与重启
 

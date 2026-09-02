@@ -14,7 +14,9 @@ services:
       PORT: 3000
     init: true
     ports:
-      - "3000:3000"
+      # The CMS API is for the Astro service and server operators only.
+      # Keep it off the public network; Nginx must never proxy this port.
+      - "127.0.0.1:3000:3000"
     volumes:
       # Bind mounts preserve the restored database, its WAL files and uploads
       # outside the container lifecycle while keeping them easy to back up.
@@ -51,7 +53,8 @@ services:
         condition: service_healthy
     init: true
     ports:
-      - "4321:4321"
+      # Nginx on the host proxies public traffic to this loopback-only port.
+      - "127.0.0.1:4321:4321"
     healthcheck:
       test:
         - CMD
