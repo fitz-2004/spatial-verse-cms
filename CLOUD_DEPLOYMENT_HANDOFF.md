@@ -1,6 +1,6 @@
 # Spatial Verse CMS 云端部署交接
 
-本文记录截至 2026-09-02 的云端部署状态，以及后续接手人需要维护的文件、数据、容器和静态海报流程。
+本文记录截至 2026-09-04 的云端部署状态，以及后续接手人需要维护的文件、数据、容器和静态海报流程。
 
 ## 1. 当前云端实例
 
@@ -20,7 +20,7 @@
 
 ## 2. 当前部署代码来源与重要差异
 
-服务器最初从代码包 `spatial-verse-cms-code-dev-d39b01f-20260831.zip` 解压，基线为 Git 提交 `d39b01f`。随后服务器为适应国内镜像网络做过两项**手工修改**：
+服务器最初从代码包 `spatial-verse-cms-code-dev-d39b01f-20260831.zip` 解压，早期基线为 Git 提交 `d39b01f`。随后服务器为适应国内镜像网络做过两项**手工修改**：
 
 1. 删除 Dockerfile 的 `# syntax=docker/dockerfile:1.7`，因为阿里云镜像加速器中没有 `docker/dockerfile:1.7`。
 2. 将 Dockerfile 中两处基础镜像改为：
@@ -29,7 +29,7 @@
    FROM m.daocloud.io/docker.io/library/node:22-bookworm-slim
    ```
 
-GitHub `dev` 之后还有提交 `69587e8`，其中包含第一项修复；服务器不能直接 Git 拉取，因此接手人更新部署时必须先比较服务器工作目录与 `dev`，不得盲目覆盖 Dockerfile。
+当前 GitHub `dev` 的运行时代码基线是 `bdd4652`。该提交已合并 `lbh-dynamic-nav`，实现 CMS 可管理的 `Global.primaryNav`（新增/排序顶部导航及下拉子项），并将仓库 Dockerfile 的基础镜像统一为 `docker.m.daocloud.io/library/node:22-bookworm-slim`。**按本次交付确认，云服务器尚未包含这一个运行时代码提交**；因此云端当前不能视为最终交付版本。服务器不能直接 Git 拉取，接手人更新部署时必须先比较服务器工作目录与该基线；尤其要确认旧手工 DaoCloud 前缀与仓库中的新前缀均可拉取后，再统一 Dockerfile，不能盲目覆盖。
 
 ## 3. 容器与持久化
 

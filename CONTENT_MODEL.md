@@ -1,6 +1,6 @@
 # SpatialVerse CMS 内容模型速查
 
-> 当前范围：已完成的 Home、Solution、核心能力与学术研究页面域
+> 当前范围：已接入的 Home、Solution、核心能力、学术研究、样例数据集与关于我们页面域
 >
 > 面向：后续 CMS、Astro、视觉与交互开发人员
 >
@@ -38,6 +38,12 @@ CMS Page 数据 → Astro Page Template → Astro Component / AposArea → HTML
 | Widget 类型 → Astro Widget | `frontend/src/widgets/index.js` | Area item type，例如 `home-hero` |
 | 页面公共外壳 | `frontend/src/pages/[...slug].astro` | Header、SEO、Template、Footer、编辑上下文 |
 | 公共 SEO 输出 | `frontend/src/components/SeoHead.astro` | 读取各 Page Type 的同名 SEO fields |
+
+### 全站导航
+
+定义文件：`backend/modules/@apostrophecms/global/index.js`；渲染文件：`frontend/src/components/SiteHeader.astro`。
+
+`Global.primaryNav` 是当前顶部主导航的唯一 CMS 数据源。每一项包含 `label`、内部页面关系或 `href`、`newTab`，并可配置 `children` 数组作为下拉菜单。编辑人员可在 CMS 的 **Global → Navigation → Primary Navigation** 中新增、删除和排序导航项。缺少已保存的 `primaryNav` 数据时，前端会使用中英文内置回退导航，以保护既有 SQLite 数据不出现空导航。
 
 注意：后端自定义 Widget 模块目录必须以 `-widget` 结尾，但 Area item type 和前端 registry key 不带该后缀。例如：
 
